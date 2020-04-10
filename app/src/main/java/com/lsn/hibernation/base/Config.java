@@ -42,13 +42,15 @@ public class Config {
         return createFile(new File(initLiteServiceDir(),Constant.Conn.APK));
     }
 
-    public File getImgDir(){
+    public File initImgDir(){
         return createFile(new File(initLiteServiceDir(),Constant.Conn.APP_IMG));
     }
 
-    public File getDownLoadApkFile(){
-        return new File(initApkDir().getAbsolutePath(),Constant.Conn.DOWNLOAD_NAME);
+    public File initMusicDir(){
+        return createFile(new File(initLiteServiceDir(),Constant.Conn.APP_IMG));
     }
+
+
 
     public String getProcessImageURL(String rawImageUrl){
         if (isDebug){

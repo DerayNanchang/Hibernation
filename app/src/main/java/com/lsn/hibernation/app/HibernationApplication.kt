@@ -1,7 +1,6 @@
 package com.lsn.hibernation.app
 
 import android.app.Application
-import com.audio.administrator.ganhuo.db.manager.DBManager
 import com.lsn.hibernation.utils.comm.NetUtil
 
 /**
@@ -21,7 +20,7 @@ class HibernationApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         get = this
-        DBManager.get.init(get)
+        //DBManager.get.init(get)
     }
 
 

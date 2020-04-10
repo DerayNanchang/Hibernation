@@ -2,7 +2,6 @@ package com.lsn.hibernation.base
 
 import android.content.Context
 import android.util.AttributeSet
-import com.yingjiu.base.HeadOrFootItemView
 
 /**
  * Author: Chris

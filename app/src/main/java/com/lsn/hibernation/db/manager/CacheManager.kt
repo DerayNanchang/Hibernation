@@ -1,10 +1,8 @@
-package com.audio.administrator.ganhuo.db.manager
+package com.lsn.hibernation.manager
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
-import com.yingjiu.db.bean.Cache
-import com.yingjiu.db.dao.CacheDao
-import retrofit2.http.GET
+import com.lsn.hibernation.db.bean.Cache
 
 /**
  * Author: Chris
@@ -40,25 +38,26 @@ class CacheManager private constructor() {
                 false
             } else {
                 // 数据不一致,就更新插入数据
-                DBManager.get.getCacheDao().insertOrReplace(cache)
+                //DBManager.get.getCacheDao().insertOrReplace(cache)
                 true
             }
         } else {
             // 第一次插入
-            DBManager.get.getCacheDao().insertOrReplace(cache)
+            //DBManager.get.getCacheDao().insertOrReplace(cache)
             true
         }
     }
 
     fun getCache(key: String): String {
-        val cache = DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key)).unique()
+        /*val cache = DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key)).unique()
         return if (cache != null) {
             // 有缓存
             cache.jsonEntity
         } else {
             // 无缓存
             ""
-        }
+        }*/
+        return ""
     }
 
 }

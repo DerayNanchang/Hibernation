@@ -1,8 +1,7 @@
 package com.lsn.hibernation.base
 
 import android.text.TextUtils
-import com.audio.administrator.ganhuo.db.manager.CacheManager
-import com.yingjiu.base.IBaseView
+import com.lsn.hibernation.manager.CacheManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

@@ -1,8 +1,4 @@
-package com.audio.administrator.ganhuo.db.manager
-
-import android.content.Context
-import com.lsn.hibernation.db.dao.CacheDao
-import com.lsn.hibernation.db.dao.DaoMaster
+package com.lsn.hibernation.manager
 
 /**
  * Author: Chris
@@ -12,20 +8,20 @@ import com.lsn.hibernation.db.dao.DaoMaster
  */
 class DBManager private constructor() {
 
-    private lateinit var cacheDao: CacheDao
+   /* private lateinit var cacheDao: CacheDao*/
 
     companion object {
         private const val DB_NAME = "Hibernation"
         val get = DBManager()
     }
 
-    fun init(context: Context) {
+/*    fun init(context: Context) {
         val helper = DaoMaster.DevOpenHelper(context, DB_NAME)
         val db = helper.writableDb
         val session = DaoMaster(db).newSession()
         cacheDao = session.cacheDao
-    }
+    }*/
 
-    fun getCacheDao() = cacheDao
+  /*  fun getCacheDao() = cacheDao*/
 
 }
