@@ -1,8 +1,8 @@
 package com.audio.administrator.ganhuo.db.manager
 
 import android.content.Context
-import com.yingjiu.db.dao.CacheDao
-import com.yingjiu.db.dao.DaoMaster
+import com.lsn.hibernation.db.dao.CacheDao
+import com.lsn.hibernation.db.dao.DaoMaster
 
 /**
  * Author: Chris
@@ -15,7 +15,7 @@ class DBManager private constructor() {
     private lateinit var cacheDao: CacheDao
 
     companion object {
-        private const val DB_NAME = "YJ"
+        private const val DB_NAME = "Hibernation"
         val get = DBManager()
     }
 

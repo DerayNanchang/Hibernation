@@ -8,8 +8,7 @@
         android:orientation="horizontal"
         android:background="@android:color/white">
 
-    <ProgressBar
-        android:layout_width="25dp" android:layout_height="25dp"/>
+    <ProgressBar android:id="@+id/pbBar" android:layout_width="25dp" android:layout_height="25dp"/>
 
     <TextView
             android:id="@+id/tvMsg"

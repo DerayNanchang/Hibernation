@@ -1,5 +1,4 @@
-package com.yingjiu.base
-
+package com.lsn.hibernation.base
 import io.reactivex.disposables.Disposable
 
 /**
@@ -8,7 +7,8 @@ import io.reactivex.disposables.Disposable
  * Date: 2019/1/22
  * Description  这里可以做很多关于网络请求的事情
  */
-open class ModelResponseAdapter<CACHE, RESULT, EXCEPTION> : ModelResponse<CACHE, RESULT, EXCEPTION> {
+open class ModelResponseAdapter<CACHE, RESULT, EXCEPTION> :
+    ModelResponse<CACHE, RESULT, EXCEPTION> {
     override fun onEmptyStatusResponse() {
 
     }

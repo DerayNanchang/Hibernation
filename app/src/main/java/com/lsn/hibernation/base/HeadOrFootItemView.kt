@@ -1,7 +1,8 @@
-package com.yingjiu.base
+package com.lsn.hibernation.base
 
 import android.content.Context
 import android.util.AttributeSet
+import com.lsn.hibernation.base.BaseItemView
 
 /**
  * Author: Chris

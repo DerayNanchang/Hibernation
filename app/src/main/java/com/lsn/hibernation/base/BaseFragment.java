@@ -3,17 +3,16 @@ package com.lsn.hibernation.base;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.qd.kit.R;
-import com.qd.kit.fragment.QDBaseFragment;
-import com.yingjiu.annotation.LayoutResId;
-import com.yingjiu.ui.InconstantView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.lsn.hibernation.R;
+import com.lsn.hibernation.annotation.LayoutResId;
 
 
 /**
@@ -22,7 +21,7 @@ import com.yingjiu.ui.InconstantView;
  * Date: 2018/12/3
  * Description
  */
-abstract public class YJFragment extends QDBaseFragment {
+abstract public class BaseFragment extends Fragment {
 
     private boolean isFmtVisible = false;     // fragment 是否可视（by 懒加载）
 

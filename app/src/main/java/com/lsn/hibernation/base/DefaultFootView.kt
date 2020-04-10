@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
-import com.yingjiu.base.HeadOrFootItemView
+import kotlinx.android.synthetic.main.view_default_head.view.*
 
 /**
  * Author: Chris

@@ -1,9 +1,9 @@
-package com.yingjiu.base
+package com.lsn.hibernation.base
 
 import android.content.Context
 import android.util.AttributeSet
-import com.qd.kit.R
-import com.yingjiu.annotation.LayoutResId
+import com.lsn.hibernation.R
+import com.lsn.hibernation.annotation.LayoutResId
 import kotlinx.android.synthetic.main.view_default_head.view.*
 
 /**

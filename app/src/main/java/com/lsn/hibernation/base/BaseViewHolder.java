@@ -1,5 +1,5 @@
 package com.lsn.hibernation.base;
-
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
 
 /**

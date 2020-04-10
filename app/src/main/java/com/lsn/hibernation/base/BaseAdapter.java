@@ -2,18 +2,14 @@ package com.lsn.hibernation.base;
 
 import android.view.ViewGroup;
 
-
-import com.yingjiu.base.BaseItemView;
-import com.yingjiu.base.CustomHeadOrFootView;
-import com.yingjiu.base.DefaultFootView;
-import com.yingjiu.base.DefaultHeadView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.annotations.NonNull;
 
 /**
  * Author: Chris
@@ -31,7 +27,7 @@ public abstract class BaseAdapter<DATA> extends RecyclerView.Adapter<BaseViewHol
     private boolean isAddDefaultFoot = false;
     private CustomHeadOrFootView customHeadView;
     private CustomHeadOrFootView customFootView;
-    private int mSelectedPos = -1;
+
 
     public List<DATA> getBody() {
         return data;
@@ -39,15 +35,6 @@ public abstract class BaseAdapter<DATA> extends RecyclerView.Adapter<BaseViewHol
 
     public int getBodySize() {
         return data.size();
-    }
-
-
-    public int getSelectedPos() {
-        return mSelectedPos;
-    }
-
-    public void setSelectedPos(int selectedPos) {
-        mSelectedPos = selectedPos;
     }
 
 
@@ -89,9 +76,6 @@ public abstract class BaseAdapter<DATA> extends RecyclerView.Adapter<BaseViewHol
         this.data.addAll(data);
         notifyDataSetChanged();
         mLastPosition = -1;
-        for (int i = 0; i < data.size(); i++) {
-            mSelectedPos = i;
-        }
     }
 
 
@@ -101,10 +85,6 @@ public abstract class BaseAdapter<DATA> extends RecyclerView.Adapter<BaseViewHol
     public void moreData(List<DATA> data) {
         this.data.addAll(data);
         notifyDataSetChanged();
-    }
-
-    public List<DATA> getData(){
-        return data;
     }
 
     @NonNull

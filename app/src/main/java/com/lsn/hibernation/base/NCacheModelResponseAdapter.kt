@@ -1,4 +1,6 @@
-package com.yingjiu.base
+package com.lsn.hibernation.base
+
+import com.lsn.hibernation.base.NCacheModelResponse
 
 
 /**
@@ -8,7 +10,8 @@ package com.yingjiu.base
  * Description
  */
 
-abstract  class NCacheModelResponseAdapter<RESULT, EXCEPTION> : NCacheModelResponse<RESULT, EXCEPTION>{
+abstract  class NCacheModelResponseAdapter<RESULT, EXCEPTION> :
+    NCacheModelResponse<RESULT, EXCEPTION> {
     override fun onSuccess(result: RESULT?) {
 
     }

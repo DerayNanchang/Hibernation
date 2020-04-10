@@ -1,6 +1,4 @@
-package com.yingjiu.base
-
-
+package com.lsn.hibernation.base
 /**
  * Author: Chris
  * Blog: https://www.jianshu.com/u/a3534a2292e8

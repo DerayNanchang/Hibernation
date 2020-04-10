@@ -1,6 +1,5 @@
 package com.lsn.hibernation.base;
 
-import com.yingjiu.base.BaseItemView;
 
 import java.util.List;
 
