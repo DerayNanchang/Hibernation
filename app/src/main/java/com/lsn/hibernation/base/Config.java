@@ -52,11 +52,11 @@ public class Config {
 
 
 
-    public String getProcessImageURL(String rawImageUrl){
+    /*public String getProcessImageURL(String rawImageUrl){
         if (isDebug){
             return Constant.Conn.DEBUG_URL + rawImageUrl;
         }else {
             return Constant.Conn.RELEASE_URL + rawImageUrl;
         }
-    }
+    }*/
 }

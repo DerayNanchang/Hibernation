@@ -25,6 +25,12 @@ class MainActivity : BaseActivity() {
     override fun init() {
         initDir()
         initView()
+        initEvent()
+    }
+
+    private fun initEvent() {
+        // 每日推荐,歌单, 排行榜,歌手
+
     }
 
     private fun initView() {
