@@ -9,8 +9,10 @@ import com.lsn.hibernation.base.Config
 import com.lsn.hibernation.modules.information.InformationFragment
 import com.lsn.hibernation.modules.main.adapter.MainAdapter
 import com.lsn.hibernation.modules.main.entity.MainTabEntity
-import com.lsn.hibernation.modules.music.MusicFragment
+import com.lsn.hibernation.modules.music.fragment.MusicFragment
 import com.lsn.hibernation.modules.video.VideoFragment
+import com.lsn.hibernation.ui.adapter.CTLTabSelectListener
+import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +31,21 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initEvent() {
-        // 每日推荐,歌单, 排行榜,歌手
+        // 音乐，视频，信息咨询
+
+        cTLMainTabLayout.setOnTabSelectListener(object : CTLTabSelectListener() {
+            override fun onTabSelect(position: Int) {
+                super.onTabSelect(position)
+                cVPContent.currentItem = position
+            }
+        })
+
+        cVPContent.addOnPageChangeListener(object : CVPPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                cTLMainTabLayout.currentTab = position
+            }
+        })
 
     }
 

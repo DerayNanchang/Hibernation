@@ -13,14 +13,15 @@ import io.reactivex.disposables.Disposable
  */
 interface UserContact {
 
-    interface userView : IBaseView {
+    interface UserView : IBaseView {
+        fun loginNetEaseSuccess(loginInfoBean: LoginInfoBean)
     }
 
-    interface userPresenter {
+    interface UserPresenter {
         fun loginNetEase(phone: String, password: String)
     }
 
-    interface userModel{
+    interface UserModel{
         fun loginNetEase(phone: String,password: String , response : NCacheModelResponseAdapter<LoginInfoBean,String>) : Disposable
     }
 

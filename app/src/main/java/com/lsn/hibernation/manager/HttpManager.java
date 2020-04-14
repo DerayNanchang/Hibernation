@@ -91,7 +91,6 @@ public class HttpManager {
 
 
     public <T> T post(Class<T> clazz, String tag, boolean isAddToken) {
-        System.out.println("tag : " + tag);
         switch (tag) {
             case Tag.DEBUG:
                 retrofitUrl = Url.DEBUG;

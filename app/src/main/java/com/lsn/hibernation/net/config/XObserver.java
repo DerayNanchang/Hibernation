@@ -54,7 +54,7 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
         }
     }
 
-    private void cacheParse(Disposable d, String cacheJson) {
+    private void cacheParse(Disposable d, @NonNull String cacheJson) {
         Class<CACHE> cacheClazz = (Class<CACHE>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
         List<CACHE> cache = JSON.parseArray(cacheJson, cacheClazz);
@@ -82,10 +82,10 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
     protected abstract void onEmptyStatusResponse();
 
     // 加载中
-    protected abstract void onRequesting(Disposable d, List<CACHE> cache);
+    protected abstract void onRequesting(Disposable d,  @NonNull List<CACHE> cache);
 
     // 加载成功
-    protected abstract void onSuccess(String key, @NonNull ENTITY entity);
+    protected abstract void onSuccess( @NonNull String key, @NonNull ENTITY entity);
 
     // 加载失败
     protected abstract void onFailed(@NonNull Throwable e);

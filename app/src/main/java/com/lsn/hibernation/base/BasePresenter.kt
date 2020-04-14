@@ -25,6 +25,7 @@ abstract class BasePresenter<VIEW : IBaseView>(protected var view: VIEW?) {
         }
     }
 
+
     protected open fun <CACHE> setCache(key: String?, cache: CACHE): Boolean {
         // 缓存数据
         return if (!TextUtils.isEmpty(key)) {

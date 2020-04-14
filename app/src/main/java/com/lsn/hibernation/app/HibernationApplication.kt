@@ -1,6 +1,8 @@
 package com.lsn.hibernation.app
 
 import android.app.Application
+import com.lsn.hibernation.manager.DBManager
+import com.lsn.hibernation.modules.user.bean.LoginInfoBean
 import com.lsn.hibernation.utils.comm.NetUtil
 
 /**
@@ -11,6 +13,8 @@ import com.lsn.hibernation.utils.comm.NetUtil
  */
 class HibernationApplication : Application() {
 
+    lateinit var loginInfo: LoginInfoBean
+
     companion object JVM {
         lateinit var get: HibernationApplication
     }
@@ -20,7 +24,7 @@ class HibernationApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         get = this
-        //DBManager.get.init(get)
+        DBManager.get.init(get)
     }
 
 
@@ -35,6 +39,14 @@ class HibernationApplication : Application() {
 
     fun getPageSelectedPosition(): Int {
         return pageSelectedPosition
+    }
+
+    fun setLoginInfoBean(loginInfo: LoginInfoBean) {
+        this.loginInfo = loginInfo;
+    }
+
+    fun getLoginInfoBean(): LoginInfoBean {
+        return loginInfo
     }
 
 }

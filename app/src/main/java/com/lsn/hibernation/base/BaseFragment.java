@@ -14,6 +14,10 @@ import androidx.fragment.app.Fragment;
 import com.lsn.hibernation.R;
 import com.lsn.hibernation.annotation.LayoutResId;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 
 /**
  * Author: Chris
@@ -21,7 +25,7 @@ import com.lsn.hibernation.annotation.LayoutResId;
  * Date: 2018/12/3
  * Description
  */
-abstract public class BaseFragment extends Fragment {
+abstract public class BaseFragment extends Fragment implements IBaseView {
 
     private boolean isFmtVisible = false;     // fragment 是否可视（by 懒加载）
 
@@ -31,6 +35,36 @@ abstract public class BaseFragment extends Fragment {
     private ProgressDialog dialog;
     protected View view;
 
+    @NotNull
+    @Override
+    public String msg(int msg) {
+        return "";
+    }
+
+    @Override
+    public void onEmptyStatusResponse() {
+
+    }
+
+    @Override
+    public void onEmptyStatusResponse(@NotNull String msg) {
+
+    }
+
+    @Override
+    public void onSuccess(@NotNull String tag,@NotNull List<Object> entity) {
+
+    }
+
+    @Override
+    public void onSuccess(String tag, boolean isCache, List<Object> entity) {
+
+    }
+
+    @Override
+    public void onFailed() {
+
+    }
 
     private void lazyLoadValid() {
 
