@@ -16,8 +16,6 @@ import com.lsn.hibernation.annotation.LayoutResId;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 
 /**
  * Author: Chris
@@ -52,12 +50,12 @@ abstract public class BaseFragment extends Fragment implements IBaseView {
     }
 
     @Override
-    public void onSuccess(@NotNull String tag,@NotNull List<Object> entity) {
+    public void onSuccess(@NotNull String tag,@NotNull Object entity) {
 
     }
 
     @Override
-    public void onSuccess(String tag, boolean isCache, List<Object> entity) {
+    public void onSuccess(String tag, boolean isCache, Object entity) {
 
     }
 

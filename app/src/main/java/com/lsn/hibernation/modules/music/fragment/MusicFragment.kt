@@ -3,6 +3,8 @@ package com.lsn.hibernation.modules.music.fragment
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseFragment
+import com.lsn.hibernation.base.Constant
+import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
 
 /**
@@ -19,14 +21,20 @@ class MusicFragment : BaseFragment() {
 
     override fun init() {
 
+        initData()
     }
 
-    override fun onSuccess(tag: String, entity: MutableList<Any>) {
+    private fun initData() {
+
+        presenter.getBanner(1)
+    }
+
+    override fun onSuccess(tag: String, entity: Any) {
         super.onSuccess(tag,entity)
         when (tag) {
-            "1" -> {
-            }
-            "2" -> {
+            Constant.Music.Api.BANNER -> {
+                var banners = entity as List<Banner.BannersBean>
+
             }
         }
     }

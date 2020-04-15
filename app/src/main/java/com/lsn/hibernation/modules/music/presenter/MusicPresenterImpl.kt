@@ -19,9 +19,6 @@ class MusicPresenterImpl(view: IBaseView) :
     BasePresenter<IBaseView>(view), MusicContact.MusicPresenter {
     val mode = MusicModelImpl()
 
-    val BANNER = "banner"
-
-
     override fun getBanner(type: Int) {
         mode.getBanner(type, object : ModelResponseAdapter<Banner.BannersBean, Banner, String>() {
             override fun onEmptyStatusResponse() {
@@ -34,7 +31,7 @@ class MusicPresenterImpl(view: IBaseView) :
                 cache: MutableList<Banner.BannersBean>
             ) {
                 super.onRequesting(disposable, cache)
-                view?.onSuccess(BANNER, true, cache)
+                view?.onSuccess(Constant.Music.Api.BANNER, true, cache)
 
             }
 
@@ -43,7 +40,7 @@ class MusicPresenterImpl(view: IBaseView) :
                 //view?.getBannerSuccess(result.banners, false)
                 if (result.code == Constant.Music.NET_EASE_SUCCESS_CODE) {
                     if (result.banners.size > 0) {
-                        view?.onSuccess(BANNER, true, result.banners)
+                        view?.onSuccess(Constant.Music.Api.BANNER, true, result.banners)
                     } else {
                         view?.onEmptyStatusResponse()
                     }
