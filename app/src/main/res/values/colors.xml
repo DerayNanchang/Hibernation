@@ -14,4 +14,7 @@
     <color name="triangle">#aa72d572</color>
     <color name="circle">#aa738ffe</color>
     <color name="rect">#aae84e40</color>
+
+    <color name="t58">#585858</color>
+    <color name="c3">#c3c3c3</color>
 </resources>

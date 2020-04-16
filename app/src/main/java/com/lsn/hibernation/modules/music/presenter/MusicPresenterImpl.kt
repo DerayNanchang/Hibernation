@@ -40,7 +40,7 @@ class MusicPresenterImpl(view: IBaseView) :
                 //view?.getBannerSuccess(result.banners, false)
                 if (result.code == Constant.Music.NET_EASE_SUCCESS_CODE) {
                     if (result.banners.size > 0) {
-                        view?.onSuccess(Constant.Music.Api.BANNER, true, result.banners)
+                        view?.onSuccess(Constant.Music.Api.BANNER, false, result.banners)
                     } else {
                         view?.onEmptyStatusResponse()
                     }

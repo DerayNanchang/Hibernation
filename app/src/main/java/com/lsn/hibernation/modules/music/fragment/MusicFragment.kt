@@ -4,8 +4,12 @@ import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseFragment
 import com.lsn.hibernation.base.Constant
+import com.lsn.hibernation.modules.music.adapter.MusicBannerAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
+import com.youth.banner.indicator.CircleIndicator
+import kotlinx.android.synthetic.main.fragment_music.*
+
 
 /**
  * Author: lsn
@@ -15,12 +19,10 @@ import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
  */
 @LayoutResId(R.layout.fragment_music)
 class MusicFragment : BaseFragment() {
-
     val presenter = MusicPresenterImpl(this)
 
-
     override fun init() {
-
+        //创建（new banner()）或者布局文件中获取banner
         initData()
     }
 
@@ -29,13 +31,24 @@ class MusicFragment : BaseFragment() {
         presenter.getBanner(1)
     }
 
-    override fun onSuccess(tag: String, entity: Any) {
-        super.onSuccess(tag,entity)
+    override fun onSuccess(tag: String?, isCache: Boolean, entity: Any?) {
+        super.onSuccess(tag, isCache, entity)
         when (tag) {
             Constant.Music.Api.BANNER -> {
-                var banners = entity as List<Banner.BannersBean>
+                val banners = entity as List<Banner.BannersBean>
+                //--------------------------简单使用-------------------------------
+                //默认直接设置adapter就行了
+                context?.let {
+                    bnMusicBanner.adapter = MusicBannerAdapter(it, banners)
+                    bnMusicBanner.setIndicator(CircleIndicator(it))
+                        .start()
+                }
 
             }
         }
+    }
+
+    override fun onSuccess(tag: String, entity: Any) {
+        super.onSuccess(tag, entity)
     }
 }
