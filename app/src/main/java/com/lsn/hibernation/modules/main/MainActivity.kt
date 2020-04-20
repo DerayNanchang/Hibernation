@@ -11,19 +11,22 @@ import com.lsn.hibernation.modules.main.adapter.MainAdapter
 import com.lsn.hibernation.modules.main.entity.MainTabEntity
 import com.lsn.hibernation.modules.music.fragment.MusicFragment
 import com.lsn.hibernation.modules.video.VideoFragment
-import com.lsn.hibernation.ui.adapter.CTLTabSelectListener
 import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
+import com.lsn.hibernation.utils.comm.DensityUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_main_navigation.view.*
+
 
 @LayoutResId(R.layout.activity_main)
 class MainActivity : BaseActivity() {
 
     private val fragments = listOf(MusicFragment(), VideoFragment(), InformationFragment())
-    private val titles = listOf("音乐", "视频", "信息咨询")
+    private val titles = listOf("音乐", "视频", "咨询")
     private lateinit var mPermission: Disposable
+    private var selectPosition = 0;
     override fun init() {
         initDir()
         initView()
@@ -33,25 +36,76 @@ class MainActivity : BaseActivity() {
     private fun initEvent() {
         // 音乐，视频，信息咨询
 
-        cTLMainTabLayout.setOnTabSelectListener(object : CTLTabSelectListener() {
-            override fun onTabSelect(position: Int) {
-                super.onTabSelect(position)
-                cVPContent.currentItem = position
-            }
-        })
-
+        initTabLayoutEvent()
         cVPContent.addOnPageChangeListener(object : CVPPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                cTLMainTabLayout.currentTab = position
+                selectPosition = position
+                selectTab(selectPosition)
             }
         })
 
     }
 
+    private fun initTabLayoutEvent() {
+        viewNavigation.tvMusic.setOnClickListener {
+            selectTab(0)
+        }
+
+        viewNavigation.tvVideo.setOnClickListener {
+            selectTab(1)
+        }
+
+        viewNavigation.tvInformation.setOnClickListener {
+            selectTab(2)
+        }
+    }
+
+
+    fun spToPx(size:Float) : Float{
+        return DensityUtil.px2spF(this, size)
+    }
+
+    fun selectTab(position: Int) {
+        when (position) {
+            0 -> {
+                // 改变字体颜色
+                selectPosition = 0
+                viewNavigation.tvMusic.textSize = spToPx(36f)
+                viewNavigation.tvVideo.textSize = spToPx(30f)
+                viewNavigation.tvInformation.textSize = spToPx(30f)
+                viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.selectColor))
+                viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.unSelectColor))
+                viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.unSelectColor))
+                cVPContent.currentItem = selectPosition
+            }
+            1 -> {
+                selectPosition = 1
+                viewNavigation.tvMusic.textSize = spToPx(30f)
+                viewNavigation.tvVideo.textSize = spToPx(36f)
+                viewNavigation.tvInformation.textSize = spToPx(30f)
+                viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.unSelectColor))
+                viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.selectColor))
+                viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.unSelectColor))
+                cVPContent.currentItem = selectPosition
+            }
+            2 -> {
+                selectPosition = 2
+                viewNavigation.tvMusic.textSize = spToPx(30f)
+                viewNavigation.tvVideo.textSize = spToPx(30f)
+                viewNavigation.tvInformation.textSize = spToPx(36f)
+                viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.unSelectColor))
+                viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.unSelectColor))
+                viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.selectColor))
+                cVPContent.currentItem = selectPosition
+            }
+        }
+
+    }
+
     private fun initView() {
-        initTabLayout()
         initViewPage()
+        initTabLayout()
     }
 
     private fun initDir() {
@@ -75,7 +129,7 @@ class MainActivity : BaseActivity() {
         titles.forEach {
             tabs.add(MainTabEntity(it))
         }
-        cTLMainTabLayout.setTabData(tabs)
+        //viewNavigation.tlTitle.setupWithViewPager(cVPContent)
 
     }
 

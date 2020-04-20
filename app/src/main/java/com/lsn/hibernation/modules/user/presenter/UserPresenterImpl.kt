@@ -33,14 +33,14 @@ class UserPresenterImpl(view: UserContact.UserView) : BasePresenter<UserContact.
                         ELog.i(JSON.toJSONString(result.code))
                         view?.loginNetEaseSuccess(result)
                     } else {
-                        Toast.show("登录异常")
+                        Toast.show("登录异常" + JSON.toJSONString(result))
                     }
                 }
 
                 override fun onFailed(exception: String?) {
                     super.onFailed(exception)
                     ELog.e(exception)
-                    Toast.show("登录异常")
+                    Toast.show("登录异常"+ JSON.toJSONString(exception))
                 }
             })
     }

@@ -6,8 +6,8 @@ public interface Constant {
         String DEBUG_URL = "https://bank.shanxinsx.cn";
         String RELEASE_URL = "https://bank.shanxinsx.cn";
 
-        String NET_EASE_URL = "http://musicapi.leanapp.cn/";
-        String QQ_URL = "http://musicapi.leanapp.cn/";
+        String NET_EASE_URL = "http://musicapi.leanapp.cn";
+        String QQ_URL = "http://musicapi.leanapp.cn";
 
 
         String APP_NAME_EN = "JT";

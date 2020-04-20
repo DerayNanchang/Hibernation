@@ -1,4 +1,5 @@
 package com.lsn.hibernation.utils.comm
+
 import android.content.Context
 import android.graphics.Point
 import android.view.View
@@ -20,6 +21,11 @@ object DensityUtil {
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    fun dip2pxF(context: Context, dpValue: Float): Float {
+        val scale = context.resources.displayMetrics.density
+        return (dpValue * scale + 0.5f)
+    }
+
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
@@ -28,12 +34,59 @@ object DensityUtil {
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    fun dip2pxF(context: Context, dpValue: Int): Float {
+        val scale = context.resources.displayMetrics.density
+        return (dpValue * scale + 0.5f)
+    }
+
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
     fun px2dip(context: Context, pxValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
+    }
+
+    fun px2dipF(context: Context, pxValue: Float): Float {
+        val scale = context.resources.displayMetrics.density
+        return (pxValue / scale + 0.5f)
+    }
+
+
+    /**
+     * 将px值转换为sp值，保证文字大小不变
+     *
+     * @param pxValue
+     * @param fontScale
+     *            （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    fun px2sp(context: Context, pxValue: Float): Int {
+        val fontScale = context.resources.displayMetrics.scaledDensity;
+        return (pxValue / fontScale + 0.5f).toInt();
+    }
+
+    fun px2spF(context: Context, pxValue: Float): Float {
+        val fontScale = context.resources.displayMetrics.scaledDensity;
+        return (pxValue / fontScale + 0.5f);
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     *
+     * @param spValue
+     * @param fontScale
+     *            （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    fun sp2px(context: Context, spValue: Float): Int {
+        var fontScale = context.resources.displayMetrics.scaledDensity;
+        return (spValue * fontScale + 0.5f).toInt();
+    }
+
+    fun sp2pxF(context: Context, spValue: Float): Float {
+        var fontScale = context.resources.displayMetrics.scaledDensity;
+        return (spValue * fontScale + 0.5f)
     }
 
     /**
@@ -86,7 +139,6 @@ object DensityUtil {
         view.requestLayout()
         return marginParams
     }
-
 
 
     fun getStatusBarHeight(context: Context): Int {
