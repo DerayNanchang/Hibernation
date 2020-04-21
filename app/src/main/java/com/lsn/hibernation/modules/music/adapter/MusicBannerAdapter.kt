@@ -26,8 +26,8 @@ class MusicBannerAdapter(var context: Context, var banners: List<Banner.BannersB
         var csDotView: CustomSmartDotView;
 
         constructor(itemView: View) : super(itemView) {
-            ivBannerImg = itemView.find<ImageView>(R.id.ivBannerImg)
-            csDotView = itemView.find<CustomSmartDotView>(R.id.csDotView)
+            ivBannerImg = itemView.find(R.id.ivBannerImg)
+            csDotView = itemView.find(R.id.csDotView)
 
         }
     }

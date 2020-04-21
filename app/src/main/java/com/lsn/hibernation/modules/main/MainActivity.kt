@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    fun spToPx(size:Float) : Float{
+    fun spToPx(size: Float): Float {
         return DensityUtil.px2spF(this, size)
     }
 
@@ -71,9 +71,9 @@ class MainActivity : BaseActivity() {
             0 -> {
                 // 改变字体颜色
                 selectPosition = 0
-                viewNavigation.tvMusic.textSize = spToPx(36f)
-                viewNavigation.tvVideo.textSize = spToPx(30f)
-                viewNavigation.tvInformation.textSize = spToPx(30f)
+                viewNavigation.tvMusic.textSize = spToPx(46f)
+                viewNavigation.tvVideo.textSize = spToPx(40f)
+                viewNavigation.tvInformation.textSize = spToPx(40f)
                 viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.selectColor))
                 viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.unSelectColor))
                 viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.unSelectColor))
@@ -81,9 +81,9 @@ class MainActivity : BaseActivity() {
             }
             1 -> {
                 selectPosition = 1
-                viewNavigation.tvMusic.textSize = spToPx(30f)
-                viewNavigation.tvVideo.textSize = spToPx(36f)
-                viewNavigation.tvInformation.textSize = spToPx(30f)
+                viewNavigation.tvMusic.textSize = spToPx(40f)
+                viewNavigation.tvVideo.textSize = spToPx(46f)
+                viewNavigation.tvInformation.textSize = spToPx(40f)
                 viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.unSelectColor))
                 viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.selectColor))
                 viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.unSelectColor))
@@ -91,9 +91,9 @@ class MainActivity : BaseActivity() {
             }
             2 -> {
                 selectPosition = 2
-                viewNavigation.tvMusic.textSize = spToPx(30f)
-                viewNavigation.tvVideo.textSize = spToPx(30f)
-                viewNavigation.tvInformation.textSize = spToPx(36f)
+                viewNavigation.tvMusic.textSize = spToPx(40f)
+                viewNavigation.tvVideo.textSize = spToPx(40f)
+                viewNavigation.tvInformation.textSize = spToPx(46f)
                 viewNavigation.tvMusic.setTextColor(resources.getColor(R.color.unSelectColor))
                 viewNavigation.tvVideo.setTextColor(resources.getColor(R.color.unSelectColor))
                 viewNavigation.tvInformation.setTextColor(resources.getColor(R.color.selectColor))
@@ -126,6 +126,11 @@ class MainActivity : BaseActivity() {
 
     private fun initTabLayout() {
         val tabs = ArrayList<CustomTabEntity>()
+        viewNavigation.tvMusic.text = "音乐"
+        viewNavigation.tvVideo.text = "视频"
+        viewNavigation.tvInformation.text = "资讯"
+        selectTab(0)
+
         titles.forEach {
             tabs.add(MainTabEntity(it))
         }

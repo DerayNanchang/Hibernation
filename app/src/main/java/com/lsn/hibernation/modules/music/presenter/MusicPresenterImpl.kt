@@ -5,8 +5,10 @@ import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.IBaseView
 import com.lsn.hibernation.base.ModelResponseAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
+import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.modules.music.model.MusicModelImpl
+import com.lsn.hibernation.net.bean.RespEntity
 import io.reactivex.disposables.Disposable
 
 /**
@@ -17,8 +19,9 @@ import io.reactivex.disposables.Disposable
  */
 class MusicPresenterImpl(view: IBaseView) :
     BasePresenter<IBaseView>(view), MusicContact.MusicPresenter {
-    val mode = MusicModelImpl()
 
+
+    val mode = MusicModelImpl()
     override fun getBanner(type: Int) {
         mode.getBanner(type, object : ModelResponseAdapter<Banner.BannersBean, Banner, String>() {
             override fun onEmptyStatusResponse() {
@@ -32,7 +35,6 @@ class MusicPresenterImpl(view: IBaseView) :
             ) {
                 super.onRequesting(disposable, cache)
                 view?.onSuccess(Constant.Music.Api.BANNER, true, cache)
-
             }
 
             override fun onSuccess(key: String?, result: Banner) {
@@ -46,7 +48,33 @@ class MusicPresenterImpl(view: IBaseView) :
                     }
                 }
             }
+            override fun onFailed(exception: String?) {
+                super.onFailed(exception)
+                view?.onEmptyStatusResponse()
+            }
+        })
+    }
 
+    override fun getPlaylist(uid: Int) {
+        mode.getPlaylist(uid,object :ModelResponseAdapter<EasePlaylist,RespEntity<List<EasePlaylist>>,String>(){
+            override fun onEmptyStatusResponse() {
+                super.onEmptyStatusResponse()
+                view?.onEmptyStatusResponse()
+            }
+            override fun onRequesting(disposable: Disposable?, cache: MutableList<EasePlaylist>) {
+                super.onRequesting(disposable, cache)
+                view?.onSuccess(Constant.Music.Api.PLAYLIST,true,cache)
+            }
+            override fun onSuccess(key: String?, result: RespEntity<List<EasePlaylist>>) {
+                super.onSuccess(key, result)
+                if (result.code == Constant.Conn.EASE_CODE){
+                    if (result.payload.isNotEmpty()){
+                        view?.onSuccess(Constant.Music.Api.PLAYLIST,false,result.payload)
+                    }else{
+                        view?.onEmptyStatusResponse()
+                    }
+                }
+            }
             override fun onFailed(exception: String?) {
                 super.onFailed(exception)
                 view?.onEmptyStatusResponse()

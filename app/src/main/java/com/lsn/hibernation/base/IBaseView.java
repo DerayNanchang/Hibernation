@@ -12,7 +12,7 @@ public interface IBaseView {
 
     void onEmptyStatusResponse();
 
-    void onEmptyStatusResponse(String msg);
+    void onEmptyStatusResponse(String tag,String msg);
 
     void onSuccess(String tag,Object entity);
 

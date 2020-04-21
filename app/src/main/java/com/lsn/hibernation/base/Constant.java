@@ -9,6 +9,8 @@ public interface Constant {
         String NET_EASE_URL = "http://musicapi.leanapp.cn";
         String QQ_URL = "http://musicapi.leanapp.cn";
 
+        int EASE_CODE = 200;
+
 
         String APP_NAME_EN = "JT";
         String APP_IMG = "img";
@@ -23,7 +25,11 @@ public interface Constant {
         String DOWNLOAD_NAME = "闪信.apk";
         boolean IS_DEBUG = true;
         String HT_LOG = "HT_LOG";
+
+
     }
+
+
 
     interface Music {
 
@@ -37,6 +43,7 @@ public interface Constant {
 
             String CALL_PHONE = "/login/cellphone";
             String BANNER = "/banner";
+            String PLAYLIST = "/user/playlist";
 
         }
     }

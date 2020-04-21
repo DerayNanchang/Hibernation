@@ -4,6 +4,15 @@
     <color name="colorPrimaryDark">@color/black</color>
     <color name="colorAccent">@color/black</color>
 
+    <color name="lever1Text">@color/black</color>
+    <color name="lever2Text">@color/T4D</color>
+    <color name="lever3Text">@color/T9A</color>
+
+
+
+    <color name="T4D">#4D4D4D</color>
+    <color name="T9A">#9A9A9A</color>
+
     <color name="bottomLineColor2">#AAAAAA</color>
 
     <color name="white">#ffffff</color>

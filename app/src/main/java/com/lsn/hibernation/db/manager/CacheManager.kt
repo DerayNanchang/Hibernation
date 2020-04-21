@@ -3,6 +3,7 @@ package com.lsn.hibernation.manager
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.db.bean.Cache
+import com.lsn.hibernation.db.dao.CacheDao
 
 /**
  * Author: Chris
@@ -34,30 +35,29 @@ class CacheManager private constructor() {
         // 返回是否插入了，前台凭这个判断是否需要更新数据
         return if (!TextUtils.isEmpty(cacheJSON)) {
             if (cacheJSON == cache.jsonEntity) {
-                // 如果两次的数据一致，说明没有数据更新，就不插入了，也不刷新页面了
+                 //如果两次的数据一致，说明没有数据更新，就不插入了，也不刷新页面了
                 false
             } else {
                 // 数据不一致,就更新插入数据
-                //DBManager.get.getCacheDao().insertOrReplace(cache)
+                DBManager.get.getCacheDao().insertOrReplace(cache)
                 true
             }
         } else {
             // 第一次插入
-            //DBManager.get.getCacheDao().insertOrReplace(cache)
+            DBManager.get.getCacheDao().insertOrReplace(cache)
             true
         }
     }
 
     fun getCache(key: String): String {
-        /*val cache = DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key)).unique()
+        val cache = DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key)).unique()
         return if (cache != null) {
             // 有缓存
             cache.jsonEntity
         } else {
             // 无缓存
             ""
-        }*/
+        }
         return ""
     }
-
 }

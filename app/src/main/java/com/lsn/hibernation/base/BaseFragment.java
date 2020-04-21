@@ -45,7 +45,7 @@ abstract public class BaseFragment extends Fragment implements IBaseView {
     }
 
     @Override
-    public void onEmptyStatusResponse(@NotNull String msg) {
+    public void onEmptyStatusResponse(@NotNull String tag,@NotNull String msg) {
 
     }
 

@@ -33,6 +33,10 @@ class HibernationApplication : Application() {
     }
 
 
+    fun getUId() : Int{
+        return loginInfo.account.id
+    }
+
     fun setPageSelectedPosition(position: Int) {
         this.pageSelectedPosition = position
     }

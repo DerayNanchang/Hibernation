@@ -18,11 +18,13 @@ import org.jetbrains.anko.startActivity
  */
 @LayoutResId(R.layout.activity_splash)
 class SplashActivity : BaseActivity(), UserContact.UserView {
+    override fun onEmptyStatusResponse(tag: String?, msg: String?) {
+
+    }
+
     override fun onEmptyStatusResponse() {
     }
 
-    override fun onEmptyStatusResponse(msg: String?) {
-    }
 
     override fun onSuccess(tag: String?, entity: Any?) {
     }

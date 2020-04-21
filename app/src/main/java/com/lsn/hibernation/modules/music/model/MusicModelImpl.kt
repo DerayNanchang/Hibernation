@@ -5,8 +5,10 @@ import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.ModelResponseAdapter
 import com.lsn.hibernation.manager.HttpManager
 import com.lsn.hibernation.modules.music.bean.Banner
+import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.net.Api
+import com.lsn.hibernation.net.bean.RespEntity
 import com.lsn.hibernation.net.config.ThreadHelp
 import com.lsn.hibernation.net.config.XObserver
 import io.reactivex.disposables.Disposable
@@ -18,11 +20,12 @@ import io.reactivex.disposables.Disposable
  * Description
  */
 class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
+
     override fun getBanner(
         type: Int,
         response: ModelResponseAdapter<Banner.BannersBean, Banner, String>
     ) {
-        var parameters = HashMap<String, String>()
+        val parameters = HashMap<String, String>()
         parameters["type"] = type.toString()
         val cacheKey =
             getCacheKeyGet(Constant.Music.Api.BANNER, parameters)
@@ -46,6 +49,39 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
                 override fun onFailed(e: Throwable) {
                     response.onFailed(e.message)
                 }
+            })
+    }
+
+    override fun getPlaylist(
+        uid: Int,
+        response: ModelResponseAdapter<EasePlaylist, RespEntity<List<EasePlaylist>>, String>
+    ) {
+        val parameters = HashMap<String, String>()
+        parameters["uid"] = uid.toString()
+        val cacheKey =
+            getCacheKeyGet(Constant.Music.Api.PLAYLIST, parameters)
+
+
+        HttpManager.request().get(Api::class.java, HttpManager.Tag.NET_EASE)
+            .getPlaylist(uid)
+            .compose(ThreadHelp.toMain())
+            .subscribe(object : XObserver<EasePlaylist, RespEntity<List<EasePlaylist>>>(cacheKey) {
+                override fun onEmptyStatusResponse() {
+                    response.onEmptyStatusResponse()
+                }
+
+                override fun onRequesting(d: Disposable?, cache: MutableList<EasePlaylist>) {
+                    response.onRequesting(d, cache)
+                }
+
+                override fun onSuccess(key: String, entity: RespEntity<List<EasePlaylist>>) {
+                    response.onSuccess(key, entity)
+                }
+
+                override fun onFailed(e: Throwable) {
+                    response.onFailed(e.message)
+                }
+
             })
     }
 

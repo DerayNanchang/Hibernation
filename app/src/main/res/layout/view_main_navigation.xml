@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
@@ -19,20 +18,9 @@
             android:src="@drawable/svg_menu" />
 
     </LinearLayout>
-    <!--app:tabBackground="?android:attr/selectableItemBackground"
-    app:tabRippleColor="?android:attr/selectableItemBackground"-->
-    <!--<com.google.android.material.tabs.TabLayout
-        android:id="@+id/tlTitle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:tabSelectedTextColor="@color/selectColor"
-        app:tabTextColor="@color/unSelectColor"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        android:layout_weight="8" />-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:layout_weight="8"
             android:gravity="center_vertical"
             android:minWidth="200dp"
@@ -44,7 +32,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="音乐"
                 android:theme="@style/RippleF125"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -55,9 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:theme="@style/RippleF125"
-                android:gravity="center"
-                android:text="视频"
-                android:textSize="16sp" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/tvInformation"
@@ -65,9 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:theme="@style/RippleF125"
-                android:text="资讯"
-                android:textSize="16sp" />
+                android:theme="@style/RippleF125" />
 
         </LinearLayout>
 
