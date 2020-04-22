@@ -10,8 +10,11 @@ import com.lsn.hibernation.modules.music.adapter.MusicPlaylistAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
+import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
+import com.lsn.hibernation.utils.comm.DensityUtil
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_music.*
+import org.jetbrains.anko.textColor
 
 
 /**
@@ -23,38 +26,106 @@ import kotlinx.android.synthetic.main.fragment_music.*
 @LayoutResId(R.layout.fragment_music)
 class MusicFragment : BaseFragment() {
     val presenter = MusicPresenterImpl(this)
+    lateinit var mAdapter: MusicPlaylistAdapter
+
 
     override fun init() {
-        initView()
+        showDialog()
 
+        initView()
         //创建（new banner()）或者布局文件中获取banner
         initData()
+
+        initEvent()
+    }
+
+    private fun switchTab(tag:Int){
+        when(tag){
+            0 ->{
+                cvpMusicContent.currentItem = 0
+                tvSelf.textColor = resources.getColor(R.color.lever1Text)
+                tvSelfCount.textColor = resources.getColor(R.color.lever1Text)
+                context?.let {
+                    tvSelf.textSize = DensityUtil.sp2pxF(it,5f)
+                    tvSelfCount.textSize = DensityUtil.sp2pxF(it,3f)
+                }
+
+                tvCollect.textColor = resources.getColor(R.color.lever2Text)
+                tvCollectCount.textColor = resources.getColor(R.color.lever2Text)
+                context?.let {
+                    tvCollect.textSize = DensityUtil.sp2pxF(it,4f)
+                    tvCollectCount.textSize = DensityUtil.sp2pxF(it,3f)
+                }
+            }
+
+            1 ->{
+                cvpMusicContent.currentItem = 1
+
+                tvSelf.textColor = resources.getColor(R.color.lever2Text)
+                tvSelfCount.textColor = resources.getColor(R.color.lever2Text)
+                context?.let {
+                    tvSelf.textSize = DensityUtil.sp2pxF(it,4f)
+                    tvSelfCount.textSize = DensityUtil.sp2pxF(it,3f)
+                }
+
+
+                tvCollect.textColor = resources.getColor(R.color.lever1Text)
+                tvCollectCount.textColor = resources.getColor(R.color.lever1Text)
+                context?.let {
+                    tvCollect.textSize = DensityUtil.sp2pxF(it,5f)
+                    tvCollectCount.textSize = DensityUtil.sp2pxF(it,3f)
+                }
+            }
+        }
+    }
+
+    private fun initEvent() {
+
+        llSelf.setOnClickListener {
+            switchTab(0)
+        }
+
+        llCollect.setOnClickListener {
+            switchTab(1)
+        }
+
+        cvpMusicContent.addOnPageChangeListener(object : CVPPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                switchTab(position)
+            }
+        })
+
     }
 
     private fun initView() {
         initViewPage()
+        tvSelf.text = "创建歌单"
+        tvCollect.text = "收藏歌单"
+        switchTab(0)
     }
 
     private fun initViewPage() {
 
 
-
-
-        val mAdapter = MusicPlaylistAdapter()
-        cvpMusicContent
+        mAdapter = MusicPlaylistAdapter()
+        cvpMusicContent.apply {
+            adapter = mAdapter
+            currentItem = 0
+        }
 
 
     }
 
     private fun initData() {
-
         presenter.getBanner(1)
-
         presenter.getPlaylist(HibernationApplication.get.getUId())
     }
 
+
     override fun onSuccess(tag: String?, isCache: Boolean, entity: Any?) {
         super.onSuccess(tag, isCache, entity)
+        dismissDialog()
         when (tag) {
             Constant.Music.Api.BANNER -> {
                 val banners = entity as List<Banner.BannersBean>
@@ -66,15 +137,24 @@ class MusicFragment : BaseFragment() {
                         .start()
                 }
             }
-
-            Constant.Music.Api.PLAYLIST ->{
+            Constant.Music.Api.PLAYLIST -> {
                 val easePlaylist = entity as List<EasePlaylist>
-                111111111
+                val self = ArrayList<EasePlaylist>()
+                val collect = ArrayList<EasePlaylist>()
+                easePlaylist.forEach {
+                    if (it.creator.nickname == HibernationApplication.get.getNikeName()) {
+                        self.add(it)
+                    } else {
+                        collect.add(it)
+                    }
+                }
+                tvSelfCount.text = self.size.toString()
+                tvCollectCount.text = collect.size.toString()
+                context?.let {
+                    mAdapter.setData(self, collect, it)
+                    mAdapter.notifyDataSetChanged()
+                }
             }
         }
-    }
-
-    override fun onSuccess(tag: String, entity: Any) {
-        super.onSuccess(tag, entity)
     }
 }

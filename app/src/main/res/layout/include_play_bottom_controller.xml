@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@color/white"
+    android:alpha="0.7"
+    android:elevation="30dp">
+
+    <LinearLayout
+        android:id="@+id/ll_local_controller_root"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/ll_local_controller_menu_root"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:minWidth="200dp"
+            android:orientation="horizontal"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:id="@+id/ivControllerMusicIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="5dp"
+                android:src="@mipmap/ic_music_default"
+                android:transitionName="icon" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_local_controller_music_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="这一生关于你的风景"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_local_controller_music_singer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="隔壁老樊"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_local_controller_music_play"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="12dp"
+            android:src="@drawable/svg_pause"
+            android:visibility="gone" />
+
+        <com.lsn.hibernation.ui.widget.CircleProgressBarView
+            android:id="@+id/cpbView"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:radius="13dp" />
+
+        <ImageView
+            android:id="@+id/iv_local_controller_music_menu"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="12dp"
+            android:src="@drawable/svg_menu" />
+
+    </LinearLayout>
+</LinearLayout>
+
+

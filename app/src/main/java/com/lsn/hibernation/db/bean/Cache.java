@@ -9,12 +9,15 @@ public class Cache {
     @Id
     private String key;
     private String jsonEntity;
+    private Boolean isList;
     private Long lastTime;
     private Long storageTime;
-    @Generated(hash = 2000521047)
-    public Cache(String key, String jsonEntity, Long lastTime, Long storageTime) {
+    @Generated(hash = 806364974)
+    public Cache(String key, String jsonEntity, Boolean isList, Long lastTime,
+            Long storageTime) {
         this.key = key;
         this.jsonEntity = jsonEntity;
+        this.isList = isList;
         this.lastTime = lastTime;
         this.storageTime = storageTime;
     }
@@ -33,6 +36,12 @@ public class Cache {
     public void setJsonEntity(String jsonEntity) {
         this.jsonEntity = jsonEntity;
     }
+    public Boolean getIsList() {
+        return this.isList;
+    }
+    public void setIsList(Boolean isList) {
+        this.isList = isList;
+    }
     public Long getLastTime() {
         return this.lastTime;
     }
@@ -45,4 +54,9 @@ public class Cache {
     public void setStorageTime(Long storageTime) {
         this.storageTime = storageTime;
     }
+    public void setIsList(boolean isList) {
+        this.isList = isList;
+    }
+
+    
 }

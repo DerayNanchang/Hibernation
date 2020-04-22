@@ -104,6 +104,7 @@ public class GlideUtils {
                 .load(url)
                 .placeholder(imageView.getDrawable())
                 .skipMemoryCache(false)
+                .transition(new DrawableTransitionOptions().crossFade(500))
                 .dontAnimate()
                 .apply(requestOptions.error(defaultImg))
                 .apply(requestOptions.transform(new GlideRoundTransform(7)))
@@ -182,6 +183,10 @@ public class GlideUtils {
         RequestOptions requestOptions = new RequestOptions();
         Glide.with(imageView)
                 .load(url)
+                .placeholder(imageView.getDrawable())
+                .skipMemoryCache(false)
+                .transition(new DrawableTransitionOptions().crossFade(500))
+                .dontAnimate()
                 .apply(requestOptions.dontAnimate().centerCrop())
                 .apply(requestOptions.error(defaultImg))
                 .apply(requestOptions.skipMemoryCache(false))

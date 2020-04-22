@@ -4,11 +4,11 @@ import android.Manifest
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
-import com.lsn.hibernation.base.BaseActivity
 import com.lsn.hibernation.base.Config
 import com.lsn.hibernation.modules.information.InformationFragment
 import com.lsn.hibernation.modules.main.adapter.MainAdapter
 import com.lsn.hibernation.modules.main.entity.MainTabEntity
+import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.modules.music.fragment.MusicFragment
 import com.lsn.hibernation.modules.video.VideoFragment
 import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.view_main_navigation.view.*
 
 
 @LayoutResId(R.layout.activity_main)
-class MainActivity : BaseActivity() {
+class MainActivity : BaseMusicActivity() {
 
     private val fragments = listOf(MusicFragment(), VideoFragment(), InformationFragment())
     private val titles = listOf("音乐", "视频", "咨询")

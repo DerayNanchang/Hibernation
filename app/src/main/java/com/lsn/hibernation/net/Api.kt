@@ -2,9 +2,8 @@ package com.lsn.hibernation.net
 
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.user.bean.LoginInfoBean
-import com.lsn.hibernation.net.bean.RespEntity
+import com.lsn.hibernation.net.bean.EaseEntity
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -33,5 +32,5 @@ interface Api {
 
 
     @GET(Constant.Music.Api.PLAYLIST)
-    fun getPlaylist(@Query("uid") uid: Int): Observable<RespEntity<List<EasePlaylist>>>
+    fun getPlaylist(@Query("uid") uid: Int): Observable<EaseEntity>
 }

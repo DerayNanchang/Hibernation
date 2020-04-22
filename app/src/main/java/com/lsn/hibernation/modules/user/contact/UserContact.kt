@@ -1,6 +1,5 @@
 package com.lsn.hibernation.modules.user.contact
 
-import com.lsn.hibernation.base.IBaseView
 import com.lsn.hibernation.base.NCacheModelResponseAdapter
 import com.lsn.hibernation.modules.user.bean.LoginInfoBean
 import io.reactivex.disposables.Disposable
@@ -12,10 +11,6 @@ import io.reactivex.disposables.Disposable
  * Description
  */
 interface UserContact {
-
-    interface UserView : IBaseView {
-        fun loginNetEaseSuccess(loginInfoBean: LoginInfoBean)
-    }
 
     interface UserPresenter {
         fun loginNetEase(phone: String, password: String)

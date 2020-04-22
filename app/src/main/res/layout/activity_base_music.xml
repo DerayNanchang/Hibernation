@@ -3,11 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/ivBannerImg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
+    <include layout="@layout/include_play_bottom_controller"/>
 </RelativeLayout>

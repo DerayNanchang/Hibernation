@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:minHeight="80dp"
+    android:orientation="horizontal"
+    android:paddingEnd="10dp">
 
     <ImageView
         android:id="@+id/ivPlaylistEd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="55dp"
+        android:layout_height="55dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -23,18 +24,20 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="歌单:power"
+            android:ellipsize="end"
+            android:maxWidth="100dp"
+            android:maxLines="2"
             android:textColor="@color/lever2Text"
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:id="@+id/tvSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="10首"
+            android:layout_marginTop="5dp"
+            android:maxWidth="100dp"
             android:textColor="@color/lever3Text"
             android:textSize="@dimen/sp12" />
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

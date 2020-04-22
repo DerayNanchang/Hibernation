@@ -1,5 +1,6 @@
 package com.lsn.hibernation.modules.music.presenter
 
+import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.IBaseView
@@ -8,7 +9,7 @@ import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.modules.music.model.MusicModelImpl
-import com.lsn.hibernation.net.bean.RespEntity
+import com.lsn.hibernation.net.bean.EaseEntity
 import io.reactivex.disposables.Disposable
 
 /**
@@ -56,7 +57,7 @@ class MusicPresenterImpl(view: IBaseView) :
     }
 
     override fun getPlaylist(uid: Int) {
-        mode.getPlaylist(uid,object :ModelResponseAdapter<EasePlaylist,RespEntity<List<EasePlaylist>>,String>(){
+        mode.getPlaylist(uid,object :ModelResponseAdapter<EasePlaylist,EaseEntity,String>(){
             override fun onEmptyStatusResponse() {
                 super.onEmptyStatusResponse()
                 view?.onEmptyStatusResponse()
@@ -65,11 +66,12 @@ class MusicPresenterImpl(view: IBaseView) :
                 super.onRequesting(disposable, cache)
                 view?.onSuccess(Constant.Music.Api.PLAYLIST,true,cache)
             }
-            override fun onSuccess(key: String?, result: RespEntity<List<EasePlaylist>>) {
+            override fun onSuccess(key: String?, result: EaseEntity) {
                 super.onSuccess(key, result)
+                println("歌单数据:" + JSON.toJSONString(result))
                 if (result.code == Constant.Conn.EASE_CODE){
-                    if (result.payload.isNotEmpty()){
-                        view?.onSuccess(Constant.Music.Api.PLAYLIST,false,result.payload)
+                    if (result.playlist.isNotEmpty()){
+                        view?.onSuccess(Constant.Music.Api.PLAYLIST,false,result.playlist)
                     }else{
                         view?.onEmptyStatusResponse()
                     }
@@ -77,6 +79,7 @@ class MusicPresenterImpl(view: IBaseView) :
             }
             override fun onFailed(exception: String?) {
                 super.onFailed(exception)
+                println("歌单数据2:" +exception)
                 view?.onEmptyStatusResponse()
             }
         })

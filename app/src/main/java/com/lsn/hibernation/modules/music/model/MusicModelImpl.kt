@@ -8,9 +8,9 @@ import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.net.Api
-import com.lsn.hibernation.net.bean.RespEntity
+import com.lsn.hibernation.net.bean.EaseEntity
 import com.lsn.hibernation.net.config.ThreadHelp
-import com.lsn.hibernation.net.config.XObserver
+import com.lsn.hibernation.net.config.XObserverAdapter
 import io.reactivex.disposables.Disposable
 
 /**
@@ -33,20 +33,24 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
         HttpManager.request().get(Api::class.java, HttpManager.Tag.NET_EASE)
             .getBanner(type)
             .compose(ThreadHelp.toMain())
-            .subscribe(object : XObserver<Banner.BannersBean, Banner>(cacheKey) {
+            .subscribe(object : XObserverAdapter<Banner.BannersBean, Banner>(cacheKey) {
                 override fun onEmptyStatusResponse() {
+                    super.onEmptyStatusResponse()
                     response.onEmptyStatusResponse()
                 }
 
                 override fun onRequesting(d: Disposable?, cache: MutableList<Banner.BannersBean>) {
+                    super.onRequesting(d, cache)
                     response.onRequesting(d, cache)
                 }
 
                 override fun onSuccess(key: String, entity: Banner) {
+                    super.onSuccess(key, entity)
                     response.onSuccess(key, entity)
                 }
 
                 override fun onFailed(e: Throwable) {
+                    super.onFailed(e)
                     response.onFailed(e.message)
                 }
             })
@@ -54,34 +58,36 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
 
     override fun getPlaylist(
         uid: Int,
-        response: ModelResponseAdapter<EasePlaylist, RespEntity<List<EasePlaylist>>, String>
+        response: ModelResponseAdapter<EasePlaylist, EaseEntity, String>
     ) {
         val parameters = HashMap<String, String>()
         parameters["uid"] = uid.toString()
         val cacheKey =
             getCacheKeyGet(Constant.Music.Api.PLAYLIST, parameters)
 
-
         HttpManager.request().get(Api::class.java, HttpManager.Tag.NET_EASE)
             .getPlaylist(uid)
             .compose(ThreadHelp.toMain())
-            .subscribe(object : XObserver<EasePlaylist, RespEntity<List<EasePlaylist>>>(cacheKey) {
+            .subscribe(object : XObserverAdapter<EasePlaylist, EaseEntity>(cacheKey) {
                 override fun onEmptyStatusResponse() {
+                    super.onEmptyStatusResponse()
                     response.onEmptyStatusResponse()
                 }
 
                 override fun onRequesting(d: Disposable?, cache: MutableList<EasePlaylist>) {
+                    super.onRequesting(d, cache)
                     response.onRequesting(d, cache)
                 }
 
-                override fun onSuccess(key: String, entity: RespEntity<List<EasePlaylist>>) {
+                override fun onSuccess(key: String, entity: EaseEntity) {
+                    super.onSuccess(key, entity)
                     response.onSuccess(key, entity)
                 }
 
                 override fun onFailed(e: Throwable) {
+                    super.onFailed(e)
                     response.onFailed(e.message)
                 }
-
             })
     }
 

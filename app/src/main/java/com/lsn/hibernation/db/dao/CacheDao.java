@@ -26,8 +26,9 @@ public class CacheDao extends AbstractDao<Cache, String> {
     public static class Properties {
         public final static Property Key = new Property(0, String.class, "key", true, "KEY");
         public final static Property JsonEntity = new Property(1, String.class, "jsonEntity", false, "JSON_ENTITY");
-        public final static Property LastTime = new Property(2, Long.class, "lastTime", false, "LAST_TIME");
-        public final static Property StorageTime = new Property(3, Long.class, "storageTime", false, "STORAGE_TIME");
+        public final static Property IsList = new Property(2, Boolean.class, "isList", false, "IS_LIST");
+        public final static Property LastTime = new Property(3, Long.class, "lastTime", false, "LAST_TIME");
+        public final static Property StorageTime = new Property(4, Long.class, "storageTime", false, "STORAGE_TIME");
     }
 
 
@@ -45,8 +46,9 @@ public class CacheDao extends AbstractDao<Cache, String> {
         db.execSQL("CREATE TABLE " + constraint + "\"CACHE\" (" + //
                 "\"KEY\" TEXT PRIMARY KEY NOT NULL ," + // 0: key
                 "\"JSON_ENTITY\" TEXT," + // 1: jsonEntity
-                "\"LAST_TIME\" INTEGER," + // 2: lastTime
-                "\"STORAGE_TIME\" INTEGER);"); // 3: storageTime
+                "\"IS_LIST\" INTEGER," + // 2: isList
+                "\"LAST_TIME\" INTEGER," + // 3: lastTime
+                "\"STORAGE_TIME\" INTEGER);"); // 4: storageTime
     }
 
     /** Drops the underlying database table. */
@@ -69,14 +71,19 @@ public class CacheDao extends AbstractDao<Cache, String> {
             stmt.bindString(2, jsonEntity);
         }
  
+        Boolean isList = entity.getIsList();
+        if (isList != null) {
+            stmt.bindLong(3, isList ? 1L: 0L);
+        }
+ 
         Long lastTime = entity.getLastTime();
         if (lastTime != null) {
-            stmt.bindLong(3, lastTime);
+            stmt.bindLong(4, lastTime);
         }
  
         Long storageTime = entity.getStorageTime();
         if (storageTime != null) {
-            stmt.bindLong(4, storageTime);
+            stmt.bindLong(5, storageTime);
         }
     }
 
@@ -94,14 +101,19 @@ public class CacheDao extends AbstractDao<Cache, String> {
             stmt.bindString(2, jsonEntity);
         }
  
+        Boolean isList = entity.getIsList();
+        if (isList != null) {
+            stmt.bindLong(3, isList ? 1L: 0L);
+        }
+ 
         Long lastTime = entity.getLastTime();
         if (lastTime != null) {
-            stmt.bindLong(3, lastTime);
+            stmt.bindLong(4, lastTime);
         }
  
         Long storageTime = entity.getStorageTime();
         if (storageTime != null) {
-            stmt.bindLong(4, storageTime);
+            stmt.bindLong(5, storageTime);
         }
     }
 
@@ -115,8 +127,9 @@ public class CacheDao extends AbstractDao<Cache, String> {
         Cache entity = new Cache( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // key
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // jsonEntity
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // lastTime
-            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3) // storageTime
+            cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0, // isList
+            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // lastTime
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4) // storageTime
         );
         return entity;
     }
@@ -125,8 +138,9 @@ public class CacheDao extends AbstractDao<Cache, String> {
     public void readEntity(Cursor cursor, Cache entity, int offset) {
         entity.setKey(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setJsonEntity(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setLastTime(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setStorageTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setIsList(cursor.isNull(offset + 2) ? null : cursor.getShort(offset + 2) != 0);
+        entity.setLastTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setStorageTime(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
      }
     
     @Override

@@ -4,11 +4,18 @@ import android.app.ProgressDialog;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.lsn.hibernation.annotation.YaoAnnotation;
 import com.lsn.hibernation.manager.ActivityManager;
 import com.lsn.hibernation.receiver.NetConnectReceiver;
+import com.lsn.hibernation.utils.comm.MVPConfig;
+import com.lsn.hibernation.utils.comm.UtilsStyle;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -17,19 +24,61 @@ import com.lsn.hibernation.receiver.NetConnectReceiver;
  * Date: 2018/12/3
  * Description
  */
-abstract public class BaseActivity extends AppCompatActivity {
+abstract public class BaseActivity extends AppCompatActivity implements IBaseView {
 
     private ProgressDialog dialog;
     private NetConnectReceiver receiver;
+    private View statusBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityManager.get().addActivity(this);
         initWindow();
         super.onCreate(savedInstanceState);
+        UtilsStyle.statusBarLightMode(this);
         registerNetReceiver();
         YaoAnnotation.INSTANCE.init(this);
         init();
+    }
+
+    private void initStatusBar() {
+        if (statusBarView == null) {
+            int identifier = getResources().getIdentifier("statusBarBackground", "id", "android");
+            statusBarView = getWindow().findViewById(identifier);
+        }
+        if (statusBarView != null) {
+            statusBarView.setBackgroundDrawable(null);//在设置前将背景设置为null;
+            statusBarView.setBackgroundResource(MVPConfig.statusDrawable);
+        }
+    }
+
+    @NotNull
+    @Override
+    public String msg(int msg) {
+        return "";
+    }
+
+    @Override
+    public void onEmptyStatusResponse() {
+
+    }
+
+    @Override
+    public void onEmptyStatusResponse(@NotNull String tag, @NotNull String msg) {
+
+    }
+
+    @Override
+    public void onSuccess(@NotNull String tag, @NotNull Object entity) {
+    }
+
+    @Override
+    public void onSuccess(String tag, boolean isCache, Object entity) {
+    }
+
+    @Override
+    public void onFailed() {
+
     }
 
     protected void initWindow() {
@@ -53,7 +102,6 @@ abstract public class BaseActivity extends AppCompatActivity {
 
 
     protected abstract void init();
-
 
 
     protected void showDialog(String msg) {

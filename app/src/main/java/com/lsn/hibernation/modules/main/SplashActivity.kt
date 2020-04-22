@@ -6,7 +6,6 @@ import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BaseActivity
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.modules.user.bean.LoginInfoBean
-import com.lsn.hibernation.modules.user.contact.UserContact
 import com.lsn.hibernation.modules.user.presenter.UserPresenterImpl
 import org.jetbrains.anko.startActivity
 
@@ -17,27 +16,7 @@ import org.jetbrains.anko.startActivity
  * Description
  */
 @LayoutResId(R.layout.activity_splash)
-class SplashActivity : BaseActivity(), UserContact.UserView {
-    override fun onEmptyStatusResponse(tag: String?, msg: String?) {
-
-    }
-
-    override fun onEmptyStatusResponse() {
-    }
-
-
-    override fun onSuccess(tag: String?, entity: Any?) {
-    }
-
-    override fun onSuccess(tag: String?, isCache: Boolean, entity: Any?) {
-    }
-
-    override fun onFailed() {
-    }
-
-    override fun msg(msg: Int): String {
-        return ""
-    }
+class SplashActivity : BaseActivity() {
 
     override fun init() {
 
@@ -46,8 +25,11 @@ class SplashActivity : BaseActivity(), UserContact.UserView {
 
     }
 
-    override fun loginNetEaseSuccess(loginInfoBean: LoginInfoBean) {
+    override fun onSuccess(tag: String?, isCache: Boolean, entity: Any?) {
+        super.onSuccess(tag, isCache, entity)
+        val loginInfoBean = entity as LoginInfoBean
         HibernationApplication.get.setLoginInfoBean(loginInfoBean)
+
         startActivity<MainActivity>()
     }
 

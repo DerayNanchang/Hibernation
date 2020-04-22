@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.lsn.hibernation.app.HibernationApplication;
 import com.lsn.hibernation.manager.CacheManager;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
     @Override
     public void onSubscribe(Disposable d) {
 
-        String cacheJson = CacheManager.Companion.getGet().getCache(key);
+        String cacheJson = CacheManager.Companion.getGet().getCacheStr(key);
         // 判断是否有网络
         if (HibernationApplication.get.isNetConnect()) {
             // 有网络 是否有缓存
@@ -40,7 +41,7 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
         } else {
             // 无网络 是否有缓存
             if (!TextUtils.isEmpty(cacheJson)) {
-                // 有缓存,加载缓存，然后去做请求
+                // 有缓存,加载缓存
                 cacheParse(d, cacheJson);
                 // 不用去做请求了
                 d.dispose();
@@ -55,11 +56,18 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
     }
 
     private void cacheParse(Disposable d, @NonNull String cacheJson) {
-        Class<CACHE> cacheClazz = (Class<CACHE>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-        List<CACHE> cache = JSON.parseArray(cacheJson, cacheClazz);
-        // 返回数据
-        onRequesting(d, cache);
+        boolean isList = CacheManager.Companion.getGet().isList(key);
+        if (isList) {
+            // 是 list
+            Class<CACHE> cacheClazz = (Class<CACHE>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            List<CACHE> cache = JSON.parseArray(cacheJson, cacheClazz);
+            // 返回数据
+            onRequesting(d, cache);
+        } else {
+            Class<CACHE> cacheClazz = (Class<CACHE>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            CACHE cache = JSON.parseObject(cacheJson, cacheClazz);
+            onRequesting(d, cache);
+        }
     }
 
     @Override
@@ -82,10 +90,13 @@ public abstract class XObserver<CACHE, ENTITY> implements Observer<ENTITY> {
     protected abstract void onEmptyStatusResponse();
 
     // 加载中
-    protected abstract void onRequesting(Disposable d,  @NonNull List<CACHE> cache);
+    protected abstract void onRequesting(Disposable d, @NonNull List<CACHE> cache);
+
+    // 加载中
+    protected abstract void onRequesting(Disposable d, @NonNull CACHE cache);
 
     // 加载成功
-    protected abstract void onSuccess( @NonNull String key, @NonNull ENTITY entity);
+    protected abstract void onSuccess(@NonNull String key, @NonNull ENTITY entity);
 
     // 加载失败
     protected abstract void onFailed(@NonNull Throwable e);

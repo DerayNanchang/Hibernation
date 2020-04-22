@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".modules.main.MainActivity">
 
-
-
-    <include android:id="@+id/viewNavigation" layout="@layout/view_main_navigation"/>
-
+    <include
+        android:id="@+id/viewNavigation"
+        layout="@layout/view_main_navigation" />
 
     <com.lsn.hibernation.ui.widget.CustomViewPage
         android:id="@+id/cVPContent"

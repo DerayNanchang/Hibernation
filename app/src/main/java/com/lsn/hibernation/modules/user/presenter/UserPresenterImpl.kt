@@ -3,6 +3,7 @@ package com.lsn.hibernation.modules.user.presenter
 import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
+import com.lsn.hibernation.base.IBaseView
 import com.lsn.hibernation.base.NCacheModelResponseAdapter
 import com.lsn.hibernation.modules.user.bean.LoginInfoBean
 import com.lsn.hibernation.modules.user.contact.UserContact
@@ -16,7 +17,7 @@ import com.lsn.hibernation.utils.comm.Toast
  * Date: 2020/4/14 10:06
  * Description
  */
-class UserPresenterImpl(view: UserContact.UserView) : BasePresenter<UserContact.UserView>(view),
+class UserPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
     UserContact.UserPresenter {
 
     private val mode = UserModelImpl()
@@ -31,7 +32,7 @@ class UserPresenterImpl(view: UserContact.UserView) : BasePresenter<UserContact.
                     ELog.i(JSON.toJSONString(result))
                     if (result?.code == Constant.Music.NET_EASE_SUCCESS_CODE) {
                         ELog.i(JSON.toJSONString(result.code))
-                        view?.loginNetEaseSuccess(result)
+                        view?.onSuccess(Constant.Music.Api.CALL_PHONE,result)
                     } else {
                         Toast.show("登录异常" + JSON.toJSONString(result))
                     }

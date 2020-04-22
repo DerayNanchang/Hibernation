@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/themeColor</item>
         <!--// menu 三个白点-->
         <item name="android:textColorSecondary">#ffffff</item>
     </style>
@@ -79,6 +79,12 @@
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
         <item name="android:colorControlHighlight">#F1F1F1</item>
         <item name="android:radius">25dp</item>
+    </style>
+
+    <style name="RippleF17">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:colorControlHighlight">#F1F1F1</item>
+        <item name="android:radius">7dp</item>
     </style>
 
 </resources>

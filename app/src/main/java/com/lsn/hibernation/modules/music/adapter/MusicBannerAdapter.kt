@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.lsn.hibernation.R
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.ui.widget.CustomSmartDotView
 import com.lsn.hibernation.utils.glide.GlideUtils
 import com.youth.banner.adapter.BannerAdapter
 import org.jetbrains.anko.find
@@ -23,11 +22,9 @@ class MusicBannerAdapter(var context: Context, var banners: List<Banner.BannersB
     BannerAdapter<Banner.BannersBean, MusicBannerAdapter.BannerViewHolder>(banners) {
     class BannerViewHolder : RecyclerView.ViewHolder {
         var ivBannerImg: ImageView;
-        var csDotView: CustomSmartDotView;
 
         constructor(itemView: View) : super(itemView) {
             ivBannerImg = itemView.find(R.id.ivBannerImg)
-            csDotView = itemView.find(R.id.csDotView)
 
         }
     }
@@ -49,7 +46,6 @@ class MusicBannerAdapter(var context: Context, var banners: List<Banner.BannersB
         size: Int
     ) {
         GlideUtils.defaultBanner(holder?.ivBannerImg, data?.picUrl)
-        holder?.csDotView?.setDrawDotNumber(banners.size)
     }
 
 }

@@ -32,7 +32,7 @@ class ItemPlaylistView : BaseItemView<EasePlaylist> {
     override fun bindData(data: EasePlaylist, position: Int) {
         GlideUtils.defaultBanner(ivPlaylistEd, data.coverImgUrl)
         tvName.text = data.name
-        tvSize.text = data.trackCount.toString()
+        tvSize.text = data.trackCount.toString() + "首"
     }
 
 }

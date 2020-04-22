@@ -30,12 +30,21 @@ class CacheManager private constructor() {
     }
 
     fun <ENTITY> setCache(key: String, entity: ENTITY): Boolean {
-        val cache = Cache(key, JSON.toJSONString(entity), System.currentTimeMillis(), FOR_EVER)
-        val cacheJSON = getCache(key)
+        println("储存的数据的类型 : " + (entity is List<*>))
+
+
+        val cache = Cache(
+            key,
+            JSON.toJSONString(entity),
+            (entity is List<*>),
+            System.currentTimeMillis(),
+            FOR_EVER
+        )
+        val cacheJSON = getCacheStr(key)
         // 返回是否插入了，前台凭这个判断是否需要更新数据
         return if (!TextUtils.isEmpty(cacheJSON)) {
             if (cacheJSON == cache.jsonEntity) {
-                 //如果两次的数据一致，说明没有数据更新，就不插入了，也不刷新页面了
+                //如果两次的数据一致，说明没有数据更新，就不插入了，也不刷新页面了
                 false
             } else {
                 // 数据不一致,就更新插入数据
@@ -49,8 +58,16 @@ class CacheManager private constructor() {
         }
     }
 
-    fun getCache(key: String): String {
-        val cache = DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key)).unique()
+    private fun getCache(key: String): Cache? {
+
+
+        return DBManager.get.getCacheDao().queryBuilder().where(CacheDao.Properties.Key.eq(key))
+            .build().unique()
+
+    }
+
+    fun getCacheStr(key: String): String {
+        val cache = getCache(key)
         return if (cache != null) {
             // 有缓存
             cache.jsonEntity
@@ -59,5 +76,14 @@ class CacheManager private constructor() {
             ""
         }
         return ""
+    }
+
+    fun isList(key: String): Boolean {
+        val cache = getCache(key)
+        if (cache != null) {
+            return cache.isList
+        } else {
+            return false
+        }
     }
 }

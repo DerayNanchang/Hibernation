@@ -10,10 +10,11 @@ import java.util.List;
  */
 public class EasePlaylist {
 
+
     /**
      * subscribers : []
      * subscribed : false
-     * creator : {"defaultAvatar":false,"province":360000,"authStatus":0,"followed":false,"avatarUrl":"http://p1.music.126.net/bmJqOw7m92ZINsQlGCPrAg==/109951164919639189.jpg","accountStatus":0,"gender":1,"city":360100,"birthday":801320309004,"userId":366231393,"userType":0,"nickname":"lsener","signature":"听歌最怕旋律暗入人心的那一刻，那发自内心的刺痛，已然分不清是歌还是人。","description":"","detailDescription":"","avatarImgId":109951164919639180,"backgroundImgId":109951164919636210,"backgroundUrl":"http://p1.music.126.net/OxqM54MCZ7PfDYGlBfoSrA==/109951164919636203.jpg","authority":0,"mutual":false,"expertTags":null,"experts":null,"djStatus":0,"vipType":0,"remarkName":null,"backgroundImgIdStr":"109951164919636203","avatarImgIdStr":"109951164919639189","avatarImgId_str":"109951164919639189"}
+     * creator : {"defaultAvatar":false,"province":360000,"authStatus":0,"followed":false,"avatarUrl":"http://p1.music.126.net/bmJqOw7m92ZINsQlGCPrAg==/109951164919639189.jpg","accountStatus":0,"gender":1,"city":360100,"birthday":801320309004,"userId":366231393,"userType":0,"nickname":"lsener","signature":"听歌最怕旋律暗入人心的那一刻，那发自内心的刺痛，已然分不清是歌还是人。","description":"","detailDescription":"","avatarImgId":109951164919639180,"backgroundImgId":109951164919636210,"backgroundUrl":"http://p1.music.126.net/OxqM54MCZ7PfDYGlBfoSrA==/109951164919636203.jpg","authority":0,"mutual":false,"expertTags":null,"experts":null,"djStatus":0,"vipType":0,"remarkName":null,"avatarImgIdStr":"109951164919639189","backgroundImgIdStr":"109951164919636203","avatarImgId_str":"109951164919639189"}
      * artists : null
      * tracks : null
      * updateFrequency : null
@@ -25,31 +26,31 @@ public class EasePlaylist {
      * opRecommend : false
      * recommendInfo : null
      * adType : 0
-     * trackNumberUpdateTime : 1582880462357
-     * subscribedCount : 0
+     * trackNumberUpdateTime : 1585130532017
+     * subscribedCount : 1
      * cloudTrackCount : 0
      * userId : 366231393
-     * updateTime : 1582880462357
-     * coverImgId : 109951164232791600
-     * createTime : 1479800726584
+     * createTime : 1503407158154
      * highQuality : false
+     * updateTime : 1585130532017
+     * coverImgId : 109951164709424500
+     * privacy : 0
+     * trackUpdateTime : 1587432317999
+     * trackCount : 252
+     * commentThreadId : A_PL_0_890153477
      * newImported : false
      * anonimous : false
      * totalDuration : 0
-     * specialType : 5
-     * coverImgUrl : http://p1.music.126.net/DY63DJtbtRQZLmtoucmLig==/109951164232791600.jpg
-     * trackCount : 30
-     * commentThreadId : A_PL_0_516736946
-     * privacy : 0
-     * trackUpdateTime : 1587451818783
-     * playCount : 159
-     * ordered : true
+     * specialType : 0
+     * coverImgUrl : http://p2.music.126.net/a28xqqCtz_5IZPpJiyEfGg==/109951164709424503.jpg
+     * playCount : 2585
+     * ordered : false
      * tags : []
-     * description : null
+     * description : 流行也会变成怀念。
      * status : 0
-     * name : lsener喜欢的音乐
-     * id : 516736946
-     * coverImgId_str : 109951164232791600
+     * name : 一些记忆
+     * id : 890153477
+     * coverImgId_str : 109951164709424503
      */
 
     private boolean subscribed;
@@ -69,25 +70,25 @@ public class EasePlaylist {
     private int subscribedCount;
     private int cloudTrackCount;
     private int userId;
-    private long updateTime;
-    private long coverImgId;
     private long createTime;
     private boolean highQuality;
+    private long updateTime;
+    private long coverImgId;
+    private int privacy;
+    private long trackUpdateTime;
+    private int trackCount;
+    private String commentThreadId;
     private boolean newImported;
     private boolean anonimous;
     private int totalDuration;
     private int specialType;
     private String coverImgUrl;
-    private int trackCount;
-    private String commentThreadId;
-    private int privacy;
-    private long trackUpdateTime;
     private int playCount;
     private boolean ordered;
-    private Object description;
+    private String description;
     private int status;
     private String name;
-    private int id;
+    private String id;
     private String coverImgId_str;
     private List<?> subscribers;
     private List<?> tags;
@@ -228,6 +229,22 @@ public class EasePlaylist {
         this.userId = userId;
     }
 
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public boolean isHighQuality() {
+        return highQuality;
+    }
+
+    public void setHighQuality(boolean highQuality) {
+        this.highQuality = highQuality;
+    }
+
     public long getUpdateTime() {
         return updateTime;
     }
@@ -244,20 +261,36 @@ public class EasePlaylist {
         this.coverImgId = coverImgId;
     }
 
-    public long getCreateTime() {
-        return createTime;
+    public int getPrivacy() {
+        return privacy;
     }
 
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
+    public void setPrivacy(int privacy) {
+        this.privacy = privacy;
     }
 
-    public boolean isHighQuality() {
-        return highQuality;
+    public long getTrackUpdateTime() {
+        return trackUpdateTime;
     }
 
-    public void setHighQuality(boolean highQuality) {
-        this.highQuality = highQuality;
+    public void setTrackUpdateTime(long trackUpdateTime) {
+        this.trackUpdateTime = trackUpdateTime;
+    }
+
+    public int getTrackCount() {
+        return trackCount;
+    }
+
+    public void setTrackCount(int trackCount) {
+        this.trackCount = trackCount;
+    }
+
+    public String getCommentThreadId() {
+        return commentThreadId;
+    }
+
+    public void setCommentThreadId(String commentThreadId) {
+        this.commentThreadId = commentThreadId;
     }
 
     public boolean isNewImported() {
@@ -300,38 +333,6 @@ public class EasePlaylist {
         this.coverImgUrl = coverImgUrl;
     }
 
-    public int getTrackCount() {
-        return trackCount;
-    }
-
-    public void setTrackCount(int trackCount) {
-        this.trackCount = trackCount;
-    }
-
-    public String getCommentThreadId() {
-        return commentThreadId;
-    }
-
-    public void setCommentThreadId(String commentThreadId) {
-        this.commentThreadId = commentThreadId;
-    }
-
-    public int getPrivacy() {
-        return privacy;
-    }
-
-    public void setPrivacy(int privacy) {
-        this.privacy = privacy;
-    }
-
-    public long getTrackUpdateTime() {
-        return trackUpdateTime;
-    }
-
-    public void setTrackUpdateTime(long trackUpdateTime) {
-        this.trackUpdateTime = trackUpdateTime;
-    }
-
     public int getPlayCount() {
         return playCount;
     }
@@ -348,11 +349,11 @@ public class EasePlaylist {
         this.ordered = ordered;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -372,11 +373,11 @@ public class EasePlaylist {
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -431,8 +432,8 @@ public class EasePlaylist {
          * djStatus : 0
          * vipType : 0
          * remarkName : null
-         * backgroundImgIdStr : 109951164919636203
          * avatarImgIdStr : 109951164919639189
+         * backgroundImgIdStr : 109951164919636203
          * avatarImgId_str : 109951164919639189
          */
 
@@ -461,8 +462,8 @@ public class EasePlaylist {
         private int djStatus;
         private int vipType;
         private Object remarkName;
-        private String backgroundImgIdStr;
         private String avatarImgIdStr;
+        private String backgroundImgIdStr;
         private String avatarImgId_str;
 
         public boolean isDefaultAvatar() {
@@ -665,20 +666,20 @@ public class EasePlaylist {
             this.remarkName = remarkName;
         }
 
-        public String getBackgroundImgIdStr() {
-            return backgroundImgIdStr;
-        }
-
-        public void setBackgroundImgIdStr(String backgroundImgIdStr) {
-            this.backgroundImgIdStr = backgroundImgIdStr;
-        }
-
         public String getAvatarImgIdStr() {
             return avatarImgIdStr;
         }
 
         public void setAvatarImgIdStr(String avatarImgIdStr) {
             this.avatarImgIdStr = avatarImgIdStr;
+        }
+
+        public String getBackgroundImgIdStr() {
+            return backgroundImgIdStr;
+        }
+
+        public void setBackgroundImgIdStr(String backgroundImgIdStr) {
+            this.backgroundImgIdStr = backgroundImgIdStr;
         }
 
         public String getAvatarImgId_str() {

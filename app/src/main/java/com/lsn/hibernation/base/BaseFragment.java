@@ -51,12 +51,10 @@ abstract public class BaseFragment extends Fragment implements IBaseView {
 
     @Override
     public void onSuccess(@NotNull String tag,@NotNull Object entity) {
-        System.out.println("1111111111");
     }
 
     @Override
     public void onSuccess(String tag, boolean isCache, Object entity) {
-        System.out.println("1111111111");
     }
 
     @Override

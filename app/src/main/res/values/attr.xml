@@ -3,4 +3,19 @@
     <declare-styleable name="CustomViewPage">
         <attr name="isCanScroll" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="CircleProgressBarView">
+        <attr name="progress" format="float"/>
+        <attr name="max" format="float"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="rawRingColor" format="color"/>
+        <attr name="processedRingColor" format="color"/>
+        <attr name="playSignColor" format="color"/>
+        <attr name="pauseSignColor" format="color"/>
+        <attr name="ringWidth" format="dimension"/>
+        <attr name="playSignHeight" format="dimension"/>
+        <attr name="playSignSpacing" format="dimension"/>
+        <attr name="pauseSignLength" format="dimension"/>
+        <attr name="pauseSignWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

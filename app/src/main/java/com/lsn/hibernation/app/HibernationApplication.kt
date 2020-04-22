@@ -33,8 +33,9 @@ class HibernationApplication : Application() {
     }
 
 
-    fun getUId() : Int{
-        return loginInfo.account.id
+    fun getUId(): Int {
+        //return loginInfo.account.id
+        return 366231393
     }
 
     fun setPageSelectedPosition(position: Int) {
@@ -46,11 +47,17 @@ class HibernationApplication : Application() {
     }
 
     fun setLoginInfoBean(loginInfo: LoginInfoBean) {
-        this.loginInfo = loginInfo;
+        //this.loginInfo = loginInfo;
+
     }
 
-    fun getLoginInfoBean(): LoginInfoBean {
-        return loginInfo
+    fun getLoginInfoBean(): LoginInfoBean? {
+        //return loginInfo
+        return null
+    }
+
+    fun getNikeName(): String {
+        return "lsener"
     }
 
 }

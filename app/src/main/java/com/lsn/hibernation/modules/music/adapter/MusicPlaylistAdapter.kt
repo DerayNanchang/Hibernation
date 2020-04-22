@@ -1,9 +1,10 @@
 package com.lsn.hibernation.modules.music.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.lsn.hibernation.R
@@ -16,32 +17,44 @@ import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
  * Description
  */
 class MusicPlaylistAdapter : PagerAdapter {
-    lateinit var easePlaylist: List<EasePlaylist>
+    var self: List<EasePlaylist>? = null
+    var collect: List<EasePlaylist>? = null
+
 
     constructor() : super()
 
-    constructor(easePlaylist: List<EasePlaylist>) : super() {
-        this.easePlaylist = easePlaylist
+
+    fun setData(self: List<EasePlaylist>, collect: List<EasePlaylist>, context: Context) {
+        this.self = self
+        this.collect = collect
     }
-
-    fun setView(easePlaylist: List<EasePlaylist>) {
-        this.easePlaylist = easePlaylist
-    }
-
-
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        //val view = easePlaylist[position]
-        val mAdapter = PlaylistAdapter()
         val view =
-            LayoutInflater.from(container.context).inflate(R.layout.item_music_playlist, null, false)
+            LayoutInflater.from(container.context)
+                .inflate(R.layout.item_music_playlist, null, false)
+        val mAdapter = PlaylistAdapter()
         val rvMusicPlaylist = view.findViewById<RecyclerView>(R.id.rvMusicPlaylist)
         rvMusicPlaylist.apply {
             this.adapter = mAdapter
-            layoutManager = LinearLayoutManager(container.context)
+            this.layoutManager = GridLayoutManager(context, 2)
+            when (position) {
+                0 -> {
+                    if (self != null) {
+                        mAdapter.updateData(self)
+                    }
+                    container.addView(view)
+                    return view
+                }
+                1 -> {
+                    if (collect != null) {
+                        mAdapter.updateData(collect)
+                    }
+                    container.addView(view)
+                    return view
+                }
+            }
+            return view
         }
-        mAdapter.updateData(easePlaylist)
-        container.addView(view)
-        return view
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -53,9 +66,13 @@ class MusicPlaylistAdapter : PagerAdapter {
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        super.destroyItem(container, position, `object`)
-        //container.removeView(views[position]);
+        //super.destroyItem(container, position, `object`)
+        container.removeView(`object` as View);
 
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
     }
 
 }
