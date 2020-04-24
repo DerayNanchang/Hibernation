@@ -6,7 +6,7 @@ import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BaseFragment
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.modules.music.adapter.MusicBannerAdapter
-import com.lsn.hibernation.modules.music.adapter.MusicPlaylistAdapter
+import com.lsn.hibernation.modules.music.adapter.MusicPlaylistPageAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
@@ -26,7 +26,7 @@ import org.jetbrains.anko.textColor
 @LayoutResId(R.layout.fragment_music)
 class MusicFragment : BaseFragment() {
     val presenter = MusicPresenterImpl(this)
-    lateinit var mAdapter: MusicPlaylistAdapter
+    lateinit var mAdapter: MusicPlaylistPageAdapter
 
 
     override fun init() {
@@ -39,41 +39,41 @@ class MusicFragment : BaseFragment() {
         initEvent()
     }
 
-    private fun switchTab(tag:Int){
-        when(tag){
-            0 ->{
+    private fun switchTab(tag: Int) {
+        when (tag) {
+            0 -> {
                 cvpMusicContent.currentItem = 0
                 tvSelf.textColor = resources.getColor(R.color.lever1Text)
                 tvSelfCount.textColor = resources.getColor(R.color.lever1Text)
                 context?.let {
-                    tvSelf.textSize = DensityUtil.sp2pxF(it,5f)
-                    tvSelfCount.textSize = DensityUtil.sp2pxF(it,3f)
+                    tvSelf.textSize = DensityUtil.sp2pxF(it, 5f)
+                    tvSelfCount.textSize = DensityUtil.sp2pxF(it, 3f)
                 }
 
                 tvCollect.textColor = resources.getColor(R.color.lever2Text)
                 tvCollectCount.textColor = resources.getColor(R.color.lever2Text)
                 context?.let {
-                    tvCollect.textSize = DensityUtil.sp2pxF(it,4f)
-                    tvCollectCount.textSize = DensityUtil.sp2pxF(it,3f)
+                    tvCollect.textSize = DensityUtil.sp2pxF(it, 4f)
+                    tvCollectCount.textSize = DensityUtil.sp2pxF(it, 3f)
                 }
             }
 
-            1 ->{
+            1 -> {
                 cvpMusicContent.currentItem = 1
 
                 tvSelf.textColor = resources.getColor(R.color.lever2Text)
                 tvSelfCount.textColor = resources.getColor(R.color.lever2Text)
                 context?.let {
-                    tvSelf.textSize = DensityUtil.sp2pxF(it,4f)
-                    tvSelfCount.textSize = DensityUtil.sp2pxF(it,3f)
+                    tvSelf.textSize = DensityUtil.sp2pxF(it, 4f)
+                    tvSelfCount.textSize = DensityUtil.sp2pxF(it, 3f)
                 }
 
 
                 tvCollect.textColor = resources.getColor(R.color.lever1Text)
                 tvCollectCount.textColor = resources.getColor(R.color.lever1Text)
                 context?.let {
-                    tvCollect.textSize = DensityUtil.sp2pxF(it,5f)
-                    tvCollectCount.textSize = DensityUtil.sp2pxF(it,3f)
+                    tvCollect.textSize = DensityUtil.sp2pxF(it, 5f)
+                    tvCollectCount.textSize = DensityUtil.sp2pxF(it, 3f)
                 }
             }
         }
@@ -108,7 +108,7 @@ class MusicFragment : BaseFragment() {
     private fun initViewPage() {
 
 
-        mAdapter = MusicPlaylistAdapter()
+        mAdapter = MusicPlaylistPageAdapter()
         cvpMusicContent.apply {
             adapter = mAdapter
             currentItem = 0

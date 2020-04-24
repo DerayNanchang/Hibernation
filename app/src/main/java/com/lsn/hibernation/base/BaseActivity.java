@@ -9,6 +9,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lsn.hibernation.R;
 import com.lsn.hibernation.annotation.YaoAnnotation;
 import com.lsn.hibernation.manager.ActivityManager;
 import com.lsn.hibernation.receiver.NetConnectReceiver;
@@ -62,6 +63,18 @@ abstract public class BaseActivity extends AppCompatActivity implements IBaseVie
     public void onEmptyStatusResponse() {
 
     }
+
+    protected void initBody(InconstantView inconstantView) {
+        // 添加空状态与无网络
+        if (inconstantView != null) {
+            inconstantView.addContent(R.layout.view_default_content);
+            inconstantView.addEmptyState(R.layout.view_default_empty_state);
+            inconstantView.addNoConnect(R.layout.view_default_no_connect);
+            inconstantView.addLoading(R.layout.view_custom_wrap_progress);
+            inconstantView.setBodyTransform(InconstantView.Type.LOADING);
+        }
+    }
+
 
     @Override
     public void onEmptyStatusResponse(@NotNull String tag, @NotNull String msg) {

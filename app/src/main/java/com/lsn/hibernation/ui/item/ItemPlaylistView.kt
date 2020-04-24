@@ -6,20 +6,19 @@ import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseItemView
 import com.lsn.hibernation.modules.music.adapter.PlaylistAdapter
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
-import com.lsn.hibernation.utils.glide.GlideUtils
-import kotlinx.android.synthetic.main.item_music_playlist_view.view.*
+import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
+import kotlinx.android.synthetic.main.item_playlist_view.view.*
 
 /**
  * Author: lsn
  * Blog: https://www.jianshu.com/u/a3534a2292e8
- * Date: 2020/4/21 17:44
+ * Date: 2020/4/23 13:45
  * Description
  */
-@LayoutResId(R.layout.item_music_playlist_view)
-class ItemPlaylistView : BaseItemView<EasePlaylist> {
-    lateinit var adapter: PlaylistAdapter
+@LayoutResId(R.layout.item_playlist_view)
+class ItemPlaylistView : BaseItemView<RawPlaylistInfo.PlaylistBean.TracksBean> {
 
+    lateinit var adapter: PlaylistAdapter
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -29,10 +28,16 @@ class ItemPlaylistView : BaseItemView<EasePlaylist> {
         defStyleAttr
     )
 
-    override fun bindData(data: EasePlaylist, position: Int) {
-        GlideUtils.defaultBanner(ivPlaylistEd, data.coverImgUrl)
-        tvName.text = data.name
-        tvSize.text = data.trackCount.toString() + "首"
+    override fun bindData(data: RawPlaylistInfo.PlaylistBean.TracksBean, position: Int) {
+        tvSongName.text = data.name
+        //tvSinger.text = data.ar.
+        tvPosition.text = (position + 1).toString()
+        if (data.ar != null && data.ar.size > 0) {
+            //tvSinger.text = data.
+            data.ar.forEach {
+                tvSinger.text = it.name + tvSinger.text + "/"
+            }
+        }
     }
 
 }

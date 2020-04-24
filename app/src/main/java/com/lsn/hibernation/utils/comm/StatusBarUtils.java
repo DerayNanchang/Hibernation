@@ -2,6 +2,7 @@ package com.lsn.hibernation.utils.comm;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
@@ -189,6 +190,18 @@ public class StatusBarUtils {
             } catch (Exception e) {
 
             }
+        }
+        return result;
+    }
+
+    /**
+     * 获取状态栏高度
+     */
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }

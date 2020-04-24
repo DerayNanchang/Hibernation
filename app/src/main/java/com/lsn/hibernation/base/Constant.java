@@ -11,7 +11,6 @@ public interface Constant {
 
         int EASE_CODE = 200;
 
-
         String APP_NAME_EN = "JT";
         String APP_IMG = "img";
         String APK = "apk";
@@ -30,6 +29,10 @@ public interface Constant {
     }
 
 
+    interface Key{
+        String PLAYLIST_ID = "PLAYLIST_ID";
+    }
+
 
     interface Music {
 
@@ -44,6 +47,7 @@ public interface Constant {
             String CALL_PHONE = "/login/cellphone";
             String BANNER = "/banner";
             String PLAYLIST = "/user/playlist";
+            String GET_PLAYLIST_DETAIL = "/playlist/detail";
 
         }
     }

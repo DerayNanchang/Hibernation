@@ -10,6 +10,17 @@
         <item name="android:textColorSecondary">#ffffff</item>
     </style>
 
+    <style name="NoSpaceActionBarTheme2" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+        <item name="titleTextColor">#ffffff</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="titleTextAppearance">@style/ToolBar.Title</item>
+        <item name="subtitleTextAppearance">@style/Toolbar.SubTitle</item>
+    </style>
+
     <style name="NoSpaceActionBarTheme" parent="Base.Widget.AppCompat.Toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
