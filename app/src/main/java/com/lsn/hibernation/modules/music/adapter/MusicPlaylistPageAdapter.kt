@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.R
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.modules.music.activity.PlaylistActivity
+import com.lsn.hibernation.modules.music.bean.PlaylistComm
 import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 
 /**
@@ -40,11 +42,18 @@ class MusicPlaylistPageAdapter : PagerAdapter {
                 .inflate(R.layout.item_music_playlist, null, false)
         val mAdapter = MusicPlaylistAdapter()
         val rvMusicPlaylist = view.findViewById<RecyclerView>(R.id.rvMusicPlaylist)
-        mAdapter.setMOnItemClickListener(object :MusicPlaylistAdapter.OnItemClickListener{
+        mAdapter.setMOnItemClickListener(object : MusicPlaylistAdapter.OnItemClickListener {
             override fun onClick(position: Int, entity: EasePlaylist) {
                 context?.let {
                     val intent = Intent(context, PlaylistActivity::class.java)
-                    intent.putExtra(Constant.Key.PLAYLIST_ID, entity.id)
+                    val playlistComm = PlaylistComm(
+                        entity.coverImgUrl,
+                        entity.creator.avatarUrl,
+                        entity.name,
+                        entity.creator.nickname,
+                        entity.id
+                    )
+                    intent.putExtra(Constant.Key.PLAYLIST_COMM, JSON.toJSONString(playlistComm))
                     (it as Activity).startActivity(intent)
                 }
             }

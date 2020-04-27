@@ -21,7 +21,7 @@ import java.lang.ref.WeakReference
  * Date: 2019/1/9
  * Description
  */
-class EasyNavigation private constructor() {
+public class EasyNavigation private constructor() {
 
 
     enum class NavigationMode {

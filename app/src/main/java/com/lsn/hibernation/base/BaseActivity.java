@@ -70,7 +70,8 @@ abstract public class BaseActivity extends AppCompatActivity implements IBaseVie
             inconstantView.addContent(R.layout.view_default_content);
             inconstantView.addEmptyState(R.layout.view_default_empty_state);
             inconstantView.addNoConnect(R.layout.view_default_no_connect);
-            inconstantView.addLoading(R.layout.view_custom_wrap_progress);
+            //inconstantView.addLoading(R.layout.view_custom_wrap_progress);
+            inconstantView.addLoading(R.layout.view_comm_progress);
             inconstantView.setBodyTransform(InconstantView.Type.LOADING);
         }
     }

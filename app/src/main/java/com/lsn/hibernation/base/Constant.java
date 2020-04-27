@@ -30,7 +30,11 @@ public interface Constant {
 
 
     interface Key{
-        String PLAYLIST_ID = "PLAYLIST_ID";
+        String PLAYLIST_COMM = "PLAYLIST_COMM";
+
+        /*String PLAYLIST_ID = "PLAYLIST_ID";
+        String ICON = "ICON";
+        String U_AVATAR = "U_AVATAR";*/
     }
 
 

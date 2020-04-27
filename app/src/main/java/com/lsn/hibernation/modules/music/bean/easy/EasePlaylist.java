@@ -90,8 +90,8 @@ public class EasePlaylist {
     private String name;
     private String id;
     private String coverImgId_str;
-    private List<?> subscribers;
-    private List<?> tags;
+    private List<String> subscribers;
+    private List<String> tags;
 
     public boolean isSubscribed() {
         return subscribed;
@@ -389,19 +389,19 @@ public class EasePlaylist {
         this.coverImgId_str = coverImgId_str;
     }
 
-    public List<?> getSubscribers() {
+    public List<String> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<?> subscribers) {
+    public void setSubscribers(List<String> subscribers) {
         this.subscribers = subscribers;
     }
 
-    public List<?> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<?> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 

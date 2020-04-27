@@ -48,7 +48,7 @@ object YaoAnnotation {
                 musicController.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
                 val imageView =
                     musicController.findViewById<ImageView>(R.id.ivControllerMusicIcon)
-                GlideUtils.circular(imageView,R.mipmap.ic_music_default,R.mipmap.ic_music_default)
+                GlideUtils.defaultCircular(imageView, R.mipmap.ic_music_default)
 
                 // 2.2 确认每个子View布局位置
                 val musicControllerParams = RelativeLayout.LayoutParams(

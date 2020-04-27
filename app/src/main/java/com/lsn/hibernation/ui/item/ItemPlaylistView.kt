@@ -30,12 +30,16 @@ class ItemPlaylistView : BaseItemView<RawPlaylistInfo.PlaylistBean.TracksBean> {
 
     override fun bindData(data: RawPlaylistInfo.PlaylistBean.TracksBean, position: Int) {
         tvSongName.text = data.name
-        //tvSinger.text = data.ar.
         tvPosition.text = (position + 1).toString()
         if (data.ar != null && data.ar.size > 0) {
-            //tvSinger.text = data.
             data.ar.forEach {
-                tvSinger.text = it.name + tvSinger.text + "/"
+                if (position < adapter.body.size) {
+                    tvSinger.text = it.name + tvSinger.text + "/"
+                } else {
+                    tvSinger.text = it.name + tvSinger.text
+                }
+
+
             }
         }
     }

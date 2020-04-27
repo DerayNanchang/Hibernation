@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 
 
@@ -20,7 +19,11 @@ class InconstantView : RelativeLayout {
 
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         gravity = CENTER_IN_PARENT
     }
 
@@ -44,9 +47,15 @@ class InconstantView : RelativeLayout {
     fun addContent(resID: Int) {
         val contentView = LayoutInflater.from(context).inflate(resID, null, false)
         contentView.tag = CONTENT
+        contentView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+        val params = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
+        )
+        params.addRule(CENTER_IN_PARENT)
         addView(
             contentView,
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            params
         )
     }
 
@@ -69,9 +78,15 @@ class InconstantView : RelativeLayout {
     fun addNoConnect(resId: Int) {
         val noConnectView = LayoutInflater.from(context).inflate(resId, null)
         noConnectView.tag = NO_CONNECT
+        noConnectView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+        val params = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
+        )
+        params.addRule(CENTER_IN_PARENT)
         addView(
             noConnectView,
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            params
         )
     }
 
@@ -81,9 +96,15 @@ class InconstantView : RelativeLayout {
     fun addEmptyState(resId: Int) {
         val emptyStateView = LayoutInflater.from(context).inflate(resId, null)
         emptyStateView.tag = EMPTY_STATE
+        emptyStateView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+        val params = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
+        )
+        params.addRule(CENTER_IN_PARENT)
         addView(
             emptyStateView,
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            params
         )
     }
 
@@ -91,11 +112,17 @@ class InconstantView : RelativeLayout {
      *  添加加载状态
      */
     fun addLoading(resId: Int) {
-        val loadingView = LayoutInflater.from(context).inflate(resId, null)
+        val loadingView = LayoutInflater.from(context).inflate(resId, this,false)
         loadingView.tag = LOADING
+        loadingView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+        val params = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
+        )
+        params.addRule(CENTER_IN_PARENT)
         addView(
             loadingView,
-            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            params
         )
     }
 
