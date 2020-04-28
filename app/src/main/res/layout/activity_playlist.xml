@@ -15,11 +15,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bottomLineColor"
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/rlRoot"
+                android:id="@+id/llRoot"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="250dp">

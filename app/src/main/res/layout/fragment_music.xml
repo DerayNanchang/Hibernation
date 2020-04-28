@@ -200,10 +200,10 @@
         </RelativeLayout>
 
 
-        <com.lsn.hibernation.ui.widget.CustomViewPage
-            android:id="@+id/cvpMusicContent"
+        <com.lsn.hibernation.base.InconstantView
+            android:id="@+id/ivMusicContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"/>
 
 
     </LinearLayout>

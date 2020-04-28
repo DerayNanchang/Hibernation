@@ -5,6 +5,7 @@ import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BaseFragment
 import com.lsn.hibernation.base.Constant
+import com.lsn.hibernation.base.InconstantView
 import com.lsn.hibernation.modules.music.adapter.MusicBannerAdapter
 import com.lsn.hibernation.modules.music.adapter.MusicPlaylistPageAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
@@ -14,6 +15,7 @@ import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
 import com.lsn.hibernation.utils.comm.DensityUtil
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_music.*
+import kotlinx.android.synthetic.main.view_music_content.*
 import org.jetbrains.anko.textColor
 
 
@@ -30,7 +32,6 @@ class MusicFragment : BaseFragment() {
 
 
     override fun init() {
-        showDialog()
 
         initView()
         //创建（new banner()）或者布局文件中获取banner
@@ -99,15 +100,16 @@ class MusicFragment : BaseFragment() {
     }
 
     private fun initView() {
+        initBody(ivMusicContent)
+
         initViewPage()
         tvSelf.text = "创建歌单"
         tvCollect.text = "收藏歌单"
         switchTab(0)
     }
 
+
     private fun initViewPage() {
-
-
         mAdapter = MusicPlaylistPageAdapter()
         cvpMusicContent.apply {
             adapter = mAdapter
@@ -125,7 +127,6 @@ class MusicFragment : BaseFragment() {
 
     override fun onSuccess(tag: String?, isCache: Boolean, entity: Any?) {
         super.onSuccess(tag, isCache, entity)
-        dismissDialog()
         when (tag) {
             Constant.Music.Api.BANNER -> {
                 val banners = entity as List<Banner.BannersBean>
@@ -154,6 +155,7 @@ class MusicFragment : BaseFragment() {
                     mAdapter.setData(self, collect, it)
                     mAdapter.notifyDataSetChanged()
                 }
+                ivMusicContent.setBodyTransform(InconstantView.Type.CONTENT)
             }
         }
     }

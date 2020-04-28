@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.lsn.hibernation.R;
 import com.lsn.hibernation.annotation.LayoutResId;
 
 import org.jetbrains.annotations.NotNull;
@@ -104,16 +105,16 @@ abstract public class BaseFragment extends Fragment implements IBaseView {
 
     protected abstract void init();
 
-/*    protected void initBody(InconstantView inconstantView) {
+    protected void initBody(InconstantView inconstantView) {
         // 添加空状态与无网络
         if (inconstantView != null) {
-            inconstantView.addContent(R.layout.view_default_content);
+            inconstantView.addContent(R.layout.view_music_content);
             inconstantView.addEmptyState(R.layout.view_default_empty_state);
             inconstantView.addNoConnect(R.layout.view_default_no_connect);
-            inconstantView.addLoading(R.layout.view_custom_wrap_progress);
+            inconstantView.addLoading(R.layout.view_comm_progress);
             inconstantView.setBodyTransform(InconstantView.Type.LOADING);
         }
-    }*/
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

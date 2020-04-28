@@ -24,7 +24,7 @@ class InconstantView : RelativeLayout {
         attrs,
         defStyleAttr
     ) {
-        gravity = CENTER_IN_PARENT
+        //gravity = CENTER_IN_PARENT
     }
 
     enum class Type {
@@ -112,18 +112,15 @@ class InconstantView : RelativeLayout {
      *  添加加载状态
      */
     fun addLoading(resId: Int) {
-        val loadingView = LayoutInflater.from(context).inflate(resId, this,false)
+        val loadingView = inflate(context, resId, null)
         loadingView.tag = LOADING
         loadingView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
         val params = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.MATCH_PARENT
+            1000,
+            1000
         )
         params.addRule(CENTER_IN_PARENT)
-        addView(
-            loadingView,
-            params
-        )
+        addView(loadingView, params)
     }
 
 
