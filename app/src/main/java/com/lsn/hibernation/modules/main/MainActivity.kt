@@ -4,6 +4,7 @@ import android.Manifest
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
+import com.lsn.hibernation.annotation.StatusBarTextColor
 import com.lsn.hibernation.base.Config
 import com.lsn.hibernation.modules.information.InformationFragment
 import com.lsn.hibernation.modules.main.adapter.MainAdapter
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_main_navigation.view.*
 
 
+@StatusBarTextColor(true)
 @LayoutResId(R.layout.activity_main)
 class MainActivity : BaseMusicActivity() {
 

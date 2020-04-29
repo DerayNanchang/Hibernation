@@ -8,7 +8,7 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.fastjson.JSON
-import com.lsn.hibernation.R
+import com.google.android.material.appbar.AppBarLayout
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.InconstantView
@@ -23,9 +23,13 @@ import com.lsn.hibernation.utils.comm.Toast
 import com.lsn.hibernation.utils.glide.GlideHelp
 import com.lsn.hibernation.utils.glide.GlideUtils
 import kotlinx.android.synthetic.main.activity_playlist.*
+import org.jetbrains.anko.backgroundColor
+import java.lang.Math.max
+import java.lang.Math.min
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.math.abs
+
+
 
 /**
  * Author: lsn
@@ -33,11 +37,12 @@ import kotlin.math.min
  * Date: 2020/4/23 9:46
  * Description
  */
-@LayoutResId(R.layout.activity_playlist)
+@LayoutResId(com.lsn.hibernation.R.layout.activity_playlist)
 class PlaylistActivity : BaseMusicActivity() {
     val presenter = PlaylistPresenterImpl(this)
     lateinit var manager: ScrollLinearLayoutManager
     lateinit var mAdapter: PlaylistAdapter
+    lateinit var recyclerView: RecyclerView
     var playlistComm: PlaylistComm? = null
     var scrollHeight = 0
     override fun init() {
@@ -56,11 +61,59 @@ class PlaylistActivity : BaseMusicActivity() {
 
     private fun initEvent() {
         // 滑动事件
-        sslView.setOnScrollChangedListener { _, y, _, _ ->
+        ablRoot.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                // 0 -> -像素
+                val y = abs(verticalOffset)
+                println("ablRoot 滑动事件:" + y +"scrollHeight : " + scrollHeight)
+                println("y : " + recyclerView.computeVerticalScrollOffset())
+                val ratio = min(max(y, 0), scrollHeight).toFloat() / scrollHeight
+                // 设置 alpha 滑动数据
+                // 滑动比例 0-1 而 alpha 要从 隐藏到显示 0 - 255
+                val alpha = ratio * 255
+                val argb = Color.argb(alpha.toInt(), newRed, newGreen, newBlue)
+                llToolbar.setBackgroundColor(argb)
+                // 当滑动 滑动高度的三分之一的时候 就改变 title
+                if (y > scrollHeight / 3) {
+                    tvPlaylistName.text = playlistComm?.albumName
+                } else {
+                    tvPlaylistName.text = "歌单"
+                }
+            }
+
+        })
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, xX: Int, xY: Int) {
+                super.onScrolled(recyclerView, xX, xY)
+                val y = recyclerView.computeVerticalScrollOffset()
+                println("recyclerView 滑动事件:" + y)
+                /*if (y > 0) {
+                    *//*if (ablRoot.isLiftOnScroll) {
+                        ablRoot.isLiftOnScroll = false
+                    }*//*
+                    banAppBarScroll(true)
+                } else {
+                    banAppBarScroll(false)
+                    *//*if (!ablRoot.isLiftOnScroll) {
+                        ablRoot.isLiftOnScroll = true
+                    }*//*
+                }*/
+            }
+        })
+        //sslView.onS
+
+        /*sslView.setOnScrollChangedListener { _, y, _, _ ->
             // 滑动间距  所占的高度比例
             val ratio = min(max(y, 0), scrollHeight).toFloat() / scrollHeight
             // 设置 alpha 滑动数据
             // 滑动比例 0-1 而 alpha 要从 隐藏到显示 0 - 255
+            println(
+                "ratio : " + ratio + "min : " + min(
+                    max(y, 0),
+                    scrollHeight
+                ).toFloat() + "scrollHeight:" + scrollHeight
+            )
             val alpha = ratio * 255
             val argb = Color.argb(alpha.toInt(), newRed, newGreen, newBlue)
             llToolbar.setBackgroundColor(argb)
@@ -70,7 +123,7 @@ class PlaylistActivity : BaseMusicActivity() {
             } else {
                 tvPlaylistName.text = "歌单"
             }
-        }
+        }*/
     }
 
     private fun initData() {
@@ -184,14 +237,31 @@ class PlaylistActivity : BaseMusicActivity() {
             } else {
                 llRoot.background = bg
             }
+            sslView.backgroundColor = colors[colors.size - 1]
         }
+    }
+    /**
+     * 控制appbar的滑动
+     * @param isScroll true 允许滑动 false 禁止滑动
+     */
+    private fun banAppBarScroll(isScroll: Boolean) {
+        val mAppBarChildAt = ablRoot.getChildAt(0)
+        val mAppBarParams = mAppBarChildAt.getLayoutParams() as AppBarLayout.LayoutParams
+        if (isScroll) {
+            mAppBarParams.scrollFlags =
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+            mAppBarChildAt.setLayoutParams(mAppBarParams)
+        } else {
+            mAppBarParams.scrollFlags = 0
+        }
+
     }
 
     private fun initRecyclerView() {
         manager = ScrollLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         // 禁止 recycleView 滑动 防止与 ScrollView 冲突
-        manager.setScrollEnabled(false)
-        val recyclerView = ivPlaylistContent.getContent() as RecyclerView
+        //manager.setScrollEnabled(false)
+        recyclerView = ivPlaylistContent.getContent() as RecyclerView
         recyclerView.layoutManager = manager
         recyclerView.adapter = mAdapter
     }
@@ -212,6 +282,9 @@ class PlaylistActivity : BaseMusicActivity() {
         rootViewParams.height += barHeight
         val toolbarParams = llToolbar.layoutParams
         toolbarParams.height += barHeight
+
+       /* val vPlaceholderParams = vPlaceholder.layoutParams
+        vPlaceholderParams.height += barHeight*/
 
         // 5. 设置 两者 padding 高度(创建假状态栏)
         llToolbar.setPadding(

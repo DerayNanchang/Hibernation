@@ -95,18 +95,16 @@ public class UtilsStyle {
      */
     public static void statusBarLightMode(Activity activity) {
         int result = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
-                //result = 1;
-                StatusBarLightMode(activity, 1);
-            } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
-                //result = 2;
-                StatusBarLightMode(activity, 2);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                //activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                //result = 3;
-                StatusBarLightMode(activity, 3);
-            }
+        if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
+            //result = 1;
+            StatusBarLightMode(activity, 1);
+        } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
+            //result = 2;
+            StatusBarLightMode(activity, 2);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            //result = 3;
+            StatusBarLightMode(activity, 3);
         }
     }
 

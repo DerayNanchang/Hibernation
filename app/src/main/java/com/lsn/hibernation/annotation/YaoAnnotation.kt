@@ -10,6 +10,7 @@ import com.lsn.hibernation.R
 import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.utils.comm.DensityUtil
 import com.lsn.hibernation.utils.comm.StatusBarUtils
+import com.lsn.hibernation.utils.comm.UtilsStyle
 import com.lsn.hibernation.utils.glide.GlideUtils
 
 /**
@@ -22,6 +23,7 @@ object YaoAnnotation {
 
     fun init(context: Context) {
         initView(context)
+        initStatusTextColor(context)
         //initStatusColor(context)
     }
 
@@ -75,6 +77,17 @@ object YaoAnnotation {
             val layoutResID = clazz.getAnnotation(LayoutResId::class.java)
             layoutResID?.let {
                 method.invoke(context as Activity, layoutResID.value)
+            }
+        }
+    }
+
+    private fun initStatusTextColor(context: Context){
+        val activity = context as Activity
+        val clazz = activity::class.java
+        val annotation = clazz.getAnnotation(StatusBarTextColor::class.java)
+        if (annotation != null){
+            if (annotation.value){
+                UtilsStyle.statusBarLightMode(context)
             }
         }
     }

@@ -14,7 +14,6 @@ import com.lsn.hibernation.annotation.YaoAnnotation;
 import com.lsn.hibernation.manager.ActivityManager;
 import com.lsn.hibernation.receiver.NetConnectReceiver;
 import com.lsn.hibernation.utils.comm.MVPConfig;
-import com.lsn.hibernation.utils.comm.UtilsStyle;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +35,9 @@ abstract public class BaseActivity extends AppCompatActivity implements IBaseVie
         ActivityManager.get().addActivity(this);
         initWindow();
         super.onCreate(savedInstanceState);
-        UtilsStyle.statusBarLightMode(this);
+        /*if (isSetSatatusBar()){
+            UtilsStyle.statusBarLightMode(this);
+        }*/
         registerNetReceiver();
         YaoAnnotation.INSTANCE.init(this);
         init();
