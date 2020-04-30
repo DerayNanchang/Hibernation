@@ -3,10 +3,12 @@
     android:id="@+id/llItemRoot"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:gravity="center_vertical"
+    style="@style/RippleF17"
     android:minHeight="80dp"
+    android:minWidth="180dp"
     android:orientation="horizontal"
-    android:paddingEnd="10dp">
+    android:layout_marginEnd="10dp">
 
     <ImageView
         android:id="@+id/ivPlaylistEd"

@@ -1,8 +1,7 @@
 package com.lsn.hibernation.manager
 
 import android.content.Context
-import com.lsn.hibernation.db.dao.CacheDao
-import com.lsn.hibernation.db.dao.DaoMaster
+import com.lsn.hibernation.db.dao.*
 
 /**
  * Author: Chris
@@ -13,6 +12,7 @@ import com.lsn.hibernation.db.dao.DaoMaster
 class DBManager private constructor() {
 
     private lateinit var cacheDao: CacheDao
+    private lateinit var session : DaoSession
 
     companion object {
         private const val DB_NAME = "Hibernation"
@@ -22,10 +22,32 @@ class DBManager private constructor() {
     fun init(context: Context) {
         val helper = DaoMaster.DevOpenHelper(context, DB_NAME)
         val db = helper.writableDb
-        val session = DaoMaster(db).newSession()
+        session = DaoMaster(db).newSession()
         cacheDao = session.cacheDao
     }
 
-    fun getCacheDao() = cacheDao
+    fun getCacheDao() :CacheDao {
+       return  session.cacheDao
+    }
+
+    fun getPlaylistDao():PlaylistDao{
+        return session.playlistDao
+    }
+
+    fun getMusicDao():MusicDao{
+        return session.musicDao
+    }
+
+    fun getSingerDao():SingerDao{
+        return session.singerDao
+    }
+
+    fun getAlbumDao():AlbumDao{
+        return session.albumDao
+    }
+
+    fun getMusicWithSingerDao():MusicWithSingerDao{
+        return session.musicWithSingerDao
+    }
 
 }

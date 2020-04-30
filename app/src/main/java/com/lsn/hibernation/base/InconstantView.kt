@@ -112,6 +112,14 @@ class InconstantView : RelativeLayout {
      *  添加加载状态
      */
     fun addLoading(resId: Int) {
+        addLoading(resId,false)
+    }
+
+
+    /**
+     *  添加加载状态
+     */
+    fun addLoading(resId: Int,isCoordinatorLayout:Boolean) {
         val loadingView = inflate(context, resId, null)
         loadingView.tag = LOADING
         loadingView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
@@ -119,7 +127,11 @@ class InconstantView : RelativeLayout {
             1000,
             1000
         )
-        params.addRule(CENTER_IN_PARENT)
+        if (isCoordinatorLayout){
+            params.addRule(CENTER_HORIZONTAL)
+        }else{
+            params.addRule(CENTER_IN_PARENT)
+        }
         addView(loadingView, params)
     }
 

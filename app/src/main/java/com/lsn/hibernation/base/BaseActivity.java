@@ -77,6 +77,18 @@ abstract public class BaseActivity extends AppCompatActivity implements IBaseVie
         }
     }
 
+    protected void initBody(InconstantView inconstantView, boolean isCoordinatorLayout) {
+        // 添加空状态与无网络
+        if (inconstantView != null) {
+            inconstantView.addContent(R.layout.view_default_content);
+            inconstantView.addEmptyState(R.layout.view_default_empty_state);
+            inconstantView.addNoConnect(R.layout.view_default_no_connect);
+            //inconstantView.addLoading(R.layout.view_custom_wrap_progress);
+            inconstantView.addLoading(R.layout.view_comm_progress, isCoordinatorLayout);
+            inconstantView.setBodyTransform(InconstantView.Type.LOADING);
+        }
+    }
+
 
     @Override
     public void onEmptyStatusResponse(@NotNull String tag, @NotNull String msg) {

@@ -22,10 +22,16 @@
 
         <activity
             android:name=".modules.music.activity.PlaylistActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".modules.main.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity
+            android:name=".modules.music.activity.PlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
+
+        </activity>
     </application>
 
 </manifest>

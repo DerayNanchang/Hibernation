@@ -32,15 +32,7 @@ class ItemPlaylistView : BaseItemView<RawPlaylistInfo.PlaylistBean.TracksBean> {
         tvSongName.text = data.name
         tvPosition.text = (position + 1).toString()
         if (data.ar != null && data.ar.size > 0) {
-            data.ar.forEach {
-                if (position < adapter.body.size) {
-                    tvSinger.text = it.name + tvSinger.text + "/"
-                } else {
-                    tvSinger.text = it.name + tvSinger.text
-                }
-
-
-            }
+            tvSinger.text = data.ar[0].name
         }
     }
 
