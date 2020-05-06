@@ -1,8 +1,8 @@
 package com.lsn.hibernation.modules.music.contact
 
 import com.lsn.hibernation.base.ModelResponseAdapter
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.net.bean.EaseEntity
 
 /**
@@ -24,8 +24,8 @@ interface MusicContact {
 
 
         fun getPlaylist(
-            uid: Int,
-            response: ModelResponseAdapter<EasePlaylist, EaseEntity, String>
+            uid: Long,
+            response: ModelResponseAdapter<Playlist, EaseEntity, String>
         )
 
     }

@@ -67,9 +67,9 @@ public class EasePlaylist {
     private Object recommendInfo;
     private int adType;
     private long trackNumberUpdateTime;
-    private int subscribedCount;
+    private Long subscribedCount;
     private int cloudTrackCount;
-    private int userId;
+    private Long userId;
     private long createTime;
     private boolean highQuality;
     private long updateTime;
@@ -83,12 +83,12 @@ public class EasePlaylist {
     private int totalDuration;
     private int specialType;
     private String coverImgUrl;
-    private int playCount;
+    private Long playCount;
     private boolean ordered;
     private String description;
     private int status;
     private String name;
-    private String id;
+    private Long id;
     private String coverImgId_str;
     private List<String> subscribers;
     private List<String> tags;
@@ -205,11 +205,11 @@ public class EasePlaylist {
         this.trackNumberUpdateTime = trackNumberUpdateTime;
     }
 
-    public int getSubscribedCount() {
+    public Long getSubscribedCount() {
         return subscribedCount;
     }
 
-    public void setSubscribedCount(int subscribedCount) {
+    public void setSubscribedCount(Long subscribedCount) {
         this.subscribedCount = subscribedCount;
     }
 
@@ -221,11 +221,11 @@ public class EasePlaylist {
         this.cloudTrackCount = cloudTrackCount;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -333,11 +333,11 @@ public class EasePlaylist {
         this.coverImgUrl = coverImgUrl;
     }
 
-    public int getPlayCount() {
+    public Long getPlayCount() {
         return playCount;
     }
 
-    public void setPlayCount(int playCount) {
+    public void setPlayCount(Long playCount) {
         this.playCount = playCount;
     }
 
@@ -373,11 +373,11 @@ public class EasePlaylist {
         this.name = name;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

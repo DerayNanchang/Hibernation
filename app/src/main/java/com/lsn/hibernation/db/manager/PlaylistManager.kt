@@ -19,9 +19,18 @@ class PlaylistManager private constructor() {
         return DBManager.get.getPlaylistDao()
     }
 
-    fun getPlaylistById(id:String){
-        getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.Id.eq(id)).build().unique()
+    fun setPlaylistId(ease: Long): String {
+        return ease.toString()
     }
+
+    fun setPlaylistId(ease: String, qq: String): String {
+        return ease + "_" + qq
+    }
+
+
+    /*fun getPlaylistById(id:String){
+        getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.Id.eq(id)).build().unique()
+    }*/
 
 
 }

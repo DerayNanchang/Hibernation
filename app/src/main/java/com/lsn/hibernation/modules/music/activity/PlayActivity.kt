@@ -1,6 +1,7 @@
 package com.lsn.hibernation.modules.music.activity
 
 import android.media.MediaPlayer
+import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.utils.comm.Toast
@@ -12,7 +13,7 @@ import com.lsn.hibernation.utils.comm.Toast
  * Date: 2020/4/30 11:51
  * Description
  */
-@LayoutResId(com.lsn.hibernation.R.layout.activity_play)
+@LayoutResId(R.layout.activity_play)
 class PlayActivity : BaseMusicActivity(), MediaPlayer.OnCompletionListener {
     override fun onCompletion(p0: MediaPlayer?) {
 

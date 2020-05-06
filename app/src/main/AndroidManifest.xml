@@ -29,9 +29,11 @@
 
         <activity
             android:name=".modules.music.activity.PlayActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+            android:configChanges="orientation|keyboardHidden|screenSize">
 
         </activity>
+
+        <service android:name=".service.MusicService" />
     </application>
 
 </manifest>

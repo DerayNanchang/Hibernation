@@ -1,12 +1,14 @@
 package com.lsn.hibernation.modules.music.presenter
 
 import com.alibaba.fastjson.JSON
+import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.IBaseView
 import com.lsn.hibernation.base.ModelResponseAdapter
+import com.lsn.hibernation.db.bean.Playlist
+import com.lsn.hibernation.db.manager.PlaylistManager
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.modules.music.model.MusicModelImpl
 import com.lsn.hibernation.net.bean.EaseEntity
@@ -56,13 +58,13 @@ class MusicPresenterImpl(view: IBaseView) :
         })
     }
 
-    override fun getPlaylist(uid: Int) {
-        mode.getPlaylist(uid,object :ModelResponseAdapter<EasePlaylist,EaseEntity,String>(){
+    override fun getPlaylist(uid: Long) {
+        mode.getPlaylist(uid,object :ModelResponseAdapter<Playlist,EaseEntity,String>(){
             override fun onEmptyStatusResponse() {
                 super.onEmptyStatusResponse()
                 view?.onEmptyStatusResponse()
             }
-            override fun onRequesting(disposable: Disposable?, cache: MutableList<EasePlaylist>) {
+            override fun onRequesting(disposable: Disposable?, cache: MutableList<Playlist>) {
                 super.onRequesting(disposable, cache)
                 view?.onSuccess(Constant.Music.Api.PLAYLIST,true,cache)
             }
@@ -71,7 +73,26 @@ class MusicPresenterImpl(view: IBaseView) :
                 println("歌单数据:" + JSON.toJSONString(result))
                 if (result.code == Constant.Conn.EASE_CODE){
                     if (result.playlist.isNotEmpty()){
-                        view?.onSuccess(Constant.Music.Api.PLAYLIST,false,result.playlist)
+                        val list = ArrayList<Playlist>()
+                        result.playlist.forEach {
+                            val playlist = Playlist()
+                            playlist.apply {
+                                id = PlaylistManager.get.setPlaylistId(it.id)
+                                netId = it.id
+                                name = it.name
+                                url = it.coverImgUrl
+                                isCollect = it.userId == HibernationApplication.get.getUId()
+                                owner = it.userId.toString()
+                                commentId = it.commentThreadId
+                                subscribedCount = it.subscribedCount
+                                playCount = it.playCount
+                                createTime = it.createTime
+                                updateTime = it.updateTime
+                            }
+                            list.add(playlist)
+                        }
+
+                        view?.onSuccess(Constant.Music.Api.PLAYLIST,false,list)
                     }else{
                         view?.onEmptyStatusResponse()
                     }
@@ -79,7 +100,6 @@ class MusicPresenterImpl(view: IBaseView) :
             }
             override fun onFailed(exception: String?) {
                 super.onFailed(exception)
-                println("歌单数据2:" +exception)
                 view?.onEmptyStatusResponse()
             }
         })

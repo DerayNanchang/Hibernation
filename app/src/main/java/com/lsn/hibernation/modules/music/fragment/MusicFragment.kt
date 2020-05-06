@@ -6,6 +6,7 @@ import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BaseFragment
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.InconstantView
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.adapter.MusicBannerAdapter
 import com.lsn.hibernation.modules.music.adapter.MusicPlaylistPageAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
@@ -139,7 +140,7 @@ class MusicFragment : BaseFragment() {
                 }
             }
             Constant.Music.Api.PLAYLIST -> {
-                val easePlaylist = entity as List<EasePlaylist>
+                val easePlaylist = entity as List<Playlist>
                 val self = ArrayList<EasePlaylist>()
                 val collect = ArrayList<EasePlaylist>()
                 easePlaylist.forEach {

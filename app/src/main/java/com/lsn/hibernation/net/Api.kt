@@ -34,7 +34,7 @@ interface Api {
 
     // 获取用户歌单
     @GET(Constant.Music.Api.PLAYLIST)
-    fun getPlaylist(@Query("uid") uid: Int): Observable<EaseEntity>
+    fun getPlaylist(@Query("uid") uid: Long): Observable<EaseEntity>
 
 
     // 获取歌单详情 歌单ID

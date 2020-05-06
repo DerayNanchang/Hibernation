@@ -33,7 +33,7 @@ class HibernationApplication : Application() {
     }
 
 
-    fun getUId(): Int {
+    fun getUId(): Long {
         //return loginInfo.account.id
         return 366231393
     }

@@ -57,7 +57,7 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
     }
 
     override fun getPlaylist(
-        uid: Int,
+        uid: Long,
         response: ModelResponseAdapter<EasePlaylist, EaseEntity, String>
     ) {
         val parameters = HashMap<String, String>()

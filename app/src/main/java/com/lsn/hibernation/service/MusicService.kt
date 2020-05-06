@@ -17,6 +17,7 @@ class MusicService : Service(){
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        //MusicManager.get.init()
         return START_REDELIVER_INTENT
     }
 
