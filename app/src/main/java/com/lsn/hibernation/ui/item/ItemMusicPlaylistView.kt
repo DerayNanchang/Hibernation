@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseItemView
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.adapter.MusicPlaylistAdapter
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.utils.glide.GlideUtils
 import kotlinx.android.synthetic.main.item_music_playlist_view.view.*
 
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_music_playlist_view.view.*
  * Description
  */
 @LayoutResId(R.layout.item_music_playlist_view)
-class ItemMusicPlaylistView : BaseItemView<EasePlaylist> {
+class ItemMusicPlaylistView : BaseItemView<Playlist> {
     lateinit var adapter: MusicPlaylistAdapter
 
 
@@ -29,11 +29,14 @@ class ItemMusicPlaylistView : BaseItemView<EasePlaylist> {
         defStyleAttr
     )
 
-    override fun bindData(data: EasePlaylist, position: Int) {
-        GlideUtils.defaultBanner(ivPlaylistEd, data.coverImgUrl)
+    override fun bindData(data: Playlist, position: Int) {
+        GlideUtils.defaultBanner(ivPlaylistEd, data.url)
         tvName.text = data.name
-        tvSize.text = data.trackCount.toString() + "首"
-
+        if (data.isCollect){
+            tvSize.text = adapter.collect?.size.toString() + "首"
+        }else{
+            tvSize.text = adapter.self?.size.toString() + "首"
+        }
         llItemRoot.setOnClickListener {
             println("点击事件:" + adapter.onItemClickListener)
             adapter.onItemClickListener?.onClick(position,data)

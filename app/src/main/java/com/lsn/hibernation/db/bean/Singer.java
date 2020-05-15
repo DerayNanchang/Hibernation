@@ -23,8 +23,8 @@ import java.util.List;
 public class Singer {
     @Id
     private String id;
-    private Long netId;
-    private Long QQId;
+    private String netId;
+    private String QQId;
     private String name;
     @ToMany
     @JoinEntity(entity = MusicWithSinger.class, sourceProperty = "sId", targetProperty = "mId")
@@ -35,8 +35,8 @@ public class Singer {
     /** Used for active entity operations. */
     @Generated(hash = 183933131)
     private transient SingerDao myDao;
-    @Generated(hash = 1303122251)
-    public Singer(String id, Long netId, Long QQId, String name) {
+    @Generated(hash = 236169471)
+    public Singer(String id, String netId, String QQId, String name) {
         this.id = id;
         this.netId = netId;
         this.QQId = QQId;
@@ -51,16 +51,16 @@ public class Singer {
     public void setId(String id) {
         this.id = id;
     }
-    public Long getNetId() {
+    public String getNetId() {
         return this.netId;
     }
-    public void setNetId(Long netId) {
+    public void setNetId(String netId) {
         this.netId = netId;
     }
-    public Long getQQId() {
+    public String getQQId() {
         return this.QQId;
     }
-    public void setQQId(Long QQId) {
+    public void setQQId(String QQId) {
         this.QQId = QQId;
     }
     public String getName() {

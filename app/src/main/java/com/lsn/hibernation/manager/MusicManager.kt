@@ -1,7 +1,6 @@
 package com.lsn.hibernation.manager
 
-import android.content.Context
-import android.media.MediaPlayer
+import com.lsn.hibernation.db.bean.Music
 
 /**
  * Author: lsn
@@ -9,11 +8,11 @@ import android.media.MediaPlayer
  * Date: 2020/4/30 15:10
  * Description
  */
-class MusicManager private constructor() : MediaPlayer.OnCompletionListener {
+class MusicManager private constructor(){
 
-    lateinit var context: Context
+   // lateinit var context: Context
 
-    private var player: MediaPlayer? = null
+   /* private var player: MediaPlayer? = null
 
     private enum class PlayMode {
         // 顺序，随机，循环
@@ -26,24 +25,44 @@ class MusicManager private constructor() : MediaPlayer.OnCompletionListener {
         IDLE,
         PLAY, PAUSE
     }
-
+*/
     companion object JVM {
-        val get = MusicManager
+        val get = MusicManager()
     }
 
-    fun init(context: Context) {
+
+    fun setMusicId(ease: String): String {
+        return setMusicId(ease, "0")
+    }
+
+    fun setMusicId(ease: String, qq: String): String {
+        return ease + "_" + qq
+    }
+
+    fun insert(music: Music) {
+        DBManager.get.getMusicDao().insertOrReplace(music)
+    }
+
+    fun insert(music: List<Music>) {
+        music.forEach {
+            DBManager.get.getMusicDao().insertOrReplace(it)
+        }
+    }
+
+
+    /*fun init(context: Context) {
         this.context = context
         if (player == null) {
             initPlay()
         }
-    }
+    }*/
 
-    private fun initPlay() {
+    /*private fun initPlay() {
         player = MediaPlayer()
         player?.apply {
             setOnCompletionListener(this@MusicManager)
         }
-    }
+    }*/
 
     // 点击的是其他歌曲  or 点击的是正在唱的歌曲
     /*fun playPause() {
@@ -85,12 +104,12 @@ class MusicManager private constructor() : MediaPlayer.OnCompletionListener {
         }
     }*/
 
-
-    /**
+/*
+    *//**
      * 播放完成
-     */
+     *//*
     override fun onCompletion(mediaPlayer: MediaPlayer?) {
 
-    }
+    }*/
 
 }

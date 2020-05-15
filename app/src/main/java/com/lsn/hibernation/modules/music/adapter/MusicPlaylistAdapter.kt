@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.lsn.hibernation.base.BaseItemView
 import com.lsn.hibernation.base.BaseViewHolder
 import com.lsn.hibernation.base.SimpleAdapter
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.ui.item.ItemMusicPlaylistView
 
 /**
@@ -13,7 +13,8 @@ import com.lsn.hibernation.ui.item.ItemMusicPlaylistView
  * Date: 2020/4/21 17:40
  * Description
  */
-class MusicPlaylistAdapter : SimpleAdapter<EasePlaylist>(){
+class MusicPlaylistAdapter(var self: List<Playlist>?, var collect: List<Playlist>?) :
+    SimpleAdapter<Playlist>() {
     override fun onCreateBodyViewHolder(
         parent: ViewGroup?,
         viewType: Int
@@ -24,18 +25,19 @@ class MusicPlaylistAdapter : SimpleAdapter<EasePlaylist>(){
         return MusicPlayListViewHolder(playlistView)
     }
 
-    class MusicPlayListViewHolder(view: ItemMusicPlaylistView) : BaseViewHolder<EasePlaylist, ItemMusicPlaylistView>(view)
+    class MusicPlayListViewHolder(view: ItemMusicPlaylistView) :
+        BaseViewHolder<Playlist, ItemMusicPlaylistView>(view)
 
-     var onItemClickListener: OnItemClickListener? =  null
+    var onItemClickListener: OnItemClickListener? = null
 
 
-    fun setMOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setMOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
 
     interface OnItemClickListener {
-        fun onClick(position: Int, entity: EasePlaylist)
+        fun onClick(position: Int, entity: Playlist)
     }
 
 

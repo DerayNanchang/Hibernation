@@ -30,8 +30,8 @@ public class SingerDao extends AbstractDao<Singer, String> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, String.class, "id", true, "ID");
-        public final static Property NetId = new Property(1, Long.class, "netId", false, "NET_ID");
-        public final static Property QQId = new Property(2, Long.class, "QQId", false, "QQID");
+        public final static Property NetId = new Property(1, String.class, "netId", false, "NET_ID");
+        public final static Property QQId = new Property(2, String.class, "QQId", false, "QQID");
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
     }
 
@@ -53,8 +53,8 @@ public class SingerDao extends AbstractDao<Singer, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"SINGER\" (" + //
                 "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
-                "\"NET_ID\" INTEGER," + // 1: netId
-                "\"QQID\" INTEGER," + // 2: QQId
+                "\"NET_ID\" TEXT," + // 1: netId
+                "\"QQID\" TEXT," + // 2: QQId
                 "\"NAME\" TEXT);"); // 3: name
     }
 
@@ -73,14 +73,14 @@ public class SingerDao extends AbstractDao<Singer, String> {
             stmt.bindString(1, id);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(2, netId);
+            stmt.bindString(2, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(3, QQId);
+            stmt.bindString(3, QQId);
         }
  
         String name = entity.getName();
@@ -98,14 +98,14 @@ public class SingerDao extends AbstractDao<Singer, String> {
             stmt.bindString(1, id);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(2, netId);
+            stmt.bindString(2, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(3, QQId);
+            stmt.bindString(3, QQId);
         }
  
         String name = entity.getName();
@@ -129,8 +129,8 @@ public class SingerDao extends AbstractDao<Singer, String> {
     public Singer readEntity(Cursor cursor, int offset) {
         Singer entity = new Singer( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // netId
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // QQId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // netId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // QQId
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // name
         );
         return entity;
@@ -139,8 +139,8 @@ public class SingerDao extends AbstractDao<Singer, String> {
     @Override
     public void readEntity(Cursor cursor, Singer entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setNetId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setQQId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setNetId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setQQId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     

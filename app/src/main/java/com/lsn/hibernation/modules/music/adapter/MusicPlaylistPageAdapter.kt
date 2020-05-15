@@ -12,9 +12,9 @@ import androidx.viewpager.widget.PagerAdapter
 import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.R
 import com.lsn.hibernation.base.Constant
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.activity.PlaylistActivity
 import com.lsn.hibernation.modules.music.bean.PlaylistComm
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 
 /**
  * Author: lsn
@@ -23,14 +23,14 @@ import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
  * Description
  */
 class MusicPlaylistPageAdapter : PagerAdapter {
-    var self: List<EasePlaylist>? = null
-    var collect: List<EasePlaylist>? = null
+    var self: List<Playlist>? = null
+    var collect: List<Playlist>? = null
     var context: Context? = null
 
     constructor() : super()
 
 
-    fun setData(self: List<EasePlaylist>, collect: List<EasePlaylist>, context: Context) {
+    fun setData(self: List<Playlist>, collect: List<Playlist>, context: Context) {
         this.self = self
         this.collect = collect
         this.context = context
@@ -40,17 +40,17 @@ class MusicPlaylistPageAdapter : PagerAdapter {
         val view =
             LayoutInflater.from(container.context)
                 .inflate(R.layout.item_music_playlist, null, false)
-        val mAdapter = MusicPlaylistAdapter()
+        val mAdapter = MusicPlaylistAdapter(self,collect)
         val rvMusicPlaylist = view.findViewById<RecyclerView>(R.id.rvMusicPlaylist)
         mAdapter.setMOnItemClickListener(object : MusicPlaylistAdapter.OnItemClickListener {
-            override fun onClick(position: Int, entity: EasePlaylist) {
+            override fun onClick(position: Int, entity: Playlist) {
                 context?.let {
                     val intent = Intent(context, PlaylistActivity::class.java)
                     val playlistComm = PlaylistComm(
-                        entity.coverImgUrl,
-                        entity.creator.avatarUrl,
+                        entity.url,
+                        entity.ownerAvatar,
                         entity.name,
-                        entity.creator.nickname,
+                        entity.ownerName,
                         entity.id
                     )
                     intent.putExtra(Constant.Key.PLAYLIST_COMM, JSON.toJSONString(playlistComm))

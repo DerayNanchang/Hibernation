@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseItemView
+import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.modules.music.adapter.PlaylistAdapter
-import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
 import kotlinx.android.synthetic.main.item_playlist_view.view.*
 
 /**
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_playlist_view.view.*
  * Description
  */
 @LayoutResId(R.layout.item_playlist_view)
-class ItemPlaylistView : BaseItemView<RawPlaylistInfo.PlaylistBean.TracksBean> {
+class ItemPlaylistView : BaseItemView<Music> {
 
     lateinit var adapter: PlaylistAdapter
 
@@ -28,11 +28,11 @@ class ItemPlaylistView : BaseItemView<RawPlaylistInfo.PlaylistBean.TracksBean> {
         defStyleAttr
     )
 
-    override fun bindData(data: RawPlaylistInfo.PlaylistBean.TracksBean, position: Int) {
+    override fun bindData(data: Music, position: Int) {
         tvSongName.text = data.name
         tvPosition.text = (position + 1).toString()
-        if (data.ar != null && data.ar.size > 0) {
-            tvSinger.text = data.ar[0].name
+        if (data.singers != null && data.singers.size > 0) {
+            tvSinger.text = data.singers[0].name
         }
     }
 

@@ -10,7 +10,6 @@ import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.adapter.MusicBannerAdapter
 import com.lsn.hibernation.modules.music.adapter.MusicPlaylistPageAdapter
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.presenter.MusicPresenterImpl
 import com.lsn.hibernation.ui.adapter.CVPPageChangeListener
 import com.lsn.hibernation.utils.comm.DensityUtil
@@ -140,14 +139,14 @@ class MusicFragment : BaseFragment() {
                 }
             }
             Constant.Music.Api.PLAYLIST -> {
-                val easePlaylist = entity as List<Playlist>
-                val self = ArrayList<EasePlaylist>()
-                val collect = ArrayList<EasePlaylist>()
-                easePlaylist.forEach {
-                    if (it.creator.nickname == HibernationApplication.get.getNikeName()) {
-                        self.add(it)
-                    } else {
+                val playList = entity as List<Playlist>
+                val self = ArrayList<Playlist>()
+                val collect = ArrayList<Playlist>()
+                playList.forEach {
+                    if (it.isCollect){
                         collect.add(it)
+                    }else{
+                        self.add(it)
                     }
                 }
                 tvSelfCount.text = self.size.toString()

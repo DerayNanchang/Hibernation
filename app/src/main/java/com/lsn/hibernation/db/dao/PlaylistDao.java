@@ -25,18 +25,20 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, String.class, "id", true, "ID");
-        public final static Property NetId = new Property(1, Long.class, "netId", false, "NET_ID");
-        public final static Property QQId = new Property(2, Long.class, "QQId", false, "QQID");
+        public final static Property NetId = new Property(1, String.class, "netId", false, "NET_ID");
+        public final static Property QQId = new Property(2, String.class, "QQId", false, "QQID");
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
         public final static Property Url = new Property(4, String.class, "url", false, "URL");
         public final static Property IsCollect = new Property(5, boolean.class, "isCollect", false, "IS_COLLECT");
         public final static Property Owner = new Property(6, String.class, "owner", false, "OWNER");
-        public final static Property CommentId = new Property(7, String.class, "commentId", false, "COMMENT_ID");
-        public final static Property SubscribedCount = new Property(8, Long.class, "subscribedCount", false, "SUBSCRIBED_COUNT");
-        public final static Property PlayCount = new Property(9, Long.class, "playCount", false, "PLAY_COUNT");
-        public final static Property MusicCount = new Property(10, Long.class, "musicCount", false, "MUSIC_COUNT");
-        public final static Property CreateTime = new Property(11, Long.class, "createTime", false, "CREATE_TIME");
-        public final static Property UpdateTime = new Property(12, Long.class, "updateTime", false, "UPDATE_TIME");
+        public final static Property OwnerName = new Property(7, String.class, "ownerName", false, "OWNER_NAME");
+        public final static Property OwnerAvatar = new Property(8, String.class, "ownerAvatar", false, "OWNER_AVATAR");
+        public final static Property CommentId = new Property(9, String.class, "commentId", false, "COMMENT_ID");
+        public final static Property SubscribedCount = new Property(10, Long.class, "subscribedCount", false, "SUBSCRIBED_COUNT");
+        public final static Property PlayCount = new Property(11, Long.class, "playCount", false, "PLAY_COUNT");
+        public final static Property MusicCount = new Property(12, Long.class, "musicCount", false, "MUSIC_COUNT");
+        public final static Property CreateTime = new Property(13, Long.class, "createTime", false, "CREATE_TIME");
+        public final static Property UpdateTime = new Property(14, Long.class, "updateTime", false, "UPDATE_TIME");
     }
 
     private DaoSession daoSession;
@@ -56,18 +58,20 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PLAYLIST\" (" + //
                 "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
-                "\"NET_ID\" INTEGER," + // 1: netId
-                "\"QQID\" INTEGER," + // 2: QQId
+                "\"NET_ID\" TEXT," + // 1: netId
+                "\"QQID\" TEXT," + // 2: QQId
                 "\"NAME\" TEXT," + // 3: name
                 "\"URL\" TEXT," + // 4: url
                 "\"IS_COLLECT\" INTEGER NOT NULL ," + // 5: isCollect
                 "\"OWNER\" TEXT," + // 6: owner
-                "\"COMMENT_ID\" TEXT," + // 7: commentId
-                "\"SUBSCRIBED_COUNT\" INTEGER," + // 8: subscribedCount
-                "\"PLAY_COUNT\" INTEGER," + // 9: playCount
-                "\"MUSIC_COUNT\" INTEGER," + // 10: musicCount
-                "\"CREATE_TIME\" INTEGER," + // 11: createTime
-                "\"UPDATE_TIME\" INTEGER);"); // 12: updateTime
+                "\"OWNER_NAME\" TEXT," + // 7: ownerName
+                "\"OWNER_AVATAR\" TEXT," + // 8: ownerAvatar
+                "\"COMMENT_ID\" TEXT," + // 9: commentId
+                "\"SUBSCRIBED_COUNT\" INTEGER," + // 10: subscribedCount
+                "\"PLAY_COUNT\" INTEGER," + // 11: playCount
+                "\"MUSIC_COUNT\" INTEGER," + // 12: musicCount
+                "\"CREATE_TIME\" INTEGER," + // 13: createTime
+                "\"UPDATE_TIME\" INTEGER);"); // 14: updateTime
     }
 
     /** Drops the underlying database table. */
@@ -85,14 +89,14 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
             stmt.bindString(1, id);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(2, netId);
+            stmt.bindString(2, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(3, QQId);
+            stmt.bindString(3, QQId);
         }
  
         String name = entity.getName();
@@ -111,34 +115,44 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
             stmt.bindString(7, owner);
         }
  
+        String ownerName = entity.getOwnerName();
+        if (ownerName != null) {
+            stmt.bindString(8, ownerName);
+        }
+ 
+        String ownerAvatar = entity.getOwnerAvatar();
+        if (ownerAvatar != null) {
+            stmt.bindString(9, ownerAvatar);
+        }
+ 
         String commentId = entity.getCommentId();
         if (commentId != null) {
-            stmt.bindString(8, commentId);
+            stmt.bindString(10, commentId);
         }
  
         Long subscribedCount = entity.getSubscribedCount();
         if (subscribedCount != null) {
-            stmt.bindLong(9, subscribedCount);
+            stmt.bindLong(11, subscribedCount);
         }
  
         Long playCount = entity.getPlayCount();
         if (playCount != null) {
-            stmt.bindLong(10, playCount);
+            stmt.bindLong(12, playCount);
         }
  
         Long musicCount = entity.getMusicCount();
         if (musicCount != null) {
-            stmt.bindLong(11, musicCount);
+            stmt.bindLong(13, musicCount);
         }
  
         Long createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindLong(12, createTime);
+            stmt.bindLong(14, createTime);
         }
  
         Long updateTime = entity.getUpdateTime();
         if (updateTime != null) {
-            stmt.bindLong(13, updateTime);
+            stmt.bindLong(15, updateTime);
         }
     }
 
@@ -151,14 +165,14 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
             stmt.bindString(1, id);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(2, netId);
+            stmt.bindString(2, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(3, QQId);
+            stmt.bindString(3, QQId);
         }
  
         String name = entity.getName();
@@ -177,34 +191,44 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
             stmt.bindString(7, owner);
         }
  
+        String ownerName = entity.getOwnerName();
+        if (ownerName != null) {
+            stmt.bindString(8, ownerName);
+        }
+ 
+        String ownerAvatar = entity.getOwnerAvatar();
+        if (ownerAvatar != null) {
+            stmt.bindString(9, ownerAvatar);
+        }
+ 
         String commentId = entity.getCommentId();
         if (commentId != null) {
-            stmt.bindString(8, commentId);
+            stmt.bindString(10, commentId);
         }
  
         Long subscribedCount = entity.getSubscribedCount();
         if (subscribedCount != null) {
-            stmt.bindLong(9, subscribedCount);
+            stmt.bindLong(11, subscribedCount);
         }
  
         Long playCount = entity.getPlayCount();
         if (playCount != null) {
-            stmt.bindLong(10, playCount);
+            stmt.bindLong(12, playCount);
         }
  
         Long musicCount = entity.getMusicCount();
         if (musicCount != null) {
-            stmt.bindLong(11, musicCount);
+            stmt.bindLong(13, musicCount);
         }
  
         Long createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindLong(12, createTime);
+            stmt.bindLong(14, createTime);
         }
  
         Long updateTime = entity.getUpdateTime();
         if (updateTime != null) {
-            stmt.bindLong(13, updateTime);
+            stmt.bindLong(15, updateTime);
         }
     }
 
@@ -223,18 +247,20 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
     public Playlist readEntity(Cursor cursor, int offset) {
         Playlist entity = new Playlist( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // netId
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // QQId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // netId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // QQId
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // url
             cursor.getShort(offset + 5) != 0, // isCollect
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // owner
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // commentId
-            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8), // subscribedCount
-            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9), // playCount
-            cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10), // musicCount
-            cursor.isNull(offset + 11) ? null : cursor.getLong(offset + 11), // createTime
-            cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12) // updateTime
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // ownerName
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // ownerAvatar
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // commentId
+            cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10), // subscribedCount
+            cursor.isNull(offset + 11) ? null : cursor.getLong(offset + 11), // playCount
+            cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12), // musicCount
+            cursor.isNull(offset + 13) ? null : cursor.getLong(offset + 13), // createTime
+            cursor.isNull(offset + 14) ? null : cursor.getLong(offset + 14) // updateTime
         );
         return entity;
     }
@@ -242,18 +268,20 @@ public class PlaylistDao extends AbstractDao<Playlist, String> {
     @Override
     public void readEntity(Cursor cursor, Playlist entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setNetId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setQQId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setNetId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setQQId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setIsCollect(cursor.getShort(offset + 5) != 0);
         entity.setOwner(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setCommentId(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setSubscribedCount(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
-        entity.setPlayCount(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
-        entity.setMusicCount(cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10));
-        entity.setCreateTime(cursor.isNull(offset + 11) ? null : cursor.getLong(offset + 11));
-        entity.setUpdateTime(cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12));
+        entity.setOwnerName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setOwnerAvatar(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setCommentId(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setSubscribedCount(cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10));
+        entity.setPlayCount(cursor.isNull(offset + 11) ? null : cursor.getLong(offset + 11));
+        entity.setMusicCount(cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12));
+        entity.setCreateTime(cursor.isNull(offset + 13) ? null : cursor.getLong(offset + 13));
+        entity.setUpdateTime(cursor.isNull(offset + 14) ? null : cursor.getLong(offset + 14));
      }
     
     @Override

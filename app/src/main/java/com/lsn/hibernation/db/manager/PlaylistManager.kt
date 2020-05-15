@@ -1,5 +1,6 @@
 package com.lsn.hibernation.db.manager
 
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.db.dao.PlaylistDao
 import com.lsn.hibernation.manager.DBManager
 
@@ -19,14 +20,24 @@ class PlaylistManager private constructor() {
         return DBManager.get.getPlaylistDao()
     }
 
-    fun setPlaylistId(ease: Long): String {
-        return ease.toString()
+    fun setPlaylistId(ease: String): String {
+        return setPlaylistId(ease, "0")
     }
 
     fun setPlaylistId(ease: String, qq: String): String {
         return ease + "_" + qq
     }
 
+    fun findPlaylistById(id: String): Playlist {
+        return getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.Id.eq(id)).build()
+            .unique()
+    }
+
+
+    fun findPlaylistByEaseId(id: Long): Playlist {
+        return getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.NetId.eq(id)).build()
+            .unique()
+    }
 
     /*fun getPlaylistById(id:String){
         getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.Id.eq(id)).build().unique()

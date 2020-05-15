@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.lsn.hibernation.base.BaseItemView
 import com.lsn.hibernation.base.BaseViewHolder
 import com.lsn.hibernation.base.SimpleAdapter
-import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
+import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.ui.item.ItemPlaylistView
 
 /**
@@ -13,7 +13,7 @@ import com.lsn.hibernation.ui.item.ItemPlaylistView
  * Date: 2020/4/23 13:43
  * Description
  */
-class PlaylistAdapter : SimpleAdapter<RawPlaylistInfo.PlaylistBean.TracksBean>(){
+class PlaylistAdapter : SimpleAdapter<Music>(){
     lateinit var adapter: PlaylistAdapter
     override fun onCreateBodyViewHolder(
         parent: ViewGroup?,
@@ -25,5 +25,5 @@ class PlaylistAdapter : SimpleAdapter<RawPlaylistInfo.PlaylistBean.TracksBean>()
         return PlayListViewHolder(playlistView)
     }
 
-    class PlayListViewHolder(view:ItemPlaylistView):BaseViewHolder<RawPlaylistInfo.PlaylistBean.TracksBean,ItemPlaylistView>(view)
+    class PlayListViewHolder(view:ItemPlaylistView):BaseViewHolder<Music,ItemPlaylistView>(view)
 }

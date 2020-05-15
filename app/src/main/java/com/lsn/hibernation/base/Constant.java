@@ -11,6 +11,10 @@ public interface Constant {
 
         int EASE_CODE = 200;
 
+        int EASE = 0;
+        int QQ = 1;
+
+
         String APP_NAME_EN = "JT";
         String APP_IMG = "img";
         String APK = "apk";

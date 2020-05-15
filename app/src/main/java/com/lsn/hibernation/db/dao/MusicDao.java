@@ -34,8 +34,8 @@ public class MusicDao extends AbstractDao<Music, String> {
     public static class Properties {
         public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property NetId = new Property(2, Long.class, "netId", false, "NET_ID");
-        public final static Property QQId = new Property(3, Long.class, "QQId", false, "QQID");
+        public final static Property NetId = new Property(2, String.class, "netId", false, "NET_ID");
+        public final static Property QQId = new Property(3, String.class, "QQId", false, "QQID");
         public final static Property Duration = new Property(4, Long.class, "duration", false, "DURATION");
         public final static Property IsNet = new Property(5, boolean.class, "isNet", false, "IS_NET");
         public final static Property Type = new Property(6, int.class, "type", false, "TYPE");
@@ -64,8 +64,8 @@ public class MusicDao extends AbstractDao<Music, String> {
         db.execSQL("CREATE TABLE " + constraint + "\"MUSIC\" (" + //
                 "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
-                "\"NET_ID\" INTEGER," + // 2: netId
-                "\"QQID\" INTEGER," + // 3: QQId
+                "\"NET_ID\" TEXT," + // 2: netId
+                "\"QQID\" TEXT," + // 3: QQId
                 "\"DURATION\" INTEGER," + // 4: duration
                 "\"IS_NET\" INTEGER NOT NULL ," + // 5: isNet
                 "\"TYPE\" INTEGER NOT NULL ," + // 6: type
@@ -93,14 +93,14 @@ public class MusicDao extends AbstractDao<Music, String> {
             stmt.bindString(2, name);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(3, netId);
+            stmt.bindString(3, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(4, QQId);
+            stmt.bindString(4, QQId);
         }
  
         Long duration = entity.getDuration();
@@ -135,14 +135,14 @@ public class MusicDao extends AbstractDao<Music, String> {
             stmt.bindString(2, name);
         }
  
-        Long netId = entity.getNetId();
+        String netId = entity.getNetId();
         if (netId != null) {
-            stmt.bindLong(3, netId);
+            stmt.bindString(3, netId);
         }
  
-        Long QQId = entity.getQQId();
+        String QQId = entity.getQQId();
         if (QQId != null) {
-            stmt.bindLong(4, QQId);
+            stmt.bindString(4, QQId);
         }
  
         Long duration = entity.getDuration();
@@ -179,8 +179,8 @@ public class MusicDao extends AbstractDao<Music, String> {
         Music entity = new Music( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // netId
-            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // QQId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // netId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // QQId
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // duration
             cursor.getShort(offset + 5) != 0, // isNet
             cursor.getInt(offset + 6), // type
@@ -194,8 +194,8 @@ public class MusicDao extends AbstractDao<Music, String> {
     public void readEntity(Cursor cursor, Music entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setNetId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setQQId(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setNetId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setQQId(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setDuration(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setIsNet(cursor.getShort(offset + 5) != 0);
         entity.setType(cursor.getInt(offset + 6));

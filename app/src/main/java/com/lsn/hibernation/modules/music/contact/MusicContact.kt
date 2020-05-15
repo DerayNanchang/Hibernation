@@ -16,7 +16,7 @@ interface MusicContact {
     interface MusicPresenter {
         fun getBanner(type: Int)
 
-        fun getPlaylist(uid: Int)
+        fun getPlaylist(uid: Long)
     }
 
     interface MusicModel {

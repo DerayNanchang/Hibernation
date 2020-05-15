@@ -1,6 +1,7 @@
 package com.lsn.hibernation.modules.music.contact
 
-import com.lsn.hibernation.base.ModelResponseAdapter
+import com.lsn.hibernation.base.ModelResponseAdapter2
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
 
 /**
@@ -18,7 +19,7 @@ interface PlaylistContact {
 
         fun getPlaylistDetail(
             id: String,
-            response: ModelResponseAdapter<RawPlaylistInfo.PlaylistBean.TracksBean, RawPlaylistInfo, String>
+            response: ModelResponseAdapter2<Playlist, RawPlaylistInfo, String>
         )
     }
 }

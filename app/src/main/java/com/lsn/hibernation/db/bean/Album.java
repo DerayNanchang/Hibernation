@@ -21,8 +21,8 @@ import com.lsn.hibernation.db.dao.AlbumDao;
 public class Album {
     @Id
     private String id;
-    private Long netId;
-    private Long QQId;
+    private String netId;
+    private String QQId;
     private String url;
     @ToMany(referencedJoinProperty = "albumId")
     private List<Music> musics;
@@ -32,8 +32,8 @@ public class Album {
     /** Used for active entity operations. */
     @Generated(hash = 172302968)
     private transient AlbumDao myDao;
-    @Generated(hash = 882368006)
-    public Album(String id, Long netId, Long QQId, String url) {
+    @Generated(hash = 379163726)
+    public Album(String id, String netId, String QQId, String url) {
         this.id = id;
         this.netId = netId;
         this.QQId = QQId;
@@ -48,16 +48,16 @@ public class Album {
     public void setId(String id) {
         this.id = id;
     }
-    public Long getNetId() {
+    public String getNetId() {
         return this.netId;
     }
-    public void setNetId(Long netId) {
+    public void setNetId(String netId) {
         this.netId = netId;
     }
-    public Long getQQId() {
+    public String getQQId() {
         return this.QQId;
     }
-    public void setQQId(Long QQId) {
+    public void setQQId(String QQId) {
         this.QQId = QQId;
     }
     public String getUrl() {
@@ -131,4 +131,5 @@ public class Album {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getAlbumDao() : null;
     }
+
 }

@@ -1,19 +1,18 @@
 package com.lsn.hibernation.db.bean;
 
-import com.lsn.hibernation.db.dao.AlbumDao;
-import com.lsn.hibernation.db.dao.DaoSession;
-import com.lsn.hibernation.db.dao.MusicDao;
-import com.lsn.hibernation.db.dao.SingerDao;
-
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
+import com.lsn.hibernation.db.dao.DaoSession;
+import com.lsn.hibernation.db.dao.SingerDao;
+import com.lsn.hibernation.db.dao.AlbumDao;
+import com.lsn.hibernation.db.dao.MusicDao;
 
 /**
  * Author: lsn
@@ -27,8 +26,8 @@ public class Music {
     @Id
     private String id;
     private String name;
-    private Long netId;
-    private Long QQId;
+    private String netId;
+    private String QQId;
     @ToMany()
     @JoinEntity(entity = MusicWithSinger.class, sourceProperty = "mId", targetProperty = "sId")
     private List<Singer> singers;
@@ -45,9 +44,9 @@ public class Music {
     /** Used for active entity operations. */
     @Generated(hash = 1255683360)
     private transient MusicDao myDao;
-    @Generated(hash = 1645396067)
-    public Music(String id, String name, Long netId, Long QQId, Long duration, boolean isNet, int type,
-            String albumId, String playlistId) {
+    @Generated(hash = 1328664561)
+    public Music(String id, String name, String netId, String QQId, Long duration, boolean isNet,
+            int type, String albumId, String playlistId) {
         this.id = id;
         this.name = name;
         this.netId = netId;
@@ -73,16 +72,16 @@ public class Music {
     public void setName(String name) {
         this.name = name;
     }
-    public Long getNetId() {
+    public String getNetId() {
         return this.netId;
     }
-    public void setNetId(Long netId) {
+    public void setNetId(String netId) {
         this.netId = netId;
     }
-    public Long getQQId() {
+    public String getQQId() {
         return this.QQId;
     }
-    public void setQQId(Long QQId) {
+    public void setQQId(String QQId) {
         this.QQId = QQId;
     }
     public Long getDuration() {

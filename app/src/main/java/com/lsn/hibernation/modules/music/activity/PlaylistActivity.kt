@@ -14,10 +14,10 @@ import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.InconstantView
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.modules.music.adapter.PlaylistAdapter
 import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.modules.music.bean.PlaylistComm
-import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
 import com.lsn.hibernation.modules.music.presenter.PlaylistPresenterImpl
 import com.lsn.hibernation.ui.adapter.ScrollLinearLayoutManager
 import com.lsn.hibernation.utils.comm.StatusBarUtils
@@ -113,9 +113,9 @@ class PlaylistActivity : BaseMusicActivity() {
         super.onSuccess(tag, isCache, entity)
         when (tag) {
             Constant.Music.Api.GET_PLAYLIST_DETAIL -> {
-                val tracksBean = entity as List<RawPlaylistInfo.PlaylistBean.TracksBean>
-                tvPlaySize.text = "(共" + tracksBean.size.toString() + "首)"
-                mAdapter.updateData(tracksBean)
+                val playlist = entity as Playlist
+                tvPlaySize.text = "(共" + playlist.musics.size.toString() + "首)"
+                mAdapter.updateData(playlist.musics)
                 ivPlaylistContent.setBodyTransform(InconstantView.Type.CONTENT)
             }
         }

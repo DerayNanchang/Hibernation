@@ -3,9 +3,9 @@ package com.lsn.hibernation.modules.music.model
 import com.lsn.hibernation.base.BaseModel
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.ModelResponseAdapter
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.manager.HttpManager
 import com.lsn.hibernation.modules.music.bean.Banner
-import com.lsn.hibernation.modules.music.bean.easy.EasePlaylist
 import com.lsn.hibernation.modules.music.contact.MusicContact
 import com.lsn.hibernation.net.Api
 import com.lsn.hibernation.net.bean.EaseEntity
@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable
  * Description
  */
 class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
+
 
     override fun getBanner(
         type: Int,
@@ -56,9 +57,10 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
             })
     }
 
+
     override fun getPlaylist(
         uid: Long,
-        response: ModelResponseAdapter<EasePlaylist, EaseEntity, String>
+        response: ModelResponseAdapter<Playlist, EaseEntity, String>
     ) {
         val parameters = HashMap<String, String>()
         parameters["uid"] = uid.toString()
@@ -68,13 +70,13 @@ class MusicModelImpl : BaseModel(), MusicContact.MusicModel {
         HttpManager.request().get(Api::class.java, HttpManager.Tag.NET_EASE)
             .getPlaylist(uid)
             .compose(ThreadHelp.toMain())
-            .subscribe(object : XObserverAdapter<EasePlaylist, EaseEntity>(cacheKey) {
+            .subscribe(object : XObserverAdapter<Playlist, EaseEntity>(cacheKey) {
                 override fun onEmptyStatusResponse() {
                     super.onEmptyStatusResponse()
                     response.onEmptyStatusResponse()
                 }
 
-                override fun onRequesting(d: Disposable?, cache: MutableList<EasePlaylist>) {
+                override fun onRequesting(d: Disposable?, cache: MutableList<Playlist>) {
                     super.onRequesting(d, cache)
                     response.onRequesting(d, cache)
                 }

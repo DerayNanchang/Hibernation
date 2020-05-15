@@ -2,7 +2,8 @@ package com.lsn.hibernation.modules.music.model
 
 import com.lsn.hibernation.base.BaseModel
 import com.lsn.hibernation.base.Constant
-import com.lsn.hibernation.base.ModelResponseAdapter
+import com.lsn.hibernation.base.ModelResponseAdapter2
+import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.manager.HttpManager
 import com.lsn.hibernation.modules.music.bean.RawPlaylistInfo
 import com.lsn.hibernation.modules.music.contact.PlaylistContact
@@ -21,7 +22,7 @@ class PlaylistModelImpl : BaseModel(), PlaylistContact.PlaylistModel {
 
     override fun getPlaylistDetail(
         id: String,
-        response: ModelResponseAdapter<RawPlaylistInfo.PlaylistBean.TracksBean, RawPlaylistInfo, String>
+        response: ModelResponseAdapter2<Playlist, RawPlaylistInfo, String>
     ) {
 
         val parameters = HashMap<String, String>()
@@ -33,7 +34,7 @@ class PlaylistModelImpl : BaseModel(), PlaylistContact.PlaylistModel {
             .getPlaylistDetail(id)
             .compose(ThreadHelp.toMain())
             .subscribe(object :
-                XObserverAdapter<RawPlaylistInfo.PlaylistBean.TracksBean, RawPlaylistInfo>(cacheKey) {
+                XObserverAdapter<Playlist, RawPlaylistInfo>(cacheKey) {
                 override fun onEmptyStatusResponse() {
                     super.onEmptyStatusResponse()
                     response.onEmptyStatusResponse()
@@ -41,7 +42,7 @@ class PlaylistModelImpl : BaseModel(), PlaylistContact.PlaylistModel {
 
                 override fun onRequesting(
                     d: Disposable?,
-                    cache: MutableList<RawPlaylistInfo.PlaylistBean.TracksBean>
+                    cache: Playlist
                 ) {
                     super.onRequesting(d, cache)
                     response.onRequesting(d, cache)
@@ -54,7 +55,6 @@ class PlaylistModelImpl : BaseModel(), PlaylistContact.PlaylistModel {
 
                 override fun onFailed(e: Throwable) {
                     super.onFailed(e)
-                    println("错误消息 : " + e.message)
                     response.onFailed(e.message)
                 }
             })

@@ -88,7 +88,7 @@ public class EasePlaylist {
     private String description;
     private int status;
     private String name;
-    private Long id;
+    private String id;
     private String coverImgId_str;
     private List<String> subscribers;
     private List<String> tags;
@@ -373,11 +373,11 @@ public class EasePlaylist {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

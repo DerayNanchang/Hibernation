@@ -1,6 +1,5 @@
 package com.lsn.hibernation.modules.music.presenter
 
-import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.app.HibernationApplication
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
@@ -22,6 +21,7 @@ import io.reactivex.disposables.Disposable
  */
 class MusicPresenterImpl(view: IBaseView) :
     BasePresenter<IBaseView>(view), MusicContact.MusicPresenter {
+
 
 
     val mode = MusicModelImpl()
@@ -70,7 +70,6 @@ class MusicPresenterImpl(view: IBaseView) :
             }
             override fun onSuccess(key: String?, result: EaseEntity) {
                 super.onSuccess(key, result)
-                println("歌单数据:" + JSON.toJSONString(result))
                 if (result.code == Constant.Conn.EASE_CODE){
                     if (result.playlist.isNotEmpty()){
                         val list = ArrayList<Playlist>()
@@ -81,8 +80,10 @@ class MusicPresenterImpl(view: IBaseView) :
                                 netId = it.id
                                 name = it.name
                                 url = it.coverImgUrl
-                                isCollect = it.userId == HibernationApplication.get.getUId()
+                                isCollect = it.userId != HibernationApplication.get.getUId()
                                 owner = it.userId.toString()
+                                ownerAvatar = it.creator.avatarUrl
+                                ownerName = it.creator.nickname
                                 commentId = it.commentThreadId
                                 subscribedCount = it.subscribedCount
                                 playCount = it.playCount
