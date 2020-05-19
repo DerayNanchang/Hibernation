@@ -89,7 +89,9 @@ class MusicPresenterImpl(view: IBaseView) :
                                 playCount = it.playCount
                                 createTime = it.createTime
                                 updateTime = it.updateTime
+                                musicCount =it.trackCount.toLong()
                             }
+                            PlaylistManager.get.insertPlaylist(playlist)
                             list.add(playlist)
                         }
 

@@ -49,6 +49,8 @@ public interface Constant {
         String DEFAULT_NET_EASE_PASSWORD = "123456";
         String DEFAULT_QQ_USER_NAME = "761048783";
         String DEFAULT_QQ_PASSWORD = "b4q4s2z2lzq.";
+        String DEFAULT_NET_PLAYER = "https://music.163.com/song/media/outer/url?id=";
+
 
         interface Api{
 

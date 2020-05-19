@@ -38,9 +38,10 @@ public class MusicDao extends AbstractDao<Music, String> {
         public final static Property QQId = new Property(3, String.class, "QQId", false, "QQID");
         public final static Property Duration = new Property(4, Long.class, "duration", false, "DURATION");
         public final static Property IsNet = new Property(5, boolean.class, "isNet", false, "IS_NET");
-        public final static Property Type = new Property(6, int.class, "type", false, "TYPE");
-        public final static Property AlbumId = new Property(7, String.class, "albumId", false, "ALBUM_ID");
-        public final static Property PlaylistId = new Property(8, String.class, "playlistId", false, "PLAYLIST_ID");
+        public final static Property IsCache = new Property(6, boolean.class, "isCache", false, "IS_CACHE");
+        public final static Property Type = new Property(7, int.class, "type", false, "TYPE");
+        public final static Property AlbumId = new Property(8, String.class, "albumId", false, "ALBUM_ID");
+        public final static Property PlaylistId = new Property(9, String.class, "playlistId", false, "PLAYLIST_ID");
     }
 
     private DaoSession daoSession;
@@ -68,9 +69,10 @@ public class MusicDao extends AbstractDao<Music, String> {
                 "\"QQID\" TEXT," + // 3: QQId
                 "\"DURATION\" INTEGER," + // 4: duration
                 "\"IS_NET\" INTEGER NOT NULL ," + // 5: isNet
-                "\"TYPE\" INTEGER NOT NULL ," + // 6: type
-                "\"ALBUM_ID\" TEXT," + // 7: albumId
-                "\"PLAYLIST_ID\" TEXT);"); // 8: playlistId
+                "\"IS_CACHE\" INTEGER NOT NULL ," + // 6: isCache
+                "\"TYPE\" INTEGER NOT NULL ," + // 7: type
+                "\"ALBUM_ID\" TEXT," + // 8: albumId
+                "\"PLAYLIST_ID\" TEXT);"); // 9: playlistId
     }
 
     /** Drops the underlying database table. */
@@ -108,16 +110,17 @@ public class MusicDao extends AbstractDao<Music, String> {
             stmt.bindLong(5, duration);
         }
         stmt.bindLong(6, entity.getIsNet() ? 1L: 0L);
-        stmt.bindLong(7, entity.getType());
+        stmt.bindLong(7, entity.getIsCache() ? 1L: 0L);
+        stmt.bindLong(8, entity.getType());
  
         String albumId = entity.getAlbumId();
         if (albumId != null) {
-            stmt.bindString(8, albumId);
+            stmt.bindString(9, albumId);
         }
  
         String playlistId = entity.getPlaylistId();
         if (playlistId != null) {
-            stmt.bindString(9, playlistId);
+            stmt.bindString(10, playlistId);
         }
     }
 
@@ -150,16 +153,17 @@ public class MusicDao extends AbstractDao<Music, String> {
             stmt.bindLong(5, duration);
         }
         stmt.bindLong(6, entity.getIsNet() ? 1L: 0L);
-        stmt.bindLong(7, entity.getType());
+        stmt.bindLong(7, entity.getIsCache() ? 1L: 0L);
+        stmt.bindLong(8, entity.getType());
  
         String albumId = entity.getAlbumId();
         if (albumId != null) {
-            stmt.bindString(8, albumId);
+            stmt.bindString(9, albumId);
         }
  
         String playlistId = entity.getPlaylistId();
         if (playlistId != null) {
-            stmt.bindString(9, playlistId);
+            stmt.bindString(10, playlistId);
         }
     }
 
@@ -183,9 +187,10 @@ public class MusicDao extends AbstractDao<Music, String> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // QQId
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // duration
             cursor.getShort(offset + 5) != 0, // isNet
-            cursor.getInt(offset + 6), // type
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // albumId
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // playlistId
+            cursor.getShort(offset + 6) != 0, // isCache
+            cursor.getInt(offset + 7), // type
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // albumId
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // playlistId
         );
         return entity;
     }
@@ -198,9 +203,10 @@ public class MusicDao extends AbstractDao<Music, String> {
         entity.setQQId(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setDuration(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setIsNet(cursor.getShort(offset + 5) != 0);
-        entity.setType(cursor.getInt(offset + 6));
-        entity.setAlbumId(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setPlaylistId(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIsCache(cursor.getShort(offset + 6) != 0);
+        entity.setType(cursor.getInt(offset + 7));
+        entity.setAlbumId(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setPlaylistId(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

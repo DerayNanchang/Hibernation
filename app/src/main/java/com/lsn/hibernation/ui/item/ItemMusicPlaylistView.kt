@@ -32,14 +32,9 @@ class ItemMusicPlaylistView : BaseItemView<Playlist> {
     override fun bindData(data: Playlist, position: Int) {
         GlideUtils.defaultBanner(ivPlaylistEd, data.url)
         tvName.text = data.name
-        if (data.isCollect){
-            tvSize.text = adapter.collect?.size.toString() + "首"
-        }else{
-            tvSize.text = adapter.self?.size.toString() + "首"
-        }
+        tvSize.text = data.musicCount.toString() + "首"
         llItemRoot.setOnClickListener {
-            println("点击事件:" + adapter.onItemClickListener)
-            adapter.onItemClickListener?.onClick(position,data)
+            adapter.onItemClickListener?.onClick(position, data)
         }
     }
 

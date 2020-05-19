@@ -40,4 +40,8 @@ interface Api {
     // 获取歌单详情 歌单ID
     @GET(Constant.Music.Api.GET_PLAYLIST_DETAIL)
     fun getPlaylistDetail(@Query("id") id: String): Observable<RawPlaylistInfo>
+
+    // 获取歌单详情 歌单ID
+    @GET(Constant.Music.Api.GET_PLAYLIST_DETAIL)
+    fun getPlaylistDetail2(@Query("id") id: String): Observable<String>
 }

@@ -1,6 +1,5 @@
 package com.lsn.hibernation.modules.music.presenter
 
-import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.IBaseView
@@ -85,11 +84,18 @@ class PlaylistPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
                                 musics.add(music)
                             }
                             MusicManager.get.insert(musics)
-                            val playlist = PlaylistManager.get.findPlaylistById(
+                            val playlist = PlaylistManager.get.getPlaylistById(
                                 PlaylistManager.get.setPlaylistId(result.playlist.id)
                             )
-                            println("呈现数据:" + JSON.toJSONString(playlist))
-                            view?.onSuccess(Constant.Music.Api.GET_PLAYLIST_DETAIL, false, playlist)
+                            if (playlist != null) {
+                                view?.onSuccess(
+                                    Constant.Music.Api.GET_PLAYLIST_DETAIL,
+                                    false,
+                                    playlist
+                                )
+                            } else {
+                                view?.onEmptyStatusResponse()
+                            }
                         } else {
                             view?.onEmptyStatusResponse()
                         }

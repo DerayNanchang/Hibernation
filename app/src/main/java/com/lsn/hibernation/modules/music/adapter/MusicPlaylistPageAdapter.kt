@@ -22,12 +22,10 @@ import com.lsn.hibernation.modules.music.bean.PlaylistComm
  * Date: 2020/4/21 17:18
  * Description
  */
-class MusicPlaylistPageAdapter : PagerAdapter {
+class MusicPlaylistPageAdapter() : PagerAdapter() {
     var self: List<Playlist>? = null
     var collect: List<Playlist>? = null
     var context: Context? = null
-
-    constructor() : super()
 
 
     fun setData(self: List<Playlist>, collect: List<Playlist>, context: Context) {
@@ -51,7 +49,7 @@ class MusicPlaylistPageAdapter : PagerAdapter {
                         entity.ownerAvatar,
                         entity.name,
                         entity.ownerName,
-                        entity.id
+                        entity.netId
                     )
                     intent.putExtra(Constant.Key.PLAYLIST_COMM, JSON.toJSONString(playlistComm))
                     (it as Activity).startActivity(intent)

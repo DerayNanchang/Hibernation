@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable
  */
 class PlaylistModelImpl : BaseModel(), PlaylistContact.PlaylistModel {
 
+
     override fun getPlaylistDetail(
         id: String,
         response: ModelResponseAdapter2<Playlist, RawPlaylistInfo, String>

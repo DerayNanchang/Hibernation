@@ -24,7 +24,6 @@ object YaoAnnotation {
     fun init(context: Context) {
         initView(context)
         initStatusTextColor(context)
-        //initStatusColor(context)
     }
 
 

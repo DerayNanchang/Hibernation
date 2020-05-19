@@ -1,15 +1,16 @@
 package com.lsn.hibernation.db.bean;
 
+import com.lsn.hibernation.db.dao.DaoSession;
+import com.lsn.hibernation.db.dao.MusicDao;
+import com.lsn.hibernation.db.dao.PlaylistDao;
+
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import com.lsn.hibernation.db.dao.DaoSession;
-import com.lsn.hibernation.db.dao.MusicDao;
-import com.lsn.hibernation.db.dao.PlaylistDao;
 
 /**
  * Author: lsn
@@ -26,6 +27,7 @@ public class Playlist {
     private String name;
     private String url;
     private boolean isCollect;
+    private boolean isCache;
     private String owner;
     private String ownerName;
     private String ownerAvatar;
@@ -43,17 +45,17 @@ public class Playlist {
     /** Used for active entity operations. */
     @Generated(hash = 1436610739)
     private transient PlaylistDao myDao;
-    @Generated(hash = 1565795944)
-    public Playlist(String id, String netId, String QQId, String name, String url,
-            boolean isCollect, String owner, String ownerName, String ownerAvatar,
-            String commentId, Long subscribedCount, Long playCount, Long musicCount,
-            Long createTime, Long updateTime) {
+    @Generated(hash = 1937446164)
+    public Playlist(String id, String netId, String QQId, String name, String url, boolean isCollect,
+            boolean isCache, String owner, String ownerName, String ownerAvatar, String commentId,
+            Long subscribedCount, Long playCount, Long musicCount, Long createTime, Long updateTime) {
         this.id = id;
         this.netId = netId;
         this.QQId = QQId;
         this.name = name;
         this.url = url;
         this.isCollect = isCollect;
+        this.isCache = isCache;
         this.owner = owner;
         this.ownerName = ownerName;
         this.ownerAvatar = ownerAvatar;
@@ -221,5 +223,11 @@ public class Playlist {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPlaylistDao() : null;
+    }
+    public boolean getIsCache() {
+        return this.isCache;
+    }
+    public void setIsCache(boolean isCache) {
+        this.isCache = isCache;
     }
 }
