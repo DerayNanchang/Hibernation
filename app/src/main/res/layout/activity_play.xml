@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/ivBGP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
@@ -65,8 +66,8 @@
 
 
             <com.lsn.hibernation.ui.widget.EasePlayView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="450dp"
+                android:layout_height="450dp" />
 
         </RelativeLayout>
 
@@ -93,7 +94,7 @@
                 android:textSize="10sp" />
 
             <SeekBar
-                android:id="@+id/sbPlayMusicBar"
+                android:id="@+id/seekBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="12"
@@ -114,9 +115,10 @@
         </LinearLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:orientation="horizontal"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -124,50 +126,52 @@
 
             <ImageView
                 android:id="@+id/ivPlayMode"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:padding="15dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:src="@drawable/svg_order" />
+
+            <ImageView
+                android:id="@+id/ivPre"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:src="@drawable/svg_pre" />
 
 
             <ImageView
                 android:id="@+id/ivPlay"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@drawable/svg_pause_3" />
 
-            <ImageView
-                android:id="@+id/ivPre"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="20dp"
-                android:layout_toLeftOf="@id/ivPlay"
-                android:padding="15dp"
-                android:src="@drawable/svg_pre" />
+
 
             <ImageView
                 android:id="@+id/ivNext"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@id/ivPlay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:padding="15dp"
                 android:src="@drawable/svg_next" />
 
 
             <ImageView
                 android:id="@+id/iv_menu"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:padding="15dp"
                 android:src="@drawable/svg_playlist2" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

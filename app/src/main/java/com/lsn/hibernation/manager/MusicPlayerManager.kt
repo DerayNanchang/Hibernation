@@ -2,8 +2,10 @@ package com.lsn.hibernation.manager
 
 import android.content.Context
 import android.media.MediaPlayer
+import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.db.manager.PlaylistManager
+import java.util.*
 
 /**
  * Author: lsn
@@ -20,8 +22,12 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
     var player: MediaPlayer? = null
     var context: Context? = null
     var playMusic: Music? = null
+    private var playMode = Constant.Music.AUDIO_PLAY_MANAGER_ORDER
     var isController = false
     private var state = STATE.IDLE
+    private val NEXT = -10
+    private val PRE = -12
+    private var position = 0
     private var onStartActivity: OnStartActivity? = null
 
     private enum class STATE {
@@ -56,34 +62,31 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
 
     fun playPause() {
         val playlist = PlaylistManager.get.getQueuePlaylistById()
-        val music = MusicManager.get.getQueueMusicById()
         if (playlist == null || playlist.musics != null) return
-        if (playlist.musics.size == 0) return
-        if (music == null) return
 
         if (isIdle()) {
             // 没有播放过
-            play(music)
+            play()
         } else if (isPlay()) {
             if (isController) {
                 // 暂停
                 pause()
             } else {
-                if (isPlayExist()){
+                if (isPlayExist()) {
                     onStartActivity?.onStartActivity()
-                }else{
-                    play(music)
+                } else {
+                    play()
                 }
             }
-        }else{
-            if (isController){
+        } else {
+            if (isController) {
                 start()
-            }else{
+            } else {
                 if (isPlayExist()) {
                     //context.startActivity(new Intent(context, PlayActivity.class));
                     onStartActivity?.onStartActivity()
                 } else {
-                    play(music)
+                    play()
                 }
             }
         }
@@ -96,7 +99,7 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
     }
 
     private fun isPlayExist(): Boolean {
-        val newMusic = MusicManager.get.getQueueMusicById()
+        val newMusic = MusicManager.get.getQueueMusic()
         return newMusic?.id == playMusic?.id
     }
 
@@ -108,19 +111,26 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
     /**
      *  播放
      */
-    private fun play(music: Music?) {
-        if (music == null) return
-        player?.apply {
-            reset()
-            if (music.isNet) {
-                if (music.isNet) {
-                    setDataSource(music.netId)
-                    prepareAsync()
-                    setOnPreparedListener {
-                        state = STATE.PLAY
-                        start()
-                        playMusic = music
-                        MusicManager.get.setQueueMusic(music)
+    private fun play() {
+        val music = MusicManager.get.getQueueMusic()
+        music?.let {
+            player?.apply {
+                reset()
+                if (it.isNet) {
+                    if (it.isNet) {
+                        setDataSource(it.netId)
+                        prepareAsync()
+                        setOnPreparedListener { media ->
+                            state = STATE.PLAY
+                            start()
+                            playMusic = it
+
+                            /*if (PlayActivity. != null) {
+                                addTimer()
+                            }*/
+
+
+                        }
                     }
                 }
             }
@@ -132,15 +142,15 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
 
     }
 
-    private fun isPlay(): Boolean {
+    fun isPlay(): Boolean {
         return state == STATE.PLAY
     }
 
-    private fun isPause(): Boolean {
+    fun isPause(): Boolean {
         return state == STATE.PAUSE
     }
 
-    private fun isIdle(): Boolean {
+    fun isIdle(): Boolean {
         return state == STATE.IDLE
     }
 
@@ -152,5 +162,110 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
     fun setOnStartActivityListener(onStartActivity: OnStartActivity) {
         this.onStartActivity = onStartActivity
     }
+
+    fun setPlayMode(playMode: String) {
+        this.playMode = playMode
+    }
+
+    fun getPlayMode(): String {
+        return playMode
+    }
+
+    fun setSeekTo(progress: Int) {
+        player?.seekTo(progress)
+    }
+
+    fun updatePlayMode() {
+        val playMode = getPlayMode()
+        when (playMode) {
+            Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> this.playMode =
+                Constant.Music.AUDIO_PLAY_MANAGER_RANDOM
+            Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> this.playMode =
+                Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION
+            Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> this.playMode =
+                Constant.Music.AUDIO_PLAY_MANAGER_ORDER
+        }
+        MusicManager.get.setPlayMode(this.playMode)
+    }
+
+    fun pre() {
+        val playlist = PlaylistManager.get.getQueuePlaylistById() ?: return
+        if (playlist.musics == null || playlist.musics.size == 0) return
+
+        when (playMode) {
+            Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> {
+                position = order(PRE)
+            }
+            Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> {
+                position = random()
+            }
+            Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> {
+                position = circulation(PRE)
+            }
+        }
+    }
+
+    operator fun next() {
+        val playlist = PlaylistManager.get.getQueuePlaylistById() ?: return
+        if (playlist.musics == null || playlist.musics.size == 0) return
+        when (playMode) {
+            Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> position = order(NEXT)
+            Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> position = random()
+            Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> position = circulation(NEXT)
+        }
+        play()
+    }
+
+    private fun order(tag: Int): Int {
+        val playlist = PlaylistManager.get.getQueuePlaylistById()
+        if (playlist != null) {
+            if (playlist.musics != null && playlist.musics.size > 0) {
+                var position = MusicManager.get.getQueuePosition()
+                return if (tag == NEXT) {
+                    if (position == playlist.musics.size - 1) {
+                        position = 0
+                    } else {
+                        position += 1
+                    }
+                    position
+                } else {
+                    if (position == 0) {
+                        position = playlist.musics.size - 1
+                    } else {
+                        position -= 1
+                    }
+                    position
+                }
+            } else {
+                return -1
+            }
+        } else {
+            return -1
+        }
+    }
+
+    private fun random(): Int {
+        val playlist = PlaylistManager.get.getQueuePlaylistById()
+        return if (playlist != null) {
+            if (playlist.musics != null && playlist.musics.size > 0) {
+                val random = Random()
+                random.nextInt(playlist.musics.size)
+            } else {
+                0
+            }
+        } else {
+            0
+        }
+    }
+
+    private fun circulation(tag: Int): Int {
+        val position = MusicManager.get.getQueuePosition()
+        return if (isController) {
+            order(tag)
+        } else {
+            position
+        }
+    }
+
 
 }

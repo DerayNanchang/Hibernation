@@ -13,7 +13,7 @@ import com.lsn.hibernation.ui.item.ItemPlaylistView
  * Date: 2020/4/23 13:43
  * Description
  */
-class PlaylistAdapter : SimpleAdapter<Music>(){
+class PlaylistAdapter : SimpleAdapter<Music>() {
     lateinit var adapter: PlaylistAdapter
     override fun onCreateBodyViewHolder(
         parent: ViewGroup?,
@@ -25,5 +25,15 @@ class PlaylistAdapter : SimpleAdapter<Music>(){
         return PlayListViewHolder(playlistView)
     }
 
-    class PlayListViewHolder(view:ItemPlaylistView):BaseViewHolder<Music,ItemPlaylistView>(view)
+    class PlayListViewHolder(view: ItemPlaylistView) : BaseViewHolder<Music, ItemPlaylistView>(view)
+
+    var onItemClick: OnItemClick? = null
+
+    interface OnItemClick {
+        fun onClick(data: Music, position: Int)
+    }
+
+    fun setOnItemClickListener(onItemClick: OnItemClick) {
+        this.onItemClick = onItemClick
+    }
 }

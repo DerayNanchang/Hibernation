@@ -14,7 +14,10 @@ import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.InconstantView
+import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.db.bean.Playlist
+import com.lsn.hibernation.db.manager.PlaylistManager
+import com.lsn.hibernation.manager.MusicManager
 import com.lsn.hibernation.modules.music.adapter.PlaylistAdapter
 import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.modules.music.bean.PlaylistComm
@@ -26,6 +29,7 @@ import com.lsn.hibernation.utils.glide.GlideHelp
 import com.lsn.hibernation.utils.glide.GlideUtils
 import kotlinx.android.synthetic.main.activity_playlist.*
 import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.startActivity
 import java.lang.Math.max
 import java.lang.Math.min
 import java.util.*
@@ -69,6 +73,15 @@ class PlaylistActivity : BaseMusicActivity() {
         ivBack.setOnClickListener {
             onBackPressed()
         }
+
+        mAdapter.setOnItemClickListener(object : PlaylistAdapter.OnItemClick {
+            override fun onClick(data: Music, position: Int) {
+                // 保存当前页面的歌单
+                PlaylistManager.get.setQueuePlaylistId(data.id)
+                MusicManager.get.setQueuePosition(position)
+                startActivity<PlayActivity>()
+            }
+        })
 
         // 滑动事件
         ablRoot.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {

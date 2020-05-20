@@ -3,6 +3,8 @@ package com.lsn.hibernation.manager
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.db.dao.MusicDao
+import com.lsn.hibernation.db.manager.PlaylistManager
+import com.lsn.hibernation.utils.comm.StrUtil
 
 /**
  * Author: lsn
@@ -39,11 +41,6 @@ class MusicManager private constructor() {
         return Constant.Music.DEFAULT_NET_PLAYER + easeId + ".mp3"
     }
 
-    fun getQueueMusicById(): Music? {
-        val musicCacheId = SPManager.sp.getMusicQueueId()
-        return getMusicById(musicCacheId)
-    }
-
     fun getMusicById(id: String): Music {
         return getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(id)).build()
             .unique()
@@ -53,8 +50,40 @@ class MusicManager private constructor() {
         return DBManager.get.getMusicDao()
     }
 
-    fun setQueueMusic(music: Music) {
-        SPManager.sp.setMusicQueueId(music.id)
+
+    fun setPlayMode(mode: String) {
+        SPManager.sp.setPlayMode(mode)
+    }
+
+    fun getPlayMode(): String {
+        return SPManager.sp.getPlayMode()
+    }
+
+    fun getDurationStr(duration: Long): String {
+        return StrUtil.formatTime("mm:ss", duration)
+    }
+
+
+    fun getQueuePosition(): Int {
+        return SPManager.sp.getQueuePosition()
+    }
+
+    fun setQueuePosition(position: Int) {
+        return SPManager.sp.setQueuePosition(position)
+    }
+
+    fun getQueueMusic(): Music? {
+        val playlist = PlaylistManager.get.getQueuePlaylistById()
+        val position = getQueuePosition()
+        if (playlist != null) {
+            if (playlist.musics != null && playlist.musics.size > 0) {
+                return playlist.musics[position]
+            }else{
+                return null
+            }
+        } else {
+            return null
+        }
     }
 
 }

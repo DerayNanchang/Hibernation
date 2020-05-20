@@ -50,7 +50,11 @@ public interface Constant {
         String DEFAULT_QQ_USER_NAME = "761048783";
         String DEFAULT_QQ_PASSWORD = "b4q4s2z2lzq.";
         String DEFAULT_NET_PLAYER = "https://music.163.com/song/media/outer/url?id=";
-
+        String PLAY_ACTIVITY_KEY_MUSIC_PROGRESS = "PLAY_ACTIVITY_KEY_MUSIC_PROGRESS";
+        String PLAY_ACTIVITY_KEY_MUSIC_DURATION = "PLAY_ACTIVITY_KEY_MUSIC_DURATION";
+        String AUDIO_PLAY_MANAGER_ORDER = "ORDER";
+        String AUDIO_PLAY_MANAGER_RANDOM = "RANDOM";
+        String AUDIO_PLAY_MANAGER_CIRCULATION = "CIRCULATION";
 
         interface Api{
 

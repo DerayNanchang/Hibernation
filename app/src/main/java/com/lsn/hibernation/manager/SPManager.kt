@@ -21,21 +21,17 @@ class SPManager private constructor() {
 
         const val PLAYLIST_CACHE_ID = "PLAYLIST_CACHE_ID"
         const val MUSIC_CACHE_ID = "MUSIC_CACHE_ID"
+        const val MUSIC_PLAY_MODE = "MUSIC_PLAY_MODE"
+
+        const val QUEUE_POSITION = "QUEUE_POSITION"
     }
 
-    fun setPlaylistCacheId(id: String) {
+    fun setPlaylistQueueId(id: String) {
         SP.get().putString(PLAYLIST_CACHE_ID, id)
     }
 
     fun getPlaylistQueueId(): String {
         return SP.get().getString(PLAYLIST_CACHE_ID, "_")
-    }
-    fun setMusicQueueId(id: String) {
-        SP.get().putString(MUSIC_CACHE_ID, id)
-    }
-
-    fun getMusicQueueId(): String {
-        return SP.get().getString(MUSIC_CACHE_ID, "_")
     }
 
     fun setNetEaseMusicUserName(userName: String) {
@@ -69,6 +65,22 @@ class SPManager private constructor() {
 
     fun getQQMusicPassword() {
         SP.get().getString(QQ_MUSIC_PASSWORD, Constant.Music.DEFAULT_QQ_PASSWORD)
+    }
+
+    fun setPlayMode(mode: String) {
+        SP.get().putString(MUSIC_PLAY_MODE, mode)
+    }
+
+    fun getPlayMode(): String {
+        return SP.get().getString(MUSIC_PLAY_MODE, Constant.Music.AUDIO_PLAY_MANAGER_ORDER)
+    }
+
+    fun setQueuePosition(position: Int) {
+        SP.get().putInt(QUEUE_POSITION, position)
+    }
+
+    fun getQueuePosition() : Int{
+        return SP.get().getInt(QUEUE_POSITION,0)
     }
 
 }

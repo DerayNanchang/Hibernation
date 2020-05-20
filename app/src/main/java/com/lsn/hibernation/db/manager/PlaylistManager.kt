@@ -44,8 +44,12 @@ class PlaylistManager private constructor() {
 
 
     fun getQueuePlaylistById(): Playlist? {
-        val musicCacheId = SPManager.sp.getMusicQueueId()
+        val musicCacheId = SPManager.sp.getPlaylistQueueId()
         return getPlaylistById(musicCacheId)
+    }
+
+    fun setQueuePlaylistId(id:String){
+        SPManager.sp.setPlaylistQueueId(id)
     }
 
     private fun setQueuePlaylistStatus(playlist: Playlist) {

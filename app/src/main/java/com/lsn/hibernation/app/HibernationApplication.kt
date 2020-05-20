@@ -4,6 +4,7 @@ import android.app.Application
 import com.lsn.hibernation.manager.DBManager
 import com.lsn.hibernation.modules.user.bean.LoginInfoBean
 import com.lsn.hibernation.utils.comm.NetUtil
+import com.lsn.hibernation.utils.comm.SP
 
 /**
  * Author: Chris
@@ -25,6 +26,7 @@ class HibernationApplication : Application() {
         super.onCreate()
         get = this
         DBManager.get.init(get)
+        SP.get().init(this)        // SP 初始化
     }
 
 

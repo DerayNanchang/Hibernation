@@ -34,6 +34,10 @@ class ItemPlaylistView : BaseItemView<Music> {
         if (data.singers != null && data.singers.size > 0) {
             tvSinger.text = data.singers[0].name
         }
+        rlRoot.setOnClickListener {
+            adapter.onItemClick?.onClick(data, position)
+        }
+
     }
 
 }
