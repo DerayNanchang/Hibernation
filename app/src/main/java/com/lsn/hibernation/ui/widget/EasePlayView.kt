@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.lsn.hibernation.R
 import com.lsn.hibernation.utils.glide.GlideUtils
+import kotlinx.android.synthetic.main.view_ease_play.view.*
 
 /**
  * Author: lsn
@@ -19,6 +20,7 @@ import com.lsn.hibernation.utils.glide.GlideUtils
  * Description
  */
 class EasePlayView : RelativeLayout {
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -27,7 +29,8 @@ class EasePlayView : RelativeLayout {
         defStyleAttr
     )
 
-    private var animSet: AnimatorSet? = AnimatorSet()
+    private var animSet: AnimatorSet? = null
+    private var ivAlbumIcon: ImageView? = null
     private var interpolator = LinearInterpolator()
 
     init {
@@ -36,15 +39,22 @@ class EasePlayView : RelativeLayout {
 
     private fun initEasePlay() {
         val inflate = LayoutInflater.from(context).inflate(R.layout.view_ease_play, null, false)
-        val ivAlbumIcon = inflate.findViewById<ImageView>(R.id.ivAlbumIcon)
+        ivAlbumIcon = inflate.findViewById<ImageView>(R.id.ivAlbumIcon)
+        animSet = AnimatorSet()
         GlideUtils.defaultCircular(ivAlbumIcon, R.mipmap.ic_music_default)
-        var rotate = ObjectAnimator.ofFloat(ivAlbumIcon, "rotation", 0f, 360f)
+        val rotate = ObjectAnimator.ofFloat(ivAlbumIcon, "rotation", 0f, 360f)
         rotate.repeatMode = ValueAnimator.RESTART
         rotate.repeatCount = -1
-        animSet?.interpolator = interpolator
-        animSet?.play(rotate)
-        animSet?.duration = 25000
-        animSet?.start()
+
+        animSet?.apply {
+            interpolator = this@EasePlayView.interpolator
+            play(rotate)
+            duration = 25000
+            start()
+        }
+
+
+
         inflate.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
         val params = LayoutParams(
             LayoutParams.MATCH_PARENT,
@@ -54,5 +64,15 @@ class EasePlayView : RelativeLayout {
         addView(inflate, params)
     }
 
+
+    fun setAlbumIcon(url: String) {
+        ivAlbumIcon?.let {
+            GlideUtils.defaultCircular(it, url)
+        }
+    }
+
+    fun start() {
+
+    }
 
 }

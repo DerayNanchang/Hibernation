@@ -83,7 +83,6 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
                 start()
             } else {
                 if (isPlayExist()) {
-                    //context.startActivity(new Intent(context, PlayActivity.class));
                     onStartActivity?.onStartActivity()
                 } else {
                     play()

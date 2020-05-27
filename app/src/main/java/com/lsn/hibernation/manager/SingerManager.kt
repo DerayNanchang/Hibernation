@@ -30,4 +30,10 @@ class SingerManager private constructor() {
             DBManager.get.getSingerDao().insertOrReplace(it)
         }
     }
+
+    fun getSingers(){
+        DBManager.get.getSingerDao().queryBuilder().list().forEach {
+            println("singer : "+it.name + " : " + it.id + " : " + it.musicId)
+        }
+    }
 }

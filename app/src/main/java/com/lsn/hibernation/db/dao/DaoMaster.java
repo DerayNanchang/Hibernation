@@ -21,20 +21,18 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        CacheDao.createTable(db, ifNotExists);
         AlbumDao.createTable(db, ifNotExists);
+        CacheDao.createTable(db, ifNotExists);
         MusicDao.createTable(db, ifNotExists);
-        MusicWithSingerDao.createTable(db, ifNotExists);
         PlaylistDao.createTable(db, ifNotExists);
         SingerDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        CacheDao.dropTable(db, ifExists);
         AlbumDao.dropTable(db, ifExists);
+        CacheDao.dropTable(db, ifExists);
         MusicDao.dropTable(db, ifExists);
-        MusicWithSingerDao.dropTable(db, ifExists);
         PlaylistDao.dropTable(db, ifExists);
         SingerDao.dropTable(db, ifExists);
     }
@@ -55,10 +53,9 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(CacheDao.class);
         registerDaoClass(AlbumDao.class);
+        registerDaoClass(CacheDao.class);
         registerDaoClass(MusicDao.class);
-        registerDaoClass(MusicWithSingerDao.class);
         registerDaoClass(PlaylistDao.class);
         registerDaoClass(SingerDao.class);
     }

@@ -1,5 +1,6 @@
 package com.lsn.hibernation.modules.music.presenter
 
+import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.base.BasePresenter
 import com.lsn.hibernation.base.Constant
 import com.lsn.hibernation.base.IBaseView
@@ -47,10 +48,8 @@ class PlaylistPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
                     super.onSuccess(key, result)
                     if (result.code == Constant.Music.NET_EASE_SUCCESS_CODE) {
                         if (result.playlist.tracks.size > 0) {
-                            var musics = ArrayList<Music>()
                             result.playlist.tracks.forEach { track ->
                                 val music = Music()
-                                val singers = ArrayList<Singer>()
                                 music.id = MusicManager.get.setMusicId(track.id)
                                 music.name = track.name
                                 music.netId = track.id
@@ -59,15 +58,18 @@ class PlaylistPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
                                     it?.let { ar ->
                                         val singer = Singer()
                                         singer.apply {
-                                            this.id = SingerManager.get.setSingerId(ar.id)
+                                            //this.id = SingerManager.get.setSingerId(ar.id)
+                                            this.id = SingerManager.get.setSingerId(music.id,ar.id)
                                             this.netId = ar.id
                                             this.qqId = "0"
                                             this.name = ar.name
+                                            this.musicId = music.id
                                         }
-                                        singers.add(singer)
+                                        println("singer : " + JSON.toJSONString(singer))
+                                        SingerManager.get.insert(singer)
                                     }
                                 }
-                                SingerManager.get.insert(singers)
+
                                 music.duration = track.dt.toLong()
                                 music.isNet = true
                                 music.type = Constant.Conn.EASE
@@ -81,9 +83,8 @@ class PlaylistPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
                                 AlbumManager.get.insert(music.album)
                                 music.playlistId =
                                     PlaylistManager.get.setPlaylistId(result.playlist.id)
-                                musics.add(music)
+                                MusicManager.get.insert(music)
                             }
-                            MusicManager.get.insert(musics)
                             val playlist = PlaylistManager.get.getPlaylistById(
                                 PlaylistManager.get.setPlaylistId(result.playlist.id)
                             )
@@ -100,6 +101,8 @@ class PlaylistPresenterImpl(view: IBaseView) : BasePresenter<IBaseView>(view),
                             view?.onEmptyStatusResponse()
                         }
                     }
+
+                   // println(SingerManager.get.getSingers())
                 }
 
                 override fun onFailed(exception: String?) {

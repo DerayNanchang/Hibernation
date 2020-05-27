@@ -18,6 +18,7 @@ import com.lsn.hibernation.db.bean.Music
 import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.db.manager.PlaylistManager
 import com.lsn.hibernation.manager.MusicManager
+import com.lsn.hibernation.manager.SingerManager
 import com.lsn.hibernation.modules.music.adapter.PlaylistAdapter
 import com.lsn.hibernation.modules.music.base.BaseMusicActivity
 import com.lsn.hibernation.modules.music.bean.PlaylistComm
@@ -63,6 +64,8 @@ class PlaylistActivity : BaseMusicActivity() {
         initView()
         initData()
         initEvent()
+        //println(" singers : "+JSON.toJSONString(SingerManager.get.getSingers()))
+        //SingerManager.get.getSingers()
         llComment.setOnClickListener {
             Toast.show("点击了。。。")
         }
@@ -77,31 +80,28 @@ class PlaylistActivity : BaseMusicActivity() {
         mAdapter.setOnItemClickListener(object : PlaylistAdapter.OnItemClick {
             override fun onClick(data: Music, position: Int) {
                 // 保存当前页面的歌单
-                PlaylistManager.get.setQueuePlaylistId(data.id)
+                PlaylistManager.get.setQueuePlaylistId(data.playlistId)
                 MusicManager.get.setQueuePosition(position)
                 startActivity<PlayActivity>()
             }
         })
 
         // 滑动事件
-        ablRoot.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                // 0 -> -像素
-                val y = abs(verticalOffset)
-                val ratio = min(max(y, 0), scrollHeight).toFloat() / scrollHeight
-                // 设置 alpha 滑动数据
-                // 滑动比例 0-1 而 alpha 要从 隐藏到显示 0 - 255
-                val alpha = ratio * 255
-                val argb = Color.argb(alpha.toInt(), newRed, newGreen, newBlue)
-                llToolbar.setBackgroundColor(argb)
-                // 当滑动 滑动高度的三分之一的时候 就改变 title
-                if (y > scrollHeight / 3) {
-                    tvPlaylistName.text = playlistComm?.albumName
-                } else {
-                    tvPlaylistName.text = "歌单"
-                }
-                llRoot.translationY = verticalOffset.toFloat()
+        ablRoot.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset -> // 0 -> -像素
+            val y = abs(verticalOffset)
+            val ratio = y.coerceAtLeast(0).coerceAtMost(scrollHeight).toFloat() / scrollHeight
+            // 设置 alpha 滑动数据
+            // 滑动比例 0-1 而 alpha 要从 隐藏到显示 0 - 255
+            val alpha = ratio * 255
+            val argb = Color.argb(alpha.toInt(), newRed, newGreen, newBlue)
+            llToolbar.setBackgroundColor(argb)
+            // 当滑动 滑动高度的三分之一的时候 就改变 title
+            if (y > scrollHeight / 3) {
+                tvPlaylistName.text = playlistComm?.albumName
+            } else {
+                tvPlaylistName.text = "歌单"
             }
+            llRoot.translationY = verticalOffset.toFloat()
         })
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -219,11 +219,11 @@ class PlaylistActivity : BaseMusicActivity() {
      */
     private fun banAppBarScroll(isScroll: Boolean) {
         val mAppBarChildAt = ablRoot.getChildAt(0)
-        val mAppBarParams = mAppBarChildAt.getLayoutParams() as AppBarLayout.LayoutParams
+        val mAppBarParams = mAppBarChildAt.layoutParams as AppBarLayout.LayoutParams
         if (isScroll) {
             mAppBarParams.scrollFlags =
                 AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-            mAppBarChildAt.setLayoutParams(mAppBarParams)
+            mAppBarChildAt.layoutParams = mAppBarParams
         } else {
             mAppBarParams.scrollFlags = 0
         }

@@ -15,7 +15,6 @@ import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import com.lsn.hibernation.db.bean.Album;
-import com.lsn.hibernation.db.bean.MusicWithSinger;
 
 import com.lsn.hibernation.db.bean.Music;
 
@@ -48,7 +47,6 @@ public class MusicDao extends AbstractDao<Music, String> {
 
     private Query<Music> album_MusicsQuery;
     private Query<Music> playlist_MusicsQuery;
-    private Query<Music> singer_MusicsQuery;
 
     public MusicDao(DaoConfig config) {
         super(config);
@@ -258,21 +256,6 @@ public class MusicDao extends AbstractDao<Music, String> {
         }
         Query<Music> query = playlist_MusicsQuery.forCurrentThread();
         query.setParameter(0, playlistId);
-        return query.list();
-    }
-
-    /** Internal query to resolve the "musics" to-many relationship of Singer. */
-    public List<Music> _querySinger_Musics(String sId) {
-        synchronized (this) {
-            if (singer_MusicsQuery == null) {
-                QueryBuilder<Music> queryBuilder = queryBuilder();
-                queryBuilder.join(MusicWithSinger.class, MusicWithSingerDao.Properties.MId)
-                    .where(MusicWithSingerDao.Properties.SId.eq(sId));
-                singer_MusicsQuery = queryBuilder.build();
-            }
-        }
-        Query<Music> query = singer_MusicsQuery.forCurrentThread();
-        query.setParameter(0, sId);
         return query.list();
     }
 

@@ -8,17 +8,15 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.lsn.hibernation.db.bean.Cache;
 import com.lsn.hibernation.db.bean.Album;
+import com.lsn.hibernation.db.bean.Cache;
 import com.lsn.hibernation.db.bean.Music;
-import com.lsn.hibernation.db.bean.MusicWithSinger;
 import com.lsn.hibernation.db.bean.Playlist;
 import com.lsn.hibernation.db.bean.Singer;
 
-import com.lsn.hibernation.db.dao.CacheDao;
 import com.lsn.hibernation.db.dao.AlbumDao;
+import com.lsn.hibernation.db.dao.CacheDao;
 import com.lsn.hibernation.db.dao.MusicDao;
-import com.lsn.hibernation.db.dao.MusicWithSingerDao;
 import com.lsn.hibernation.db.dao.PlaylistDao;
 import com.lsn.hibernation.db.dao.SingerDao;
 
@@ -31,17 +29,15 @@ import com.lsn.hibernation.db.dao.SingerDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
-    private final DaoConfig cacheDaoConfig;
     private final DaoConfig albumDaoConfig;
+    private final DaoConfig cacheDaoConfig;
     private final DaoConfig musicDaoConfig;
-    private final DaoConfig musicWithSingerDaoConfig;
     private final DaoConfig playlistDaoConfig;
     private final DaoConfig singerDaoConfig;
 
-    private final CacheDao cacheDao;
     private final AlbumDao albumDao;
+    private final CacheDao cacheDao;
     private final MusicDao musicDao;
-    private final MusicWithSingerDao musicWithSingerDao;
     private final PlaylistDao playlistDao;
     private final SingerDao singerDao;
 
@@ -49,17 +45,14 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
-        cacheDaoConfig = daoConfigMap.get(CacheDao.class).clone();
-        cacheDaoConfig.initIdentityScope(type);
-
         albumDaoConfig = daoConfigMap.get(AlbumDao.class).clone();
         albumDaoConfig.initIdentityScope(type);
 
+        cacheDaoConfig = daoConfigMap.get(CacheDao.class).clone();
+        cacheDaoConfig.initIdentityScope(type);
+
         musicDaoConfig = daoConfigMap.get(MusicDao.class).clone();
         musicDaoConfig.initIdentityScope(type);
-
-        musicWithSingerDaoConfig = daoConfigMap.get(MusicWithSingerDao.class).clone();
-        musicWithSingerDaoConfig.initIdentityScope(type);
 
         playlistDaoConfig = daoConfigMap.get(PlaylistDao.class).clone();
         playlistDaoConfig.initIdentityScope(type);
@@ -67,44 +60,37 @@ public class DaoSession extends AbstractDaoSession {
         singerDaoConfig = daoConfigMap.get(SingerDao.class).clone();
         singerDaoConfig.initIdentityScope(type);
 
-        cacheDao = new CacheDao(cacheDaoConfig, this);
         albumDao = new AlbumDao(albumDaoConfig, this);
+        cacheDao = new CacheDao(cacheDaoConfig, this);
         musicDao = new MusicDao(musicDaoConfig, this);
-        musicWithSingerDao = new MusicWithSingerDao(musicWithSingerDaoConfig, this);
         playlistDao = new PlaylistDao(playlistDaoConfig, this);
         singerDao = new SingerDao(singerDaoConfig, this);
 
-        registerDao(Cache.class, cacheDao);
         registerDao(Album.class, albumDao);
+        registerDao(Cache.class, cacheDao);
         registerDao(Music.class, musicDao);
-        registerDao(MusicWithSinger.class, musicWithSingerDao);
         registerDao(Playlist.class, playlistDao);
         registerDao(Singer.class, singerDao);
     }
     
     public void clear() {
-        cacheDaoConfig.clearIdentityScope();
         albumDaoConfig.clearIdentityScope();
+        cacheDaoConfig.clearIdentityScope();
         musicDaoConfig.clearIdentityScope();
-        musicWithSingerDaoConfig.clearIdentityScope();
         playlistDaoConfig.clearIdentityScope();
         singerDaoConfig.clearIdentityScope();
-    }
-
-    public CacheDao getCacheDao() {
-        return cacheDao;
     }
 
     public AlbumDao getAlbumDao() {
         return albumDao;
     }
 
-    public MusicDao getMusicDao() {
-        return musicDao;
+    public CacheDao getCacheDao() {
+        return cacheDao;
     }
 
-    public MusicWithSingerDao getMusicWithSingerDao() {
-        return musicWithSingerDao;
+    public MusicDao getMusicDao() {
+        return musicDao;
     }
 
     public PlaylistDao getPlaylistDao() {

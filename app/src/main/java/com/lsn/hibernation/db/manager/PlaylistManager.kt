@@ -1,5 +1,6 @@
 package com.lsn.hibernation.db.manager
 
+import com.alibaba.fastjson.JSON
 import com.lsn.hibernation.db.bean.Playlist
 import com.lsn.hibernation.db.dao.PlaylistDao
 import com.lsn.hibernation.manager.DBManager
@@ -40,15 +41,14 @@ class PlaylistManager private constructor() {
     }
 
 
-
-
-
     fun getQueuePlaylistById(): Playlist? {
         val musicCacheId = SPManager.sp.getPlaylistQueueId()
+        println("get Playlist Id : $musicCacheId")
         return getPlaylistById(musicCacheId)
     }
 
-    fun setQueuePlaylistId(id:String){
+    fun setQueuePlaylistId(id: String) {
+        println("set Playlist Id : $id")
         SPManager.sp.setPlaylistQueueId(id)
     }
 
@@ -68,6 +68,10 @@ class PlaylistManager private constructor() {
 
 
     fun getPlaylistById(id: String): Playlist? {
+        val list = getPlaylistDao().queryBuilder().list()
+        list.forEach {
+            println("list : " + it.id + " name : " + it.name)
+        }
         return getPlaylistDao().queryBuilder().where(PlaylistDao.Properties.Id.eq(id)).build()
             .unique()
     }

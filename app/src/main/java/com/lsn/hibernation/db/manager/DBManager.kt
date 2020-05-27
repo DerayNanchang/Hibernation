@@ -46,8 +46,4 @@ class DBManager private constructor() {
         return session.albumDao
     }
 
-    fun getMusicWithSingerDao():MusicWithSingerDao{
-        return session.musicWithSingerDao
-    }
-
 }

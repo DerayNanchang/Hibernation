@@ -1,6 +1,8 @@
 package com.lsn.hibernation.modules.music.activity
 
+import android.R.attr.bitmap
 import android.graphics.Bitmap
+import android.graphics.BlurMaskFilter.Blur
 import android.media.MediaPlayer
 import android.view.View
 import android.view.WindowManager
@@ -9,6 +11,8 @@ import android.widget.SeekBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.hoko.blur.HokoBlur
+import com.hoko.blur.task.AsyncBlurTask
 import com.lsn.hibernation.R
 import com.lsn.hibernation.annotation.LayoutResId
 import com.lsn.hibernation.base.BaseActivity
@@ -20,7 +24,6 @@ import com.lsn.hibernation.ui.adapter.SeekBarListener
 import com.lsn.hibernation.ui.anima.AnimaUtils
 import com.lsn.hibernation.utils.comm.StatusBarUtils
 import com.lsn.hibernation.utils.comm.StrUtil
-import com.zhouwei.blurlibrary.EasyBlur
 import kotlinx.android.synthetic.main.activity_play.*
 
 
@@ -49,7 +52,6 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
             }
         }
     })*/
-
 
 
     /*open var handler: Handler = @SuppressLint("HandlerLeak")
@@ -88,9 +90,7 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
             when (manager.getPlayMode()) {
                 Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> ivPlayMode.setImageResource(com.lsn.hibernation.R.drawable.svg_order)
                 Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> ivPlayMode.setImageResource(com.lsn.hibernation.R.drawable.svg_random)
-                Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> ivPlayMode.setImageResource(
-                    R.drawable.svg_circulation
-                )
+                Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> ivPlayMode.setImageResource(R.drawable.svg_circulation)
             }
         }
 
@@ -130,28 +130,42 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
 
 
     private fun setBGP() {
+
         val playlist = PlaylistManager.get.getQueuePlaylistById()
         val queuePosition = MusicManager.get.getQueuePosition()
         val musics = playlist?.musics
         val music = musics?.get(queuePosition)
-
+        music?.let {
+            it.album?.let { it ->
+                epvView.setAlbumIcon(it.url)
+            }
+        }
         Glide.with(this)
             .asBitmap()
             .load(music?.album?.url)
             .centerCrop()
             .override(150, 150)
             .into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    val blur = EasyBlur.with(this@PlayActivity)
-                        .bitmap(resource)
-                        .scale(4)
+                override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
+                    HokoBlur.with(this@PlayActivity)
+                        .scheme(HokoBlur.SCHEME_NATIVE)
+                        .mode(HokoBlur.MODE_STACK)
                         .radius(10)
-                        .blur()
-                    ivBGP.setImageBitmap(blur)
-                    val animation = AlphaAnimation(0.0f, 1.0f)
-                    animation.duration = 3000    //深浅动画持续时间
-                    animation.fillAfter = true   //动画结束时保持结束的画面
-                    ivBGP.animation = AnimaUtils.alpha(0.0f, 1.0f)
+                        .sampleFactor(2.0f)
+                        .forceCopy(false)
+                        .needUpscale(true)
+                        .asyncBlur(bitmap, object : AsyncBlurTask.Callback {
+                            override fun onBlurSuccess(bitmap: Bitmap?) {
+                                val animation = AlphaAnimation(0.0f, 1.0f)
+                                animation.duration = 3000    //深浅动画持续时间
+                                animation.fillAfter = true   //动画结束时保持结束的画面
+                                ivBGP.animation = AnimaUtils.alpha(0.0f, 1.0f)
+                            }
+
+                            override fun onBlurFailed(error: Throwable?) {
+
+                            }
+                        })
                 }
             })
     }
@@ -189,6 +203,7 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
             }
         }
 
+        setBGP()
 
     }
 
