@@ -1,8 +1,6 @@
 package com.lsn.hibernation.modules.music.activity
 
-import android.R.attr.bitmap
 import android.graphics.Bitmap
-import android.graphics.BlurMaskFilter.Blur
 import android.media.MediaPlayer
 import android.view.View
 import android.view.WindowManager
@@ -38,29 +36,36 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
 
     var position = 0
 
-    /*object var handler = Handler(object :Handler.Callback{
-        override fun handleMessage(msg: Message): Boolean {
-            if (seekBar != null){
+
+    /*object handler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                0 -> {
+                    seekBar.progress = MusicPlayerManager.get.getCurrent()
+                    handler.sendEmptyMessageDelayed(0, 500)
+                }
+                1 -> {
+                    seekBar.max = MusicPlayerManager.get.getDuration()
+                }
+            }
+        }
+    }*/
+
+    /*var MyHandler : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            *//*if (seekBar != null) {
                 val bundle = msg.data
                 val progress = bundle.getInt(Constant.Music.PLAY_ACTIVITY_KEY_MUSIC_PROGRESS)
                 val duration = bundle.getInt(Constant.Music.PLAY_ACTIVITY_KEY_MUSIC_DURATION)
                 seekBar.max = duration
                 seekBar.progress = progress
-                return true
-            }else{
-                return false
-            }
-        }
-    })*/
-
-
-    /*open var handler: Handler = @SuppressLint("HandlerLeak")
-    object : Handler() {
-        override fun handleMessage(msg: Message) {
-            // 获取实时进度
-
+            }*//*
+            m
         }
     }*/
+
 
     override fun init() {
         initView()
@@ -84,12 +89,21 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
             }
         })
 
+        // 实时监听
+        /*MusicPlayerManager.get.setMMusicProgressResp(object : MusicPlayerManager.MusicProgress {
+            override fun onMusicProgressResp(current: Int) {
+                seekBar.progress = current
+                seekBar.max = duration
+            }
+        })*/
+
+
         ivPlayMode.setOnClickListener {
             val manager = MusicPlayerManager.get
             manager.updatePlayMode()
             when (manager.getPlayMode()) {
-                Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> ivPlayMode.setImageResource(com.lsn.hibernation.R.drawable.svg_order)
-                Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> ivPlayMode.setImageResource(com.lsn.hibernation.R.drawable.svg_random)
+                Constant.Music.AUDIO_PLAY_MANAGER_ORDER -> ivPlayMode.setImageResource(R.drawable.svg_order)
+                Constant.Music.AUDIO_PLAY_MANAGER_RANDOM -> ivPlayMode.setImageResource(R.drawable.svg_random)
                 Constant.Music.AUDIO_PLAY_MANAGER_CIRCULATION -> ivPlayMode.setImageResource(R.drawable.svg_circulation)
             }
         }
@@ -140,6 +154,7 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
                 epvView.setAlbumIcon(it.url)
             }
         }
+
         Glide.with(this)
             .asBitmap()
             .load(music?.album?.url)
@@ -150,14 +165,15 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
                     HokoBlur.with(this@PlayActivity)
                         .scheme(HokoBlur.SCHEME_NATIVE)
                         .mode(HokoBlur.MODE_STACK)
-                        .radius(10)
+                        .radius(15)
                         .sampleFactor(2.0f)
                         .forceCopy(false)
                         .needUpscale(true)
                         .asyncBlur(bitmap, object : AsyncBlurTask.Callback {
                             override fun onBlurSuccess(bitmap: Bitmap?) {
+                                ivBGP.setImageBitmap(bitmap)
                                 val animation = AlphaAnimation(0.0f, 1.0f)
-                                animation.duration = 3000    //深浅动画持续时间
+                                animation.duration = 2000    //深浅动画持续时间
                                 animation.fillAfter = true   //动画结束时保持结束的画面
                                 ivBGP.animation = AnimaUtils.alpha(0.0f, 1.0f)
                             }
@@ -208,7 +224,6 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
     }
 
     private fun initView() {
-        val seekBar = findViewById<SeekBar>(R.id.seekBar)
         initToolbar()
     }
 
@@ -236,6 +251,4 @@ open class PlayActivity : BaseActivity(), MediaPlayer.OnCompletionListener {
             llToolbar.paddingBottom
         )
     }
-
-
 }

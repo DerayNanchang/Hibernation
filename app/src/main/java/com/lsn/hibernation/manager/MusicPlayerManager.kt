@@ -127,13 +127,79 @@ class MusicPlayerManager private constructor() : MediaPlayer.OnCompletionListene
                             /*if (PlayActivity. != null) {
                                 addTimer()
                             }*/
-
+                            addTimer()
 
                         }
                     }
                 }
             }
         }
+    }
+
+    var timer: Timer? = null
+
+    private fun addTimer() {
+        if (timer == null) {
+            timer = Timer()
+            timer?.schedule(object : TimerTask() {
+                override fun run() {
+                    // 更新当前播放音乐信息
+                    //updatePlayState(playMusic)
+                    //getTopActivity(context);
+                    if (getProCurrentPosition() < 10000000) {
+                        musicProgress?.onMusicProgressResp(getProCurrentPosition())
+                    }
+                }
+            }, 0, 500)
+        }
+    }
+
+    private var musicProgress: MusicProgress? = null
+
+    interface MusicProgress {
+        fun onMusicProgressResp(current: Int)
+    }
+
+    fun setMMusicProgressResp(musicProgress: MusicProgress) {
+        this.musicProgress = musicProgress
+    }
+
+    private var musicDuration: MusicDuration? = null
+
+    interface MusicDuration {
+        fun onMusicDurationResp(duration: Int)
+    }
+
+    fun setMMusicDurationResp(musicDuration: MusicDuration) {
+        this.musicDuration = musicDuration
+    }
+
+
+    /*fun getCurrentPosition() : Long{
+        if (getCurrentPosition())
+    }*/
+
+    private fun getProCurrentPosition(): Int {
+        player?.let {
+            return it.currentPosition
+        }
+        return 0
+    }
+
+
+    fun getCurrent(): Int {
+        if (getProCurrentPosition() < 10000000) {
+            return getProCurrentPosition()
+        } else {
+            return 0
+        }
+    }
+
+    fun getDuration(): Int {
+        player?.let {
+            return it.duration
+        }
+        return 0
     }
 
 

@@ -38,7 +38,7 @@ class MusicPlaylistPageAdapter() : PagerAdapter() {
         val view =
             LayoutInflater.from(container.context)
                 .inflate(R.layout.item_music_playlist, null, false)
-        val mAdapter = MusicPlaylistAdapter(self,collect)
+        val mAdapter = MusicPlaylistAdapter()
         val rvMusicPlaylist = view.findViewById<RecyclerView>(R.id.rvMusicPlaylist)
         mAdapter.setMOnItemClickListener(object : MusicPlaylistAdapter.OnItemClickListener {
             override fun onClick(position: Int, entity: Playlist) {

@@ -13,8 +13,7 @@ import com.lsn.hibernation.ui.item.ItemMusicPlaylistView
  * Date: 2020/4/21 17:40
  * Description
  */
-class MusicPlaylistAdapter(var self: List<Playlist>?, var collect: List<Playlist>?) :
-    SimpleAdapter<Playlist>() {
+class MusicPlaylistAdapter : SimpleAdapter<Playlist>() {
     override fun onCreateBodyViewHolder(
         parent: ViewGroup?,
         viewType: Int

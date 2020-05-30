@@ -11,6 +11,7 @@ import com.lsn.hibernation.modules.music.bean.Banner
 import com.lsn.hibernation.utils.glide.GlideUtils
 import com.youth.banner.adapter.BannerAdapter
 import org.jetbrains.anko.find
+import org.jetbrains.anko.imageResource
 
 /**
  * Author: lsn
@@ -33,14 +34,14 @@ class MusicBannerAdapter(var context: Context, var banners: List<Banner.BannersB
     override fun onCreateHolder(
         parent: ViewGroup?,
         viewType: Int
-    ): MusicBannerAdapter.BannerViewHolder {
+    ): BannerViewHolder {
         val view = LayoutInflater.from(context)
-            .inflate(R.layout.layout_music_banner, parent,false)
+            .inflate(R.layout.layout_music_banner, parent, false)
         return BannerViewHolder(view)
     }
 
     override fun onBindView(
-        holder: MusicBannerAdapter.BannerViewHolder?,
+        holder: BannerViewHolder?,
         data: Banner.BannersBean?,
         position: Int,
         size: Int
